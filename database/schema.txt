@@ -1,0 +1,91 @@
+players
+-
+nflID int pk 
+height varchar(10)
+weight int
+birthDate date
+collegeName varchar(50)
+officialPosition varchar(3)
+displayName varchar(50)
+
+games
+-
+gameId int pk 
+season int
+week int
+gameDate date
+gameTimeEastern time
+homeTeamAbbr varchar(3)
+visitorTeamAbbr varchar(3)
+
+plays
+-
+gameId int pk fk >- games.gameId
+playId int pk
+playDescription varchar(500)
+quarter int
+down int
+yardsToGo int
+possessionTeam varchar(3)
+defensiveTeam varchar(3)
+yardlineSide varchar(3)
+yardlineNumber int
+gameClock varchar(5)
+preSnapHomeScore int
+preSnapVisitorScore int
+passResult varchar(2)
+penaltyYards int
+prePenaltyPlayResult int
+playResult int
+foulName1 varchar(100)
+foulNFLId1 int
+foulName2 varchar(100)
+foulNFLId2 int
+foulName3 varchar(100)
+foulNFLId3 int
+absoluteYardlineNumber int
+offenseFormation varchar(50)
+personnelO varchar(50)
+defendersInTheBox int
+personnelD varchar(50)
+dropbackType varchar(50)
+pff_playAction bool
+pff_passCoverage varchar(50)
+pff_passCoverageType varchar(50)
+
+pffScoutingData
+-
+gameId int pk fk >- games.gameId
+playId int pk
+nflId int pk fk >- players.nflId
+pff_role varchar(50)
+pff_positionLinedUp varchar(10)
+pff_hit varchar(2)
+pff_hurry varchar(2)
+pff_sack varchar(2)
+pff_beatenByDefender varchar(2)
+pff_hitAllowed varchar(2)
+pff_hurryAllowed varchar(2)
+pff_sackAllowed varchar(2)
+pff_nflIdBlockedPlayer int fk >- players.nflId
+pff_blockType varchar(2)
+pff_backFieldBlock varchar(2)
+
+trackingData
+-
+gameId int pk fk >- games.gameId
+playId int pk
+nflId int pk
+frameId int
+time timestamp
+jerseyNumber int
+club varchar(10)
+playDirection varchar(5)
+x float
+y float
+s float
+a float
+dis float
+o float
+dir float
+event varchar(50)
