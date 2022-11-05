@@ -3,27 +3,29 @@
 -- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
 
 
+
 CREATE TABLE "players" (
     "nflID" int   NOT NULL,
-    "height" varchar(10)   NOT NULL,
-    "weight" int   NOT NULL,
-    "birthDate" date,
+    "height" varchar(10),
+    "weight" int,
+    "birthDate" varchar(10),
     "collegeName" varchar(50),
-    "officialPosition" varchar(3)   NOT NULL,
-    "displayName" varchar(50)   NOT NULL,
+    "officialPosition" varchar(3),
+    "displayName" varchar(50),
     CONSTRAINT "pk_players" PRIMARY KEY (
         "nflID"
      )
 );
 
+
 CREATE TABLE "games" (
     "gameId" int   NOT NULL,
-    "season" int   NOT NULL,
-    "week" int   NOT NULL,
-    "gameDate" date   NOT NULL,
-    "gameTimeEastern" time   NOT NULL,
-    "homeTeamAbbr" varchar(3)   NOT NULL,
-    "visitorTeamAbbr" varchar(3)   NOT NULL,
+    "season" int,
+    "week" int,
+    "gameDate" varchar(10),
+    "gameTimeEastern" varchar(10),
+    "homeTeamAbbr" varchar(3),
+    "visitorTeamAbbr" varchar(3),
     CONSTRAINT "pk_games" PRIMARY KEY (
         "gameId"
      )
@@ -32,96 +34,111 @@ CREATE TABLE "games" (
 CREATE TABLE "plays" (
     "gameId" int   NOT NULL,
     "playId" int   NOT NULL,
-    "playDescription" varchar(500)   NOT NULL,
-    "quarter" int   NOT NULL,
-    "down" int   NOT NULL,
-    "yardsToGo" int   NOT NULL,
-    "possessionTeam" varchar(3)   NOT NULL,
-    "defensiveTeam" varchar(3)   NOT NULL,
-    "yardlineSide" varchar(3)   NOT NULL,
-    "yardlineNumber" int   NOT NULL,
-    "gameClock" varchar(5)   NOT NULL,
-    "preSnapHomeScore" int   NOT NULL,
-    "preSnapVisitorScore" int   NOT NULL,
-    "passResult" varchar(2)   NOT NULL,
-    "penaltyYards" int   NOT NULL,
-    "prePenaltyPlayResult" int   NOT NULL,
-    "playResult" int   NOT NULL,
-    "foulName1" varchar(100)   NOT NULL,
-    "foulNFLId1" int   NOT NULL,
-    "foulName2" varchar(100)   NOT NULL,
-    "foulNFLId2" int   NOT NULL,
-    "foulName3" varchar(100)   NOT NULL,
-    "foulNFLId3" int   NOT NULL,
-    "absoluteYardlineNumber" int   NOT NULL,
-    "offenseFormation" varchar(50)   NOT NULL,
-    "personnelO" varchar(50)   NOT NULL,
-    "defendersInTheBox" int   NOT NULL,
-    "personnelD" varchar(50)   NOT NULL,
-    "dropbackType" varchar(50)   NOT NULL,
-    "pff_playAction" bool   NOT NULL,
-    "pff_passCoverage" varchar(50)   NOT NULL,
-    "pff_passCoverageType" varchar(50)   NOT NULL,
+    "playDescription" varchar(1000),
+    "quarter" int,
+    "down" int,
+    "yardsToGo" int,
+    "possessionTeam" varchar(3),
+    "defensiveTeam" varchar(3),
+    "yardlineSide" varchar(3),
+    "yardlineNumber" int,
+    "gameClock" varchar(5),
+    "preSnapHomeScore" int,
+    "preSnapVisitorScore" int,
+    "passResult" varchar(2),
+    "penaltyYards" int,
+    "prePenaltyPlayResult" int,
+    "playResult" int,
+    "foulName1" varchar(100),
+    "foulNFLId1" int,
+    "foulName2" varchar(100),
+    "foulNFLId2" int,
+    "foulName3" varchar(100),
+    "foulNFLId3" int,
+    "absoluteYardlineNumber" int,
+    "offenseFormation" varchar(50),
+    "personnelO" varchar(50),
+    "defendersInBox" int,
+    "personnelD" varchar(50),
+    "dropbackType" varchar(50),
+    "pff_playAction" int,
+    "pff_passCoverage" varchar(50),
+    "pff_passCoverageType" varchar(50),
     CONSTRAINT "pk_plays" PRIMARY KEY (
         "gameId","playId"
      )
 );
 
-CREATE TABLE "pffScoutingData" (
+CREATE TABLE "pffscoutingdata" (
     "gameId" int   NOT NULL,
     "playId" int   NOT NULL,
-    "nflId" int   NOT NULL,
+    "nflId" int  NOT NULL,
     "pff_role" varchar(50)   NOT NULL,
     "pff_positionLinedUp" varchar(10)   NOT NULL,
-    "pff_hit" varchar(2)   NOT NULL,
-    "pff_hurry" varchar(2)   NOT NULL,
-    "pff_sack" varchar(2)   NOT NULL,
-    "pff_beatenByDefender" varchar(2)   NOT NULL,
-    "pff_hitAllowed" varchar(2)   NOT NULL,
-    "pff_hurryAllowed" varchar(2)   NOT NULL,
-    "pff_sackAllowed" varchar(2)   NOT NULL,
-    "pff_nflIdBlockedPlayer" int   NOT NULL,
-    "pff_blockType" varchar(2)   NOT NULL,
-    "pff_backFieldBlock" varchar(2)   NOT NULL,
-    CONSTRAINT "pk_pffScoutingData" PRIMARY KEY (
+    "pff_hit" int,
+    "pff_hurry" int,
+    "pff_sack" int,
+    "pff_beatenByDefender" int,
+    "pff_hitAllowed" int,
+    "pff_hurryAllowed" int,
+    "pff_sackAllowed" int,
+    "pff_nflIdBlockedPlayer" int,
+    "pff_blockType" varchar(2),
+    "pff_backFieldBlock" int,
+    CONSTRAINT "pk_pffscoutingdata" PRIMARY KEY (
         "gameId","playId","nflId"
      )
 );
 
-CREATE TABLE "trackingData" (
+CREATE TABLE "trackingdata" (
     "gameId" int   NOT NULL,
     "playId" int   NOT NULL,
-    "nflId" int   NOT NULL,
+    "nflId" int,
     "frameId" int   NOT NULL,
-    "time" timestamp   NOT NULL,
-    "jerseyNumber" int   NOT NULL,
-    "club" varchar(10)   NOT NULL,
-    "playDirection" varchar(5)   NOT NULL,
-    "x" float   NOT NULL,
-    "y" float   NOT NULL,
-    "s" float   NOT NULL,
-    "a" float   NOT NULL,
-    "dis" float   NOT NULL,
-    "o" float   NOT NULL,
-    "dir" float   NOT NULL,
-    "event" varchar(50)   NOT NULL,
-    CONSTRAINT "pk_trackingData" PRIMARY KEY (
-        "gameId","playId","nflId"
-     )
+    "time" timestamp,
+    "jerseyNumber" int,
+    "team" varchar(10),
+    "playDirection" varchar(5),
+    "x" float,
+    "y" float,
+    "s" float,
+    "a" float,
+    "dis" float,
+    "o" float,
+    "dir" float,
+    "event" varchar(50)
 );
+
+DROP TABLE players
+DROP TABLE games
+DROP TABLE plays
+DROP TABLE pffscoutingdata
+DROP TABLE trackingdata
+SELECT * FROM players
+SELECT * FROM games
+SELECT * FROM plays
+SELECT * FROM pffscoutingdata
+SELECT * FROM trackingdata where "nflId" ISNULL
+SELECT COUNT(*) FROM trackingdata
 
 ALTER TABLE "plays" ADD CONSTRAINT "fk_plays_gameId" FOREIGN KEY("gameId")
 REFERENCES "games" ("gameId");
 
-ALTER TABLE "pffScoutingData" ADD CONSTRAINT "fk_pffScoutingData_gameId" FOREIGN KEY("gameId")
+ALTER TABLE "pffscoutingdata" ADD CONSTRAINT "fk_pffscoutingdata_gameId" FOREIGN KEY("gameId")
 REFERENCES "games" ("gameId");
 
-ALTER TABLE "pffScoutingData" ADD CONSTRAINT "fk_pffScoutingData_nflId" FOREIGN KEY("nflId")
+ALTER TABLE "pffscoutingdata" ADD CONSTRAINT "fk_pffscoutingdata_nflId" FOREIGN KEY("nflId")
 REFERENCES "players" ("nflID");
 
-ALTER TABLE "pffScoutingData" ADD CONSTRAINT "fk_pffScoutingData_pff_nflIdBlockedPlayer" FOREIGN KEY("pff_nflIdBlockedPlayer")
+ALTER TABLE "pffdscoutingData" ADD CONSTRAINT "fk_pffscoutingData_pff_nflIdBlockedPlayer" FOREIGN KEY("pff_nflIdBlockedPlayer")
 REFERENCES "players" ("nflID");
 
-ALTER TABLE "trackingData" ADD CONSTRAINT "fk_trackingData_gameId" FOREIGN KEY("gameId")
+ALTER TABLE "trackingdata" ADD CONSTRAINT "fk_trackingdata_gameId" FOREIGN KEY("gameId")
 REFERENCES "games" ("gameId");
 
+
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO dennis;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO liam;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO greg;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO robert;
