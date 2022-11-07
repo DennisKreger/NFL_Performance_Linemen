@@ -91,6 +91,27 @@ Scripts to load the data into the database are provided as PySpark in Jupyter no
 [PFF Scouting Data ETL Notebook](pffScoutingData_etl_gcs_cloudsql.ipynb)
 
 
+
+## Database Preview 
+
+The following images contain a preview of the database tables.
+
+**Players Table Preview**
+![Players Table Preview](./images/players.png)
+
+**Games Table Preview**
+![Games Table Preview](./images/games.png)
+
+**Plays Table Preview**
+![Plays Table Preview](./images/plays.png)
+
+**PFF Scouting Data Preview**
+![PFF Scouting Data Preview](./images/pffscoutingdata.png)
+
+**Tracking Data Preview**
+![Tracking Data Preview](./images/trackingdata.png)
+
+
 ## Provisional ML Model
 
 A simple provisional ML model for analysis is provided in the [NFL Big Data Analysis](nfl_big_data_analysis.ipynb) notebook.
