@@ -65,3 +65,21 @@ config = {"user":"postgres",
           "driver":"org.postgresql.Driver"}
 ```
 
+## ETL
+
+Scripts to load the data into the database are provided as PySpark in Jupyter notebooks:
+
+[Games ETL Notebook](games_etl_gcs_cloudsql.ipynb)
+
+[Players ETL Notebook](players_etl_gcs_cloudsql.ipynb)
+
+[Plays ETL Notebook](plays_etl_gcs_cloudsql.ipynb)
+
+[Tracking Data ETL Notebook](trackingData_etl_gcs_cloudsql.ipynb)
+
+[PFF Scouting Data ETL Notebook](pffScoutingData_etl_gcs_cloudsql.ipynb)
+
+
+## Provisional ML Model
+
+A simple provisional ML model for analysis is provided in the [NFL Big Data Analysis](nfl_big_data_analysis.ipynb) notebook.
