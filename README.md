@@ -12,7 +12,7 @@ The [Presentation](./presentation/README.md) section, contains general informati
 
 ## Machine Learning Model
 
-The [Machine Learning] section contains a provisional machine learning model that stands in for the final machine learning model.
+The [Machine Learning](./ml/README.md) section contains a provisional machine learning model that stands in for the final machine learning model.
 
 
 ## Database Integration
