@@ -97,18 +97,28 @@ Scripts to load the data into the database are provided as PySpark in Jupyter no
 The following images contain a preview of the database tables.
 
 **Players Table Preview**
+
+The players table contains 1,679 records.
 ![Players Table Preview](./images/players.png)
 
 **Games Table Preview**
+
+The games table contains 122 records.
 ![Games Table Preview](./images/games.png)
 
 **Plays Table Preview**
+
+The plays table contains 8,557 records.
 ![Plays Table Preview](./images/plays.png)
 
 **PFF Scouting Data Preview**
+
+The pffscoutingdata table contains 188,254 records.
 ![PFF Scouting Data Preview](./images/pffscoutingdata.png)
 
 **Tracking Data Preview**
+
+The trackingdata table contains 8,314,178 records.
 ![Tracking Data Preview](./images/trackingdata.png)
 
 
