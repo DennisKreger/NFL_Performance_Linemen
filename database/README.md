@@ -7,16 +7,27 @@ The data for the competition is available at [NFL Big Data Bowl 2023](https://ww
 ## Data files uploaded and available on Google Cloud Storage
 
 https://storage.googleapis.com/big-data-bowl/games.csv
+
 https://storage.googleapis.com/big-data-bowl/pffScoutingData.csv
+
 https://storage.googleapis.com/big-data-bowl/players.csv
+
 https://storage.googleapis.com/big-data-bowl/plays.csv
+
 https://storage.googleapis.com/big-data-bowl/week1.csv
+
 https://storage.googleapis.com/big-data-bowl/week2.csv
+
 https://storage.googleapis.com/big-data-bowl/week3.csv
+
 https://storage.googleapis.com/big-data-bowl/week4.csv
+
 https://storage.googleapis.com/big-data-bowl/week5.csv
+
 https://storage.googleapis.com/big-data-bowl/week6.csv
+
 https://storage.googleapis.com/big-data-bowl/week7.csv
+
 https://storage.googleapis.com/big-data-bowl/week8.csv
 
 
