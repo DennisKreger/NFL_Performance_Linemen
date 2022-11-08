@@ -124,4 +124,4 @@ The trackingdata table contains 8,314,178 records.
 
 ## Provisional ML Model
 
-A simple provisional ML model for analysis is provided in the [NFL Big Data Analysis Provisional ML Model](nfl_big_data_analysis_pd.ipynb) notebook.  The provisional ml model looks at simple statistics for Players and the correlation between height, weight, and age.
+A simple provisional ML model for analysis is provided in the [NFL Big Data Analysis Provisional ML Model](nfl_big_data_analysis.ipynb) notebook.  The provisional ml model looks at simple statistics for Players and the correlation between height, weight, and age.
