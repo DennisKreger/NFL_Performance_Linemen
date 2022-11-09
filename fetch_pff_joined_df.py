@@ -1,5 +1,5 @@
 # from fetch_pff_joined_df import fetch_pff_joined_df
-# df = fetch_pff_joined_df('liam', 'T,gnCs\g)|2[*$}^')
+# df = fetch_pff_joined_df(user, pass)
 
 import pandas as pd
 import psycopg2
