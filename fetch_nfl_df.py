@@ -1,4 +1,4 @@
-# from fetch_nfl_df import fetch_pff_joined_df
+# from fetch_nfl_df import fetch_nfl_df
 # df = fetch_nfl_df(table_name, user, pass)
 
 import pandas as pd
