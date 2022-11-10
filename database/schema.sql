@@ -109,11 +109,30 @@ CREATE TABLE "trackingdata" (
     "event" varchar(50)
 );
 
+CREATE TABLE "combine" (
+    "player" varchar(50)   NOT NULL,
+    "pos" varchar(3),
+    "school" varchar(50),
+    "ht" varchar(10),
+    "wt" int,
+    "40yd" float,
+    "vertical" float,
+    "bench" int,
+    "broadjump" int,
+    "3cone" float,
+    "shuttle" float,
+    "tteam" varchar(50),
+    "round" int,
+    "pick" int,
+    "year" int
+);
+
 DROP TABLE players
 DROP TABLE games
 DROP TABLE plays
 DROP TABLE pffscoutingdata
 DROP TABLE trackingdata
+DROP TABLE combine
 SELECT * FROM players
 SELECT * FROM games
 SELECT * FROM plays
