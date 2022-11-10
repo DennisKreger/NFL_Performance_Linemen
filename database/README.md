@@ -30,6 +30,9 @@ https://storage.googleapis.com/big-data-bowl/week7.csv
 
 https://storage.googleapis.com/big-data-bowl/week8.csv
 
+https://storage.googleapis.com/big-data-bowl/nflcombine.csv
+
+
 
 ## Database Configuration Settings
 PostgreSQL 14
@@ -90,6 +93,8 @@ Scripts to load the data into the database are provided as PySpark in Jupyter no
 
 [PFF Scouting Data ETL Notebook](pffScoutingData_etl_gcs_cloudsql.ipynb)
 
+[Combine ETL Notebook](combine_etl_gcs_cloudsql.ipynb)
+
 
 
 ## Database Preview 
@@ -120,6 +125,11 @@ The pffscoutingdata table contains 188,254 records.
 
 The trackingdata table contains 8,314,178 records.
 ![Tracking Data Preview](./images/trackingdata.png)
+
+**Combine Data Preview**
+
+The NFL Combine table contains 7,680 records.
+![Combine Data Preview](./images/combine.png)
 
 
 ## Provisional ML Model
