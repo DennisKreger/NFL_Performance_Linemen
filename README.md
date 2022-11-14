@@ -17,7 +17,7 @@ The [Machine Learning](./ml/README.md) section contains a provisional machine le
 
 ## Database Integration
 
-The [Database Integration](./database/README.md) section contains information about the database. A PostgreSQL database has been created on Google Cloud SQL.  You can find the database schema, the connection information, and a preview of the database tables. There is also a draft machine learning model that is connected to the database.
+The [Database Integration](./database/README.md) section contains information about the database. A PostgreSQL database has been created on Google Cloud SQL.  You can find the database schema, the connection information, and a preview of the database tables. There is also a draft machine learning model that is connected to the database. 
 
 
 ## Dashboard
