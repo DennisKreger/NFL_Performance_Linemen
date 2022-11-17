@@ -109,17 +109,44 @@ CREATE TABLE "trackingdata" (
     "event" varchar(50)
 );
 
+CREATE TABLE "combine" (
+    "player" varchar(50)   NOT NULL,
+    "pos" varchar(5),
+    "school" varchar(50),
+    "ht" varchar(10),
+    "wt" int,
+    "40yd" float,
+    "vertical" float,
+    "bench" int,
+    "broadjump" int,
+    "3cone" float,
+    "shuttle" float,
+    "team" varchar(50),
+    "round" int,
+    "pick" int,
+    "year" int
+);
+
 DROP TABLE players
 DROP TABLE games
 DROP TABLE plays
 DROP TABLE pffscoutingdata
 DROP TABLE trackingdata
+DROP TABLE combine
+
 SELECT * FROM players
 SELECT * FROM games
 SELECT * FROM plays
 SELECT * FROM pffscoutingdata
-SELECT * FROM trackingdata where "nflId" ISNULL
+SELECT * FROM trackingdata LIMIT 50
+SELECT * FROM combine
+
+SELECT COUNT(*) FROM players
+SELECT COUNT(*) FROM games
+SELECT COUNT(*) FROM plays
+SELECT COUNT(*) FROM pffscoutingdata
 SELECT COUNT(*) FROM trackingdata
+SELECT COUNT(*) FROM combine
 
 ALTER TABLE "plays" ADD CONSTRAINT "fk_plays_gameId" FOREIGN KEY("gameId")
 REFERENCES "games" ("gameId");
