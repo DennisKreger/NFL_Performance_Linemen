@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # our database uri
 username = "postgres"
-password = "fPl8DUOBLcnbvA"
+password = "password"
 publicip = "34.72.136.99"
 dbname = "big-data-bowl"
 project_id = "big-data-bowl-367422"
