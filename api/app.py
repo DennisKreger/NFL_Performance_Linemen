@@ -1,9 +1,11 @@
 from flask import Flask,request,render_template,url_for,jsonify,redirect,flash
 from flask_sqlalchemy import SQLAlchemy
+from os import environ, path
 import datetime
 
 # Init App
 app = Flask(__name__)
+<<<<<<< HEAD
 
 
 # our database uri
@@ -13,10 +15,13 @@ publicip = "34.72.136.99"
 dbname = "big-data-bowl"
 project_id = "big-data-bowl-367422"
 instance_name = "big-data-bowl"
+=======
+basedir = path.abspath(path.dirname(__file__))
+app.config.from_pyfile('api_config.py')
+>>>>>>> 0576aee (Added Flask configuration)
 
 # configuration
-app.config["SECRET_KEY"] = "yoursecretkey"
-app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{username}:{password}@34.72.136.99:5432/{dbname}"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{app.config['USERNAME']}:{app.config['DB_PASSWORD']}@{app.config['PUBLIC_IP']}:5432/{app.config['DBNAME']}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True
 
 db = SQLAlchemy(app)
