@@ -1,5 +1,7 @@
 # Presentation
 
+The team presentation is available on Google Slides under [this link](https://docs.google.com/presentation/d/1uGznoeysFcdWGerJzPjS-ocTT_UQWY8YW3r7k1_3XpA/edit#slide=id.p).
+
 ## Team Members
 
 Dennis Kreger - [Github](https://github.com/DennisKreger)
