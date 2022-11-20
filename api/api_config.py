@@ -6,7 +6,7 @@ basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, '.env'))
 
 # our database config
-USERNAME = 'postgres'
+USERNAME = environ.get('DB_USER')
 DB_PASSWORD = environ.get('DB_PASSWORD')
 PUBLIC_IP = '34.72.136.99'
 DBNAME = 'big-data-bowl'
