@@ -36,11 +36,6 @@ python main.py
 
 ### Setup and configuration
 
-In main.py, ensure the configuration on line 12 is set to use ProdConfig as follows:
-```
-app.config.from_object('config.ProdConfig')
-```
-
 Follow the steps in [this tutorial](https://cloud.google.com/appengine/docs/standard/python3/building-app) for setup and configuration steps
 
 ### Deploy

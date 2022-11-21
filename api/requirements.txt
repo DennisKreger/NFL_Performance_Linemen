@@ -5,3 +5,4 @@ google-api-python-client==2.64.0
 cloud-sql-python-connector==0.9.3
 pg8000==1.29.3
 python-dotenv==0.20.0
+flask_sqlalchemy_session==1.1
