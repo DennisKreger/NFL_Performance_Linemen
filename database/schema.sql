@@ -7,11 +7,15 @@
 CREATE TABLE "players" (
     "nflID" int   NOT NULL,
     "height" varchar(10),
-    "weight" int,
+    "weight" float,
     "birthDate" varchar(10),
     "collegeName" varchar(50),
     "officialPosition" varchar(3),
     "displayName" varchar(50),
+	"age" float,
+	"heightCm" float,
+	"conference" varchar(50),
+	"conferenceId" float,
     CONSTRAINT "pk_players" PRIMARY KEY (
         "nflID"
      )
