@@ -209,14 +209,13 @@ def team_players(teamAbbr):
                 )
     results = [
         {
-            "nflId": player.nflId,
-            "jerseyNumber": player.jerseyNumber,
             "displayName": player.displayName,
+             "jerseyNumber": player.jerseyNumber,
             "officialPosition": player.officialPosition,
             "team": player.team
             
         } for player in players]    
-    return {"count": len(results), "players": results}
+    return {"players": results}
 
 
 @app.route('/players/<teamAbbr>/<positions>',methods=['GET'])
