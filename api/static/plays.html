@@ -95,37 +95,45 @@
                 <thead>
                     <tr>
                         <th>Select</th>
-                        <th>NFL Id</th>
-                        <th>Number</th>
-                        <th>Team</th>                        
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Height</th>
-                        <th>Weight</th>
-                        <th>Birth Date</th>
-                        <th>Age</th>
-                        <th>College</th>
-                        <th>Conference</th>                 
+                        <th>Game Id</th>
+                        <th>Play Id</th>
+                        <th>Play Description</th>                        
+                        <th>Quarter</th>
+                        <th>Down</th>
+                        <th>Yards to Go</th>
+                        <th>Possession Team</th>
+                        <th>Defensive Team</th>
+                        <th>Side</th>
+                        <th>Yardline</th>
+                        <th>Game Clock</th>        
+                        <th>Presnap Home Score</th>
+                        <th>Presnap Visitor Score</th>
+                        <th>Offensive Formation</th>
+                        <th>Offense Personnel</th>
+                        <th>Defense Personnel</th>
+                        <th>Dropback Type</th>        
+                        <th>Pass Coverage</th>
+                        <th>Pass Coverage Type</th>
                       </tr>
                 </thead>
                 <tbody>
                     <script>
                         var tbodyRef = document.getElementById('example').getElementsByTagName('tbody')[0];
                         async function getData() {
-                            let myObject = await fetch("/players");
+                            let myObject = await fetch("/plays");
                             let tableData = await myObject.text();
-                            let players = JSON.parse(tableData);
+                            console.log(tableData)
+                            let plays = JSON.parse(tableData);
 
                             
                             function printValues(obj) {
                               for(var k in obj) {
-                                console.log("k:" + k)
-                                    for(var player in obj[k]) {
+                                    for(var play in obj[k]) {
                                       // Insert a row at the end of table
                                       var newRow = tbodyRef.insertRow();
                                       newRow.insertCell();
-                                      for(var key in obj[k][player]) {
-                                        let val = obj[k][player][key]
+                                      for(var key in obj[k][play]) {
+                                        let val = obj[k][play][key]
                                         // Insert a cell at the end of the row
                                         var newCell = newRow.insertCell();
                                         // Append a text node to the cell
@@ -136,7 +144,7 @@
                               }
                               $.holdReady(false);
                             };
-                            printValues(players);
+                            printValues(plays);
 
                           }
                         getData();
@@ -146,17 +154,25 @@
                 <tfoot>
                     <tr>
                         <th>Select</th>
-                        <th>NFL Id</th>
-                        <th>Number</th>
-                        <th>Team</th>                        
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Height</th>
-                        <th>Weight</th>
-                        <th>Birth Date</th>
-                        <th>Age</th>
-                        <th>College</th>
-                        <th>Conference</th>    
+                        <th>Game Id</th>
+                        <th>Play Id</th>
+                        <th>Play Description</th>                        
+                        <th>Quarter</th>
+                        <th>Down</th>
+                        <th>Yards to Go</th>
+                        <th>Possession Team</th>
+                        <th>Defensive Team</th>
+                        <th>Side</th>
+                        <th>Yardline</th>
+                        <th>Game Clock</th>        
+                        <th>Presnap Home Score</th>
+                        <th>Presnap Visitor Score</th>
+                        <th>Offensive Formation</th>
+                        <th>Offense Personnel</th>
+                        <th>Defense Personnel</th>
+                        <th>Dropback Type</th>        
+                        <th>Pass Coverage</th>
+                        <th>Pass Coverage Type</th>
                     </tr>
                 </tfoot>
             </table>

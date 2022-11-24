@@ -1,3 +1,5 @@
+# https://www.digitalocean.com/community/tutorials/how-to-query-tables-and-paginate-data-in-flask-sqlalchemy
+
 from flask import Flask,request,render_template,url_for,jsonify,redirect,flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_sqlalchemy_session import flask_scoped_session
@@ -32,6 +34,7 @@ def getconn():
         return conn
 
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
 
 # configuration
 # app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{app.config['USERNAME']}:{app.config['DB_PASSWORD']}@{app.config['PUBLIC_IP']}:5432/{app.config['DBNAME']}"
@@ -174,22 +177,38 @@ def root():
 
 @app.route('/players',methods=['GET'])
 def players():
-    players = Players.query.all()
+    players = Trackingdata.query.distinct(
+                Trackingdata.nflId
+            ).join(
+                Players, Trackingdata.nflId==Players.nflID
+            ).add_columns(
+                Trackingdata.nflId,
+                Trackingdata.jerseyNumber,
+                Trackingdata.team,
+                Players.displayName,
+                Players.officialPosition,
+                Players.height,
+                Players.weight,
+                Players.birthDate,
+                Players.age,
+                Players.collegeName,
+                Players.conference
+            )
     results = [
         {
-            "nflID": player.nflID,
+            "nflID": player.nflId,
+            "displayName": player.displayName,
+            "team": player.team,            
+            "jerseyNumber": player.jerseyNumber,
+            "officialPosition": player.officialPosition,
             "height": player.height,
             "weight": player.weight,
             "birthDate": player.birthDate,
-            "collegeName": player.collegeName,
-            "officialPosition": player.officialPosition,
-            "displayName": player.displayName,
             "age": player.age,
-            "heightCm": player.heightCm,
-            "conference": player.conference,
-            "conferenceId": player.conferenceId
+            "collegeName": player.collegeName,
+            "conference": player.conference
         } for player in players]    
-    return {"count": len(results), "players": results}
+    return {"players": results}
 
 
 @app.route('/players/<teamAbbr>',methods=['GET'])
@@ -205,15 +224,27 @@ def team_players(teamAbbr):
                     Trackingdata.jerseyNumber,
                     Trackingdata.team,
                     Players.displayName,
-                    Players.officialPosition
+                    Players.officialPosition,
+                    Players.height,
+                    Players.weight,
+                    Players.birthDate,
+                    Players.age,
+                    Players.collegeName,
+                    Players.conference
                 )
     results = [
         {
+            "nflID": player.nflId,
             "displayName": player.displayName,
-             "jerseyNumber": player.jerseyNumber,
+            "team": player.team,            
+            "jerseyNumber": player.jerseyNumber,
             "officialPosition": player.officialPosition,
-            "team": player.team
-            
+            "height": player.height,
+            "weight": player.weight,
+            "birthDate": player.birthDate,
+            "age": player.age,
+            "collegeName": player.collegeName,
+            "conference": player.conference
         } for player in players]    
     return {"players": results}
 
@@ -232,7 +263,13 @@ def position_team_players(teamAbbr, positions):
                     Trackingdata.jerseyNumber,
                     Trackingdata.team,
                     Players.displayName,
-                    Players.officialPosition
+                    Players.officialPosition,
+                    Players.height,
+                    Players.weight,
+                    Players.birthDate,
+                    Players.age,
+                    Players.collegeName,
+                    Players.conference
                 ).filter(
                     Players.officialPosition.in_(position_list)
                 ).order_by(
@@ -240,20 +277,27 @@ def position_team_players(teamAbbr, positions):
                 )
     results = [
         {
-            "nflId": player.nflId,
-            "jerseyNumber": player.jerseyNumber,
+            "nflID": player.nflId,
             "displayName": player.displayName,
+            "team": player.team,            
+            "jerseyNumber": player.jerseyNumber,
             "officialPosition": player.officialPosition,
-            "team": player.team
+            "height": player.height,
+            "weight": player.weight,
+            "birthDate": player.birthDate,
+            "age": player.age,
+            "collegeName": player.collegeName,
+            "conference": player.conference
             
         } for player in players]    
-    return {"count": len(results), "players": results}
+    return {"players": results}
 
 
 
 @app.route('/plays')
 def get_plays():
     plays = Plays.query.all()
+
     results = [
         {
             "gameId": play.gameId,
@@ -276,7 +320,7 @@ def get_plays():
             "pff_passCoverage": play.pff_passCoverage,            
             "pff_passCoverageType": play.pff_passCoverageType
         } for play in plays]    
-    return {"count": len(results), "plays": results}
+    return {"plays": results}
 
 @app.route('/offenseFormations')
 def offenseFormations():
