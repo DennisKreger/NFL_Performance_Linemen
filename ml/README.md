@@ -51,7 +51,15 @@ Training and testing data sets were defined with a 20% test size considering all
 
 #### Preliminary Model
 
-A preliminary logistic regression model was created to predict win outcomes. The model had an R-squared value of 0.564, however, when applying the model to predict win outcomes in 2021, the model performed with a test accuracy below 50% - worse odds than flipping a coin.
+A preliminary logistic regression model was created to predict win outcomes.
+
+##### Training and Testing Split
+
+After fitting the model to historical data prior to 2020, 2020 stats were used as testing data to evaluate how well the model could predict our target dataset.
+
+##### Results
+
+The model had an R-squared value of 0.564, however, when applying the model to predict win outcomes in 2021, the model performed with a test accuracy below 50% - worse odds than flipping a coin. 
 
 ![prediction results from preliminary logistic regression model](./Resources/preliminary-model-prediction-results.PNG)
 
@@ -61,13 +69,21 @@ While this model takes a very streamlined approach to predicting wins, it ultima
 
 #### Production Model
 
-A production model was created to isolate how offensive teams perform against defensive teams. With both offensive and defensive team stats combined with game score results from https://www.footballdb.com/, a new model can be trained to predict how many points an offensive team could score against a rivaling defensive team.
+A production model was created to isolate how offensive teams perform against defensive teams. With both offensive and defensive team stats combined with game score results from https://www.footballdb.com/, a new linear regression model can be trained to predict how many points an offensive team could score against a rivaling defensive team.
 
-##### Regression Accuracy
+##### Training and Testing Split
+
+A similar method to the preliminary model was used to split training and testing data. The model was trained on historical data and 2021 predictions were evaluated as testing data.
+
+##### Results
+
+The model was able to predict 2021 win outcomes at a 59.2% success rate. Considering the many confounding variables (weather, ccoaching, roster, injuries) that affect game performance, this result can be deemed successful.
+
+##### Evaluation
+
+Using an F-test, the variances in the distributions of correct and incorrect predictions was statistically significant with a p-value of 0.047. We can reject the null hypothesis that the difference in win percentage predictions can be used as a reasonable prediction.
 
 ![prediction accuracy distribution results from linear regression model](./Resources/linear-regression-prediction-accuracy-distribution.PNG)
-
-![prediction results from linear regression model](./Resources/production-model-prediction-results.PNG)
 
 
 
