@@ -12,7 +12,7 @@ This model seeks to predict win results in NFL regular season games.
 
 Historical stats (2011 through 2021) and game results data were gathered from: https://www.footballdb.com/
 
-[footballdb.com logo](./Resources/footballdb-logo.png)
+![footballdb.com logo](./Resources/footballdb-logo.png)
 
 #### Processing Procedure
 
@@ -37,7 +37,7 @@ The team stats made publicly available at https://www.footballdb.com/ were all s
 * Total Yards
 * Yards per Game
 
-[footballdb.com team stats](./Resources/footballdb-team-stats.png)
+![footballdb.com team stats](./Resources/footballdb-team-stats.png)
 
 #### Decision-making process
 
@@ -53,7 +53,7 @@ Training and testing data sets were defined with a 20% test size considering all
 
 A preliminary logistic regression model was created to predict win outcomes. The model had an R-squared value of 0.564, however, when applying the model to predict win outcomes in 2021, the model performed with a test accuracy below 50% - worse odds than flipping a coin.
 
-[prediction results from preliminary logistic regression model](./Resources/preliminary-model-prediction-results.png)
+![prediction results from preliminary logistic regression model](./Resources/preliminary-model-prediction-results.png)
 
 ##### Limitations
 
@@ -65,9 +65,9 @@ A production model was created to isolate how offensive teams perform against de
 
 ##### Regression Accuracy
 
-[prediction accuracy distribution results from linear regression model](./Resources/linear-regression-prediction-accuracy-distribution.png)
+![prediction accuracy distribution results from linear regression model](./Resources/linear-regression-prediction-accuracy-distribution.png)
 
-[prediction results from linear regression model](./Resources/production-model-prediction-results.png)
+![prediction results from linear regression model](./Resources/production-model-prediction-results.png)
 
 
 
