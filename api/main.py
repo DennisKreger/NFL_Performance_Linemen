@@ -227,29 +227,48 @@ def team_players(teamAbbr):
                     Trackingdata.jerseyNumber,
                     Trackingdata.team,
                     Players.displayName,
-                    Players.officialPosition,
-                    Players.height,
-                    Players.weight,
-                    Players.birthDate,
-                    Players.age,
-                    Players.collegeName,
-                    Players.conference
+                    Players.officialPosition
                 )
     results = [
         {
             "nflID": player.nflId,
-            "displayName": player.displayName,
-            "team": player.team,            
             "jerseyNumber": player.jerseyNumber,
-            "officialPosition": player.officialPosition,
-            "height": player.height,
-            "weight": player.weight,
-            "birthDate": player.birthDate,
-            "age": player.age,
-            "collegeName": player.collegeName,
-            "conference": player.conference
+            "displayName": player.displayName,     
+            "officialPosition": player.officialPosition
         } for player in players]    
     return {"players": results}
+
+
+@app.route('/playermatchup/<positions>',methods=['GET'])
+def position_players(positions):
+    position_list = positions.split(",")
+    players = Trackingdata.query.distinct(
+                    Trackingdata.jerseyNumber
+                ).join(
+                    Players, Trackingdata.nflId==Players.nflID
+                ).add_columns(
+                    Trackingdata.nflId,
+                    Trackingdata.team,
+                    Trackingdata.jerseyNumber,
+                    Players.displayName,
+                    Players.officialPosition
+                ).filter(
+                    Players.officialPosition.in_(position_list)
+                ).order_by(
+                    Trackingdata.jerseyNumber
+                )
+
+    results = [
+        {
+            "nflID": player.nflId,
+            "team": player.team,
+            "jerseyNumber": player.jerseyNumber,
+            "displayName": player.displayName,       
+            "officialPosition": player.officialPosition
+            
+        } for player in players]    
+    return {"players": results}
+
 
 
 @app.route('/players/<teamAbbr>/<positions>',methods=['GET'])
@@ -264,33 +283,20 @@ def position_team_players(teamAbbr, positions):
                 ).add_columns(
                     Trackingdata.nflId,
                     Trackingdata.jerseyNumber,
-                    Trackingdata.team,
                     Players.displayName,
-                    Players.officialPosition,
-                    Players.height,
-                    Players.weight,
-                    Players.birthDate,
-                    Players.age,
-                    Players.collegeName,
-                    Players.conference
+                    Players.officialPosition
                 ).filter(
                     Players.officialPosition.in_(position_list)
                 ).order_by(
                     Trackingdata.jerseyNumber
                 )
+
     results = [
         {
             "nflID": player.nflId,
-            "displayName": player.displayName,
-            "team": player.team,            
             "jerseyNumber": player.jerseyNumber,
-            "officialPosition": player.officialPosition,
-            "height": player.height,
-            "weight": player.weight,
-            "birthDate": player.birthDate,
-            "age": player.age,
-            "collegeName": player.collegeName,
-            "conference": player.conference
+            "displayName": player.displayName,       
+            "officialPosition": player.officialPosition
             
         } for player in players]    
     return {"players": results}
@@ -385,10 +391,12 @@ def games():
 @app.route('/teams',methods=['GET'])
 def teams():
     results = []
-    for team in Games.query.distinct(Games.homeTeamAbbr).order_by(Games.homeTeamAbbr):
-        results.append(team.homeTeamAbbr)
-    return {"count": len(results), "teams": results}
-
+    teams = Games.query.distinct(Games.homeTeamAbbr).order_by(Games.homeTeamAbbr)
+    results = [
+        {
+        "team": team.homeTeamAbbr,
+        } for team in teams]
+    return {"teams": results}
 
 
 
