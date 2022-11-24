@@ -7,10 +7,13 @@ from google.cloud.sql.connector import Connector, IPTypes
 import pg8000
 import datetime
 from os import environ, path
+from flask_cors import CORS
 
 
 # Init App
 app = Flask(__name__)
+app.config["CORS_HEADERS"] = "Content-Type"
+CORS(app)
 basedir = path.abspath(path.dirname(__file__))
 app.config.from_pyfile('config.py')
 
