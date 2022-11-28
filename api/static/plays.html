@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Tables - SB Admin</title>
+        <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/searchpanes/2.1.0/css/searchPanes.bootstrap5.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/select/1.5.0/css/select.bootstrap5.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+        <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/searchpanes/2.1.0/js/dataTables.searchPanes.min.js"></script>
+        <script src="https://cdn.datatables.net/searchpanes/2.1.0/js/searchPanes.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
+
+
+        <script>
+            $.holdReady(true);
+            $(document).ready(function() {
+                //$('#example').DataTable();
+                var table = $('#example').DataTable({
+                    searchPanes: {
+                        layout: "columns-3",
+                        viewTotal: true
+                    },
+                    columnDefs: [ {
+                        orderable: false,
+                        className: 'select-checkbox',
+                        targets:   0
+                    } ],
+                    select: {
+                        style:    'os',
+                        selector: 'td:first-child'
+                    },
+                    order: [[ 1, 'asc' ]]
+            
+                });
+                dom: 'Plfrtip';
+                columnDefs: [
+                    {
+                        searchPanes: {
+                            show: true
+                        },
+                        targets: [0]
+                    },
+                    {
+                        searchPanes: {
+                            show: true
+                        },
+                        targets: [1]
+                    },
+                    {
+                        searchPanes: {
+                            show: true
+                        },
+                        targets: [2]
+                    },
+                    {
+                        searchPanes: {
+                            show: true
+                        },
+                        targets: [3]
+                    },
+                    {
+                        searchPanes: {
+                            show: true
+                        },
+                        targets: [4]
+                    },
+                    {
+                        searchPanes: {
+                            show: true
+                        },
+                        targets: [5]
+                    },
+                    {
+                        searchPanes: {
+                            show: true
+                        },
+                        targets: [6]
+                    }
+                ]
+                table.searchPanes.container().prependTo(table.table().container());
+                table.searchPanes.resizePanes();
+            });
+        </script>        
+
+    </head>
+    <body>
+        <div class="container">
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Game Id</th>
+                        <th>Play Id</th>
+                        <th>Play Description</th>                        
+                        <th>Quarter</th>
+                        <th>Down</th>
+                        <th>Yards to Go</th>
+                        <th>Possession Team</th>
+                        <th>Defensive Team</th>
+                        <th>Side</th>
+                        <th>Yardline</th>
+                        <th>Game Clock</th>        
+                        <th>Presnap Home Score</th>
+                        <th>Presnap Visitor Score</th>
+                        <th>Offensive Formation</th>
+                        <th>Offense Personnel</th>
+                        <th>Defense Personnel</th>
+                        <th>Dropback Type</th>        
+                        <th>Pass Coverage</th>
+                        <th>Pass Coverage Type</th>
+                      </tr>
+                </thead>
+                <tbody>
+                    <script>
+                        var tbodyRef = document.getElementById('example').getElementsByTagName('tbody')[0];
+                        async function getData() {
+                            let myObject = await fetch("/plays");
+                            let tableData = await myObject.text();
+                            console.log(tableData)
+                            let plays = JSON.parse(tableData);
+
+                            
+                            function printValues(obj) {
+                              for(var k in obj) {
+                                    for(var play in obj[k]) {
+                                      // Insert a row at the end of table
+                                      var newRow = tbodyRef.insertRow();
+                                      newRow.insertCell();
+                                      for(var key in obj[k][play]) {
+                                        let val = obj[k][play][key]
+                                        // Insert a cell at the end of the row
+                                        var newCell = newRow.insertCell();
+                                        // Append a text node to the cell
+                                        var newText = document.createTextNode(val);
+                                        newCell.appendChild(newText);
+                                      }
+                                    }
+                              }
+                              $.holdReady(false);
+                            };
+                            printValues(plays);
+
+                          }
+                        getData();
+                    </script>
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Select</th>
+                        <th>Game Id</th>
+                        <th>Play Id</th>
+                        <th>Play Description</th>                        
+                        <th>Quarter</th>
+                        <th>Down</th>
+                        <th>Yards to Go</th>
+                        <th>Possession Team</th>
+                        <th>Defensive Team</th>
+                        <th>Side</th>
+                        <th>Yardline</th>
+                        <th>Game Clock</th>        
+                        <th>Presnap Home Score</th>
+                        <th>Presnap Visitor Score</th>
+                        <th>Offensive Formation</th>
+                        <th>Offense Personnel</th>
+                        <th>Defense Personnel</th>
+                        <th>Dropback Type</th>        
+                        <th>Pass Coverage</th>
+                        <th>Pass Coverage Type</th>
+                    </tr>
+                </tfoot>
+            </table>
+        
+        </div>
+
+
+    </body>
+</html>
