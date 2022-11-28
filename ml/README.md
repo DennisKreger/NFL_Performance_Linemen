@@ -81,7 +81,7 @@ The model was able to predict 2021 win outcomes at a 59.2% success rate. Conside
 
 ##### Evaluation
 
-Using an F-test, the variances in the distributions of correct and incorrect predictions was statistically significant with a p-value of 0.047. We can reject the null hypothesis that the difference in win percentage predictions can be used as a reasonable prediction.
+Using an F-test, the variances in the distributions of correct and incorrect predictions was statistically significant with a p-value of 0.047. We can reject the null hypothesis that the difference in win percentage predictions can't be used as a reasonable prediction.
 
 ![prediction accuracy distribution results from linear regression model](./Resources/linear-regression-prediction-accuracy-distribution.PNG)
 
