@@ -97,7 +97,7 @@
                                         <script>
                                             var offenseTbodyRef = document.getElementById('offense').getElementsByTagName('tbody')[0];
                                             async function getData() {
-                                                let myOffenseObject = await fetch("/matchup/C,G,T");
+                                                let myOffenseObject = await fetch("/playermatchup/C,G,T");
                                                 let offenseTableData = await myOffenseObject.text();
                                                 let offensePlayers = JSON.parse(offenseTableData);
                                                 console.log(offensePlayers)
@@ -162,7 +162,7 @@
                                         <script>
                                             var defenseTbodyRef = document.getElementById('defense').getElementsByTagName('tbody')[0];
                                             async function getData() {
-                                                let myDefenseObject = await fetch("/matchup/DE,DT,NG,OLB,ILB");
+                                                let myDefenseObject = await fetch("/playermatchup/DT,DE,NG,OLB,ILB"); 
                                                 let defenseTableData = await myDefenseObject.text();
                                                 let defensePlayers = JSON.parse(defenseTableData);
                                                 console.log(defensePlayers)
