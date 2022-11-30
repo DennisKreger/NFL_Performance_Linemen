@@ -35,16 +35,16 @@
                     columnDefs: [ {
                         orderable: false,
                         className: 'select-checkbox',
-                        targets: 0
+                        targets:   0
                     } ],
                     select: {
                         style:    'os',
                         selector: 'td:first-child'
                     },
                     order: [[ 1, 'asc' ]]
-                
+            
                 });
-    
+
                 var defenseTable = $('#defense').DataTable({
                     searchPanes: {
                         layout: "columns-2",
@@ -60,18 +60,18 @@
                         selector: 'td:first-child'
                     },
                     order: [[ 1, 'asc' ]]
-                
+            
                 });
-    
+
                 dom: 'Plfrtip';
-    
+
                 offenseTable.searchPanes.container().prependTo(offenseTable.table().container());
                 offenseTable.searchPanes.resizePanes();
                 defenseTable.searchPanes.container().prependTo(defenseTable.table().container());
                 defenseTable.searchPanes.resizePanes();
-    
+
             });
-        </script>       
+        </script>        
     
     </head>
     <body class="sb-nav-fixed">
@@ -124,77 +124,146 @@
                             <li class="breadcrumb-item active">Player</li>
                         </ol>
                         <div class="container">
-                            <table id="example" class="display" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Select</th>
-                                        <th>NFL Id</th>
-                                        <th>Number</th>
-                                        <th>Team</th>                        
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Height</th>
-                                        <th>Weight</th>
-                                        <th>Birth Date</th>
-                                        <th>Age</th>
-                                        <th>College</th>
-                                        <th>Conference</th>                 
-                                      </tr>
-                                </thead>
-                                <tbody>
-                                    <script>
-                                        var tbodyRef = document.getElementById('example').getElementsByTagName('tbody')[0];
-                                        async function getData() {
-                                            let myObject = await fetch("/players");
-                                            let tableData = await myObject.text();
-                                            let players = JSON.parse(tableData);
-                
-                                            
-                                            function printValues(obj) {
-                                              for(var k in obj) {
-                                                console.log("k:" + k)
-                                                    for(var player in obj[k]) {
-                                                      // Insert a row at the end of table
-                                                      var newRow = tbodyRef.insertRow();
-                                                      newRow.insertCell();
-                                                      for(var key in obj[k][player]) {
-                                                        let val = obj[k][player][key]
-                                                        // Insert a cell at the end of the row
-                                                        var newCell = newRow.insertCell();
-                                                        // Append a text node to the cell
-                                                        var newText = document.createTextNode(val);
-                                                        newCell.appendChild(newText);
-                                                      }
-                                                    }
-                                              }
-                                              $.holdReady(false);
-                                            };
-                                            printValues(players);
-                
-                                          }
-                                        getData();
-                                    </script>
-                
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Select</th>
-                                        <th>NFL Id</th>
-                                        <th>Number</th>
-                                        <th>Team</th>                        
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Height</th>
-                                        <th>Weight</th>
-                                        <th>Birth Date</th>
-                                        <th>Age</th>
-                                        <th>College</th>
-                                        <th>Conference</th>    
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
                     </div>
+                    <table id="outerTable" class="display" style="width:100%">  
+                        <thead>
+                            <td colspan="2">
+                                <h2>Select a matchup to predict the outcome.</h2>
+                            </td>
+                        </thead>
+                        <tbody>
+                            <td>           
+                                <table>
+                                    <thead>
+                                        <h3>Offensive Player</h3>
+                                    </thead>
+                                    <tbody>
+                                        <table id="offense" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Select</th>
+                                                    <th>NFL Id</th>
+                                                    <th>Team</th>                                                
+                                                    <th>Number</th>                   
+                                                    <th>Name</th>
+                                                    <th>Position</th>               
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <script>
+                                                    var offenseTbodyRef = document.getElementById('offense').getElementsByTagName('tbody')[0];
+                                                    async function getData() {
+                                                        let myOffenseObject = await fetch("/playermatchup/C,G,T");
+                                                        let offenseTableData = await myOffenseObject.text();
+                                                        let offensePlayers = JSON.parse(offenseTableData);
+                                                        console.log(offensePlayers)
+                                                        function printValues(obj) {
+                                                            for(var k in obj) {
+                                                                console.log("k:" + k)
+                                                                for(var player in obj[k]) {
+                                                                    // Insert a row at the end of table
+                                                                    var newRow = offenseTbodyRef.insertRow();
+                                                                    newRow.insertCell();
+                                                                    for(var key in obj[k][player]) {
+                                                                        let val = obj[k][player][key]
+                                                                        console.log(val)
+                                                                        // Insert a cell at the end of the row
+                                                                        var newCell = newRow.insertCell();
+                                                                        // Append a text node to the cell
+                                                                        var newText = document.createTextNode(val);
+                                                                        newCell.appendChild(newText);
+                                                                    }
+                                                                }
+                                                            }
+                                                            //console.log("releasing hold")
+                                                            //$.holdReady(false);
+                                                        };
+                                                        printValues(offensePlayers);
+                                                    }
+                                                    getData();
+                                                </script>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Select</th>
+                                                    <th>NFL Id</th>
+                                                    <th>Team</th>                                                
+                                                    <th>Number</th>               
+                                                    <th>Name</th>
+                                                    <th>Position</th>  
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>           
+                                <table>
+                                    <thead>
+                                        <h3>Defensive Player</h3>
+                                    </thead>
+                                    <tbody>
+                                        <table id="defense" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Select</th>
+                                                    <th>NFL Id</th>
+                                                    <th>Team</th>                                              
+                                                    <th>Number</th>                   
+                                                    <th>Name</th>
+                                                    <th>Position</th>               
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <script>
+                                                    var defenseTbodyRef = document.getElementById('defense').getElementsByTagName('tbody')[0];
+                                                    async function getData() {
+                                                        let myDefenseObject = await fetch("/playermatchup/DT,DE,NG,OLB,ILB"); 
+                                                        let defenseTableData = await myDefenseObject.text();
+                                                        let defensePlayers = JSON.parse(defenseTableData);
+                                                        console.log(defensePlayers)
+                                                        function printValues(obj) {
+                                                            for(var k in obj) {
+                                                                console.log("k:" + k)
+                                                                for(var player in obj[k]) {
+                                                                    // Insert a row at the end of table
+                                                                    var newRow = defenseTbodyRef.insertRow();
+                                                                    newRow.insertCell();
+                                                                    for(var key in obj[k][player]) {
+                                                                        let val = obj[k][player][key]
+                                                                        console.log(val)
+                                                                        // Insert a cell at the end of the row
+                                                                        var newCell = newRow.insertCell();
+                                                                        // Append a text node to the cell
+                                                                        var newText = document.createTextNode(val);
+                                                                        newCell.appendChild(newText);
+                                                                    }
+                                                                }
+                                                            }
+                                                            console.log("releasing hold")
+                                                            $.holdReady(false);
+                                                        };
+                                                        printValues(defensePlayers);
+                                                    }
+                                                    getData();
+                                                </script>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Select</th>
+                                                    <th>NFL Id</th>
+                                                    <th>Team</th>                                              
+                                                    <th>Number</th>               
+                                                    <th>Name</th>
+                                                    <th>Position</th>  
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </tbody>
+                                </table>
+                            </td>                    
+                        </tbody>
+                    </table>
                 </main>
             </div>
         </div>
