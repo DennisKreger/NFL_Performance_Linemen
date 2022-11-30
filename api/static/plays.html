@@ -153,7 +153,7 @@
                         <div class="mask">
                             <div class="d-flex  h-100">
                                 <div class="text-white">
-                                    <h1 class="mt-4">Plays Analysis</h1>
+                                    <h1 class="mt-4">Play Analysis</h1>
                                     <ol class="breadcrumb mb-4">
                                         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                                         <li class="breadcrumb-item active">Plays</li>
@@ -165,6 +165,21 @@
                     <!-- Jumbotron -->
                     <div class="row">
                     
+                    </div>
+                    <div class="container-fluid px-4">
+                        <p>
+                            <a>Select a Play from the table below to watch a simulation of the play.</a><br>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Simulate Play
+                            </button>
+                            </p>
+                            <div class="collapse" id="collapseExample">
+                            <div class="card card-body" id="prediction">
+                                <a>Play Simulation</a>
+                                <img src="images/simulation.png" class="img-fluid" alt="Win Prediction">
+                                <img src="images/pressure.png" class="img-fluid" alt="Win Prediction">                                
+                            </div>
+                            </div>                        
                     </div>
                     <div class="container-fluid px-4">
                         <table id="example" class="display" style="width:100%">
@@ -252,6 +267,7 @@
                                 </tr>
                             </tfoot>
                         </table>
+                    </div>
             </main>
         </div>
     </div>

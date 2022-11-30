@@ -176,7 +176,7 @@ class Trackingdata(db.Model):
 
 @app.route('/')
 def root():
-    return render_template('index.html', utc_dt=datetime.datetime.utcnow())
+    return redirect('/static/index.html')
 
 @app.route('/players',methods=['GET'])
 def players():
@@ -243,7 +243,7 @@ def team_players(teamAbbr):
 def position_players(positions):
     position_list = positions.split(",")
     players = Trackingdata.query.distinct(
-                    Trackingdata.jerseyNumber
+                    Trackingdata.nflId
                 ).join(
                     Players, Trackingdata.nflId==Players.nflID
                 ).add_columns(
@@ -254,8 +254,6 @@ def position_players(positions):
                     Players.officialPosition
                 ).filter(
                     Players.officialPosition.in_(position_list)
-                ).order_by(
-                    Trackingdata.jerseyNumber
                 )
 
     results = [
