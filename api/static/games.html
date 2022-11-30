@@ -25,6 +25,25 @@
         <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
     
         <script>
+
+            var homeTeamReady = false;
+            var awayTeamReady = false;
+            function setDocumentReady(team) {
+                if (team == 'homeTeam') {
+                    console.log("Setting home team ready")
+                    homeTeamReady = true;
+                }
+                else if (team == 'awayTeam') {
+                    console.log("Setting away team ready")                    
+                    awayTeamReady = true;
+                }
+
+                if (homeTeamReady && awayTeamReady) {
+                    console.log("Releasing hold")
+                    $.holdReady(false);
+                }
+            }
+
             $.holdReady(true);
             $(document).ready(function() {
                 var homeTable = $('#home').DataTable({
@@ -193,8 +212,7 @@
                                                                             }
                                                                         }
                                                                     }
-                                                                    //console.log("releasing hold")
-                                                                    //$.holdReady(false);
+                                                                    setDocumentReady('homeTeam');
                                                                 };
                                                                 printValues(homeTeams);
                                                             }
@@ -250,8 +268,8 @@
                                                                             }
                                                                         }
                                                                     }
-                                                                    console.log("releasing hold")
-                                                                    $.holdReady(false);
+                                                                    //$.holdReady(false);
+                                                                    setDocumentReady('awayTeam');
                                                                 };
                                                                 printValues(awayTeams);
                                                             }

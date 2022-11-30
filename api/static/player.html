@@ -26,6 +26,24 @@
     <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
 
     <script>
+        var offenseReady = false;
+        var defenseReady = false;
+        function setDocumentReady(team) {
+            if (team == 'offense') {
+                console.log("Setting offense ready")
+                offenseReady = true;
+            }
+            else if (team == 'defense') {
+                console.log("Setting defense ready")                    
+                defenseReady = true;
+            }
+
+            if (offenseReady && defenseReady) {
+                console.log("Releasing hold")
+                $.holdReady(false);
+            }
+        }
+
         $.holdReady(true);
         $(document).ready(function () {
             var offenseTable = $('#offense').DataTable({
@@ -187,17 +205,17 @@
                                                             let myOffenseObject = await fetch("/playermatchup/C,G,T");
                                                             let offenseTableData = await myOffenseObject.text();
                                                             let offensePlayers = JSON.parse(offenseTableData);
-                                                            console.log(offensePlayers)
+                                                            //console.log(offensePlayers)
                                                             function printValues(obj) {
                                                                 for (var k in obj) {
-                                                                    console.log("k:" + k)
+                                                                    //console.log("k:" + k)
                                                                     for (var player in obj[k]) {
                                                                         // Insert a row at the end of table
                                                                         var newRow = offenseTbodyRef.insertRow();
                                                                         newRow.insertCell();
                                                                         for (var key in obj[k][player]) {
                                                                             let val = obj[k][player][key]
-                                                                            console.log(val)
+                                                                            //console.log(val)
                                                                             // Insert a cell at the end of the row
                                                                             var newCell = newRow.insertCell();
                                                                             // Append a text node to the cell
@@ -206,8 +224,7 @@
                                                                         }
                                                                     }
                                                                 }
-                                                                //console.log("releasing hold")
-                                                                //$.holdReady(false);
+                                                                setDocumentReady('offense');
                                                             };
                                                             printValues(offensePlayers);
                                                         }
@@ -258,17 +275,17 @@
                                                         let myDefenseObject = await fetch("/playermatchup/DT,DE,NG,OLB,ILB");
                                                         let defenseTableData = await myDefenseObject.text();
                                                         let defensePlayers = JSON.parse(defenseTableData);
-                                                        console.log(defensePlayers)
+                                                        //console.log(defensePlayers)
                                                         function printValues(obj) {
                                                             for (var k in obj) {
-                                                                console.log("k:" + k)
+                                                                //console.log("k:" + k)
                                                                 for (var player in obj[k]) {
                                                                     // Insert a row at the end of table
                                                                     var newRow = defenseTbodyRef.insertRow();
                                                                     newRow.insertCell();
                                                                     for (var key in obj[k][player]) {
                                                                         let val = obj[k][player][key]
-                                                                        console.log(val)
+                                                                        //console.log(val)
                                                                         // Insert a cell at the end of the row
                                                                         var newCell = newRow.insertCell();
                                                                         // Append a text node to the cell
@@ -277,8 +294,7 @@
                                                                     }
                                                                 }
                                                             }
-                                                            console.log("releasing hold")
-                                                            $.holdReady(false);
+                                                            setDocumentReady('defense');
                                                         };
                                                         printValues(defensePlayers);
                                                     }
