@@ -1,11 +1,16 @@
 # %%
 import pandas as pd
 import numpy as np
+import sys
 
 
 
 from scipy.spatial.distance import pdist, squareform
 
+
+sys.path.insert(0,r'E:\\coding\\NFL_Performance_Linemen\\visualization\barChartRace.py')
+
+from barChartRace import barplot
 
 
 
