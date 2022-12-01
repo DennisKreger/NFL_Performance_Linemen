@@ -28,6 +28,9 @@
 
             var homeTeamReady = false;
             var awayTeamReady = false;
+            var selectedHomeTeam;
+            var selectedAwayTeam;
+
             function setDocumentReady(team) {
                 if (team == 'homeTeam') {
                     console.log("Setting home team ready")
@@ -89,6 +92,38 @@
                 awayTable.searchPanes.container().prependTo(awayTable.table().container());
                 awayTable.searchPanes.resizePanes();
 
+
+
+                homeTable
+                .on( 'select', function ( e, dt, type, indexes ) {
+                    var homeTeamSelection = $('#selectedHomeTeam');
+                    var rowData = homeTable.rows( indexes ).data().toArray();
+                    var tableArray = homeTable.rows( indexes ).data();
+                    selectedHomeTeam = tableArray[0][1];
+                    console.log('Selected Home Team: ' + selectedHomeTeam); 
+                    homeTeamSelection.replaceWith('<h4 id=\x22selectedHomeTeam\x22>'+selectedHomeTeam+'</h4>');
+                } )
+                .on( 'deselect', function ( e, dt, type, indexes ) {
+                    console.log("Deselect fired on home team")
+                    var rowData = homeTable.rows( indexes ).data().toArray();
+                    console.log(' selection: ' + JSON.stringify( rowData ) );            
+                } );
+    
+                awayTable
+                .on( 'select', function ( e, dt, type, indexes ) {
+                    var awayTeamSelection = $('#selectedAwayTeam');
+                    var rowData = awayTable.rows( indexes ).data().toArray();
+                    var tableArray = awayTable.rows( indexes ).data();
+                    selectedAwayTeam = tableArray[0][1];
+                    console.log('Selected Away Team: ' + selectedAwayTeam);
+                    awayTeamSelection.replaceWith('<h4 id=\x22selectedAwayTeam\x22>'+selectedAwayTeam+'</h4>');
+                } )
+                .on( 'deselect', function ( e, dt, type, indexes ) {
+                    console.log("Deselect fired on defense")
+                    var rowData = awayTable.rows( indexes ).data().toArray();
+                    console.log(' selection: ' + JSON.stringify( rowData ) );            
+                } );
+    
             });
         </script>        
 
@@ -164,6 +199,29 @@
                                 </button>
                               </p>
                               <div class="collapse" id="collapseExample">
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h3>Selected Home Team</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 id="selectedHomeTeam"></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h3>Selected Away Team</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 id="selectedAwayTeam"></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
                                 <div class="card card-body" id="prediction">
                                     <a>The predicted winner of this game is ...</a>
                                     <img src="images/win-prediction.png" class="img-fluid" alt="Win Prediction">
