@@ -213,6 +213,43 @@ def players():
         } for player in players]    
     return {"players": results}
 
+@app.route('/playerinfo/<nflId>',methods=['GET'])
+def playerinfo(nflId):
+    players = Trackingdata.query.distinct(
+                Trackingdata.nflId
+            ).filter(
+                    Trackingdata.nflId==int(nflId)
+            ).join(
+                Players, Trackingdata.nflId==Players.nflID
+            ).add_columns(
+                Trackingdata.nflId,
+                Trackingdata.jerseyNumber,
+                Trackingdata.team,
+                Players.displayName,
+                Players.officialPosition,
+                Players.height,
+                Players.weight,
+                Players.birthDate,
+                Players.age,
+                Players.collegeName,
+                Players.conference
+            )
+    results = [
+        {
+            "nflID": player.nflId,
+            "displayName": player.displayName,
+            "team": player.team,            
+            "jerseyNumber": player.jerseyNumber,
+            "officialPosition": player.officialPosition,
+            "height": player.height,
+            "weight": player.weight,
+            "birthDate": player.birthDate,
+            "age": player.age,
+            "collegeName": player.collegeName,
+            "conference": player.conference
+        } for player in players]    
+    return {"players": results}
+
 
 @app.route('/players/<teamAbbr>',methods=['GET'])
 def team_players(teamAbbr):
