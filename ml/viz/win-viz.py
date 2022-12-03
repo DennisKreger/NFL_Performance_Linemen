@@ -59,7 +59,7 @@ team_colors_primary = {
     'New England Patriots': '#002244',
     'New Orleans Saints': '#d3bc8d',
     'New York Giants': '#0b2265',
-    'New York Jets Colors': '#003f2d',
+    'New York Jets': '#003f2d',
     'Oakland Raiders': '#a5acaf',
     'Las Vegas Raiders': '#a5acaf',
     'Philadelphia Eagles': '#004c54',
