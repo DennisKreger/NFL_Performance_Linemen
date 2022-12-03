@@ -8,7 +8,8 @@ import pg8000
 import datetime
 from os import environ, path
 from flask_cors import CORS
-
+from flask import Flask, render_template
+import barchartrace
 
 # Init App
 app = Flask(__name__)
@@ -288,11 +289,6 @@ def htmlplayerinfo(team, nflId):
     return render_template('playerinfo.html', results=results, team=team)
 
 
-@app.route('/htmlplayerpressure/<team>/<nflId>',methods=['GET'])
-def htmlplayerpressure(team, nflId):
-    image="pressure_by_player_defense.png"
-    return render_template('playerpressure.html', results=image, team=team)
-
 
 @app.route('/players/<teamAbbr>',methods=['GET'])
 def team_players(teamAbbr):
@@ -475,6 +471,18 @@ def teams():
         "team": team.homeTeamAbbr,
         } for team in teams]
     return {"teams": results}
+
+@app.route('/plot')
+def plot():
+    html = barchartrace.renderHtml()
+    return render_template('plot.html', html=html)
+
+
+@app.route('/htmlplayerpressure/<team>/<nflId>',methods=['GET'])
+def htmlplayerpressure(team, nflId):
+    
+    image="pressure_by_player_defense.png"
+    return render_template('playerpressure.html', results=image, team=team)
 
 
 
