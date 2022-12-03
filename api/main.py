@@ -250,6 +250,49 @@ def playerinfo(nflId):
         } for player in players]    
     return {"players": results}
 
+@app.route('/htmlplayerinfo/<team>/<nflId>',methods=['GET'])
+def htmlplayerinfo(team, nflId):
+    players = Trackingdata.query.distinct(
+                Trackingdata.nflId
+            ).filter(
+                    Trackingdata.nflId==int(nflId)
+            ).join(
+                Players, Trackingdata.nflId==Players.nflID
+            ).add_columns(
+                Trackingdata.nflId,
+                Trackingdata.jerseyNumber,
+                Trackingdata.team,
+                Players.displayName,
+                Players.officialPosition,
+                Players.height,
+                Players.weight,
+                Players.birthDate,
+                Players.age,
+                Players.collegeName,
+                Players.conference
+            )
+    results = [
+        {
+            "Name": player.displayName,
+            "Nfl ID": player.nflId,
+            "Team": player.team,            
+            "Jersey Number": player.jerseyNumber,
+            "Official Position": player.officialPosition,
+            "Height": player.height,
+            "Weight": player.weight,
+            "Birth Date": player.birthDate,
+            "Age": player.age,
+            "College Name": player.collegeName,
+            "Conference": player.conference
+        } for player in players]    
+    return render_template('playerinfo.html', results=results, team=team)
+
+
+@app.route('/htmlplayerpressure/<team>/<nflId>',methods=['GET'])
+def htmlplayerpressure(team, nflId):
+    image="pressure_by_player_defense.png"
+    return render_template('playerpressure.html', results=image, team=team)
+
 
 @app.route('/players/<teamAbbr>',methods=['GET'])
 def team_players(teamAbbr):

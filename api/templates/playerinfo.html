@@ -1,0 +1,44 @@
+        <table id="{{team}}" class="table table-striped">
+        </table>
+        <script>
+            var players = JSON.parse('{{ results | tojson | safe}}');
+
+            function generateTableHead(table, data) {
+                let thead = table.createTHead();
+                let row = thead.insertRow();
+                let th = document.createElement("th");
+                let text = document.createTextNode("Key");
+                th.appendChild(text);
+                row.appendChild(th);
+                let th2 = document.createElement("th");
+                let text2 = document.createTextNode("Value");
+                th2.appendChild(text2);
+                row.appendChild(th2);
+            }
+            
+            function generateTable(table, data) {
+                for (let element of data) {
+                    for (key in element) {
+                        let row = table.insertRow();
+                        let cell = row.insertCell();
+                        let bold = document.createElement("b");
+                        let text = document.createTextNode(key);
+                        bold.appendChild(text);
+                        cell.appendChild(bold);
+                        let cell2 = row.insertCell();
+                        let text2 = document.createTextNode(element[key]);
+                        cell2.appendChild(text2);
+                    }
+                }
+            }
+            
+            var table = document.getElementById("{{team}}");
+            //console.log(players);
+            //console.log(players[0]);
+            var data = Object.keys(players[0]);
+            generateTable(table, players);
+            //generateTableHead(table, data);
+        
+        </script>    
+
+
