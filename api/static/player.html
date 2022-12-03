@@ -108,12 +108,16 @@
                 var rowData = offenseTable.rows( indexes ).data().toArray();
                 var tableArray = offenseTable.rows( indexes ).data();
                 selectedOffensePlayerNflId = tableArray[0][1];
-                console.log('Selected Offense Player Nfl Id: ' + selectedOffensePlayerNflId);                     
+                console.log('Selected Offense Player Nfl Id: ' + selectedOffensePlayerNflId);  
+                $('#selectedOffensivePlayer').load('/htmlplayerinfo/offense/' + selectedOffensePlayerNflId);                   
+                $('#pressure_by_player_offense').load('/htmlplayerpressure/offense/' + selectedOffensePlayerNflId);        
             } )
             .on( 'deselect', function ( e, dt, type, indexes ) {
                 console.log("Deselect fired on offense")
                 var rowData = offenseTable.rows( indexes ).data().toArray();
-                console.log(' selection: ' + JSON.stringify( rowData ) );            
+                console.log(' selection: ' + JSON.stringify( rowData ) );      
+                $('#selectedOffensivePlayer').empty();
+                $('#pressure_by_player_offense').empty();      
             } );
 
             defenseTable
@@ -122,11 +126,15 @@
                 var tableArray = defenseTable.rows( indexes ).data();
                 selectedDefensePlayerNflId = tableArray[0][1];
                 console.log('Selected Defense Player Nfl Id: ' + selectedDefensePlayerNflId);
+                $('#selectedDefensivePlayer').load('/htmlplayerinfo/defense/' + selectedDefensePlayerNflId); 
+                $('#pressure_by_player_defense').load('/htmlplayerpressure/defense/' + selectedDefensePlayerNflId);                
             } )
             .on( 'deselect', function ( e, dt, type, indexes ) {
                 console.log("Deselect fired on defense")
                 var rowData = defenseTable.rows( indexes ).data().toArray();
-                console.log(' selection: ' + JSON.stringify( rowData ) );            
+                console.log(' selection: ' + JSON.stringify( rowData ) );          
+                $('#selectedDefensivePlayer').empty();
+                $('#pressure_by_player_defense').empty();  
             } );
 
         });
@@ -223,17 +231,11 @@
                                         <div class="card-header">
                                             <h3>Selected Offensive Player</h3>
                                         </div>
-                                        <div class="card-body">
-                                            <h4 class="card-title">Bryan Bulaga</h5>
-                                            <p class="card-text">Position: C<br>
-                                                                 Team: LAC<br>
-                                                                 Height: 6'6"<br>
-                                                                 Weight: 335 lbs<br>                                                                 
-                                                                 Birthdate: 3/21/1989<br>
-                                                                 College: Iowa<br>
-                                                                 Division: Big 10</p>
-                                          </div>
-                                          <img src="images/pressure_by_player_defense.png" class="card-img-bottom" alt="Pressure Allowed by Player">
+                                        <div id="selectedOffensivePlayer" class="card-body">
+
+                                        </div>
+                                        <div id="pressure_by_player_offense" class="card-body">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
@@ -241,18 +243,10 @@
                                         <div class="card-header">
                                             <h3>Selected Defensive Player</h3>
                                         </div>
-                                        <div class="card-body">
-                                            <h4 class="card-title">NDAMUKONG SUH</h5>
-                                            <p class="card-text">Position: DT<br>
-                                                                 Team: TB<br>
-                                                                 Height: 6'4"<br>
-                                                                 Weight: 307 lbs<br>
-                                                                 Birthdate: 1/6/1987<br>
-                                                                 College: Nebraska<br>
-                                                                 Division: Big 10</p>
-                                          </div>
-                                          <img src="images/pressure_by_player_defense2.png" class="card-img-bottom" alt="Pressure by Player">
-
+                                        <div id="selectedDefensivePlayer" class="card-body">
+                                        </div>
+                                        <div id="pressure_by_player_defense" class="card-body">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
