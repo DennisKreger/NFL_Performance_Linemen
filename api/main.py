@@ -1,3 +1,5 @@
+# https://www.digitalocean.com/community/tutorials/how-to-query-tables-and-paginate-data-in-flask-sqlalchemy
+
 from flask import Flask,request,render_template,url_for,jsonify,redirect,flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_sqlalchemy_session import flask_scoped_session
@@ -5,10 +7,13 @@ from google.cloud.sql.connector import Connector, IPTypes
 import pg8000
 import datetime
 from os import environ, path
+from flask_cors import CORS
 
 
 # Init App
 app = Flask(__name__)
+app.config["CORS_HEADERS"] = "Content-Type"
+CORS(app)
 basedir = path.abspath(path.dirname(__file__))
 app.config.from_pyfile('config.py')
 
@@ -32,6 +37,7 @@ def getconn():
         return conn
 
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
 
 # configuration
 # app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{app.config['USERNAME']}:{app.config['DB_PASSWORD']}@{app.config['PUBLIC_IP']}:5432/{app.config['DBNAME']}"
@@ -170,26 +176,79 @@ class Trackingdata(db.Model):
 
 @app.route('/')
 def root():
-    return render_template('index.html', utc_dt=datetime.datetime.utcnow())
+    return redirect('/static/index.html')
 
 @app.route('/players',methods=['GET'])
 def players():
-    players = Players.query.all()
+    players = Trackingdata.query.distinct(
+                Trackingdata.nflId
+            ).join(
+                Players, Trackingdata.nflId==Players.nflID
+            ).add_columns(
+                Trackingdata.nflId,
+                Trackingdata.jerseyNumber,
+                Trackingdata.team,
+                Players.displayName,
+                Players.officialPosition,
+                Players.height,
+                Players.weight,
+                Players.birthDate,
+                Players.age,
+                Players.collegeName,
+                Players.conference
+            )
     results = [
         {
-            "nflID": player.nflID,
+            "nflID": player.nflId,
+            "displayName": player.displayName,
+            "team": player.team,            
+            "jerseyNumber": player.jerseyNumber,
+            "officialPosition": player.officialPosition,
             "height": player.height,
             "weight": player.weight,
             "birthDate": player.birthDate,
-            "collegeName": player.collegeName,
-            "officialPosition": player.officialPosition,
-            "displayName": player.displayName,
             "age": player.age,
-            "heightCm": player.heightCm,
-            "conference": player.conference,
-            "conferenceId": player.conferenceId
+            "collegeName": player.collegeName,
+            "conference": player.conference
         } for player in players]    
-    return {"count": len(results), "players": results}
+    return {"players": results}
+
+@app.route('/playerinfo/<nflId>',methods=['GET'])
+def playerinfo(nflId):
+    players = Trackingdata.query.distinct(
+                Trackingdata.nflId
+            ).filter(
+                    Trackingdata.nflId==int(nflId)
+            ).join(
+                Players, Trackingdata.nflId==Players.nflID
+            ).add_columns(
+                Trackingdata.nflId,
+                Trackingdata.jerseyNumber,
+                Trackingdata.team,
+                Players.displayName,
+                Players.officialPosition,
+                Players.height,
+                Players.weight,
+                Players.birthDate,
+                Players.age,
+                Players.collegeName,
+                Players.conference
+            )
+    results = [
+        {
+            "nflID": player.nflId,
+            "displayName": player.displayName,
+            "team": player.team,            
+            "jerseyNumber": player.jerseyNumber,
+            "officialPosition": player.officialPosition,
+            "height": player.height,
+            "weight": player.weight,
+            "birthDate": player.birthDate,
+            "age": player.age,
+            "collegeName": player.collegeName,
+            "conference": player.conference
+        } for player in players]    
+    return {"players": results}
 
 
 @app.route('/players/<teamAbbr>',methods=['GET'])
@@ -209,14 +268,42 @@ def team_players(teamAbbr):
                 )
     results = [
         {
-            "nflId": player.nflId,
+            "nflID": player.nflId,
             "jerseyNumber": player.jerseyNumber,
-            "displayName": player.displayName,
-            "officialPosition": player.officialPosition,
-            "team": player.team
+            "displayName": player.displayName,     
+            "officialPosition": player.officialPosition
+        } for player in players]    
+    return {"players": results}
+
+
+@app.route('/playermatchup/<positions>',methods=['GET'])
+def position_players(positions):
+    position_list = positions.split(",")
+    players = Trackingdata.query.distinct(
+                    Trackingdata.nflId
+                ).join(
+                    Players, Trackingdata.nflId==Players.nflID
+                ).add_columns(
+                    Trackingdata.nflId,
+                    Trackingdata.team,
+                    Trackingdata.jerseyNumber,
+                    Players.displayName,
+                    Players.officialPosition
+                ).filter(
+                    Players.officialPosition.in_(position_list)
+                )
+
+    results = [
+        {
+            "nflID": player.nflId,
+            "team": player.team,
+            "jerseyNumber": player.jerseyNumber,
+            "displayName": player.displayName,       
+            "officialPosition": player.officialPosition
             
         } for player in players]    
-    return {"count": len(results), "players": results}
+    return {"players": results}
+
 
 
 @app.route('/players/<teamAbbr>/<positions>',methods=['GET'])
@@ -231,7 +318,6 @@ def position_team_players(teamAbbr, positions):
                 ).add_columns(
                     Trackingdata.nflId,
                     Trackingdata.jerseyNumber,
-                    Trackingdata.team,
                     Players.displayName,
                     Players.officialPosition
                 ).filter(
@@ -239,22 +325,23 @@ def position_team_players(teamAbbr, positions):
                 ).order_by(
                     Trackingdata.jerseyNumber
                 )
+
     results = [
         {
-            "nflId": player.nflId,
+            "nflID": player.nflId,
             "jerseyNumber": player.jerseyNumber,
-            "displayName": player.displayName,
-            "officialPosition": player.officialPosition,
-            "team": player.team
+            "displayName": player.displayName,       
+            "officialPosition": player.officialPosition
             
         } for player in players]    
-    return {"count": len(results), "players": results}
+    return {"players": results}
 
 
 
 @app.route('/plays')
 def get_plays():
     plays = Plays.query.all()
+
     results = [
         {
             "gameId": play.gameId,
@@ -277,7 +364,7 @@ def get_plays():
             "pff_passCoverage": play.pff_passCoverage,            
             "pff_passCoverageType": play.pff_passCoverageType
         } for play in plays]    
-    return {"count": len(results), "plays": results}
+    return {"plays": results}
 
 @app.route('/offenseFormations')
 def offenseFormations():
@@ -339,10 +426,12 @@ def games():
 @app.route('/teams',methods=['GET'])
 def teams():
     results = []
-    for team in Games.query.distinct(Games.homeTeamAbbr).order_by(Games.homeTeamAbbr):
-        results.append(team.homeTeamAbbr)
-    return {"count": len(results), "teams": results}
-
+    teams = Games.query.distinct(Games.homeTeamAbbr).order_by(Games.homeTeamAbbr)
+    results = [
+        {
+        "team": team.homeTeamAbbr,
+        } for team in teams]
+    return {"teams": results}
 
 
 
@@ -357,3 +446,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all() # <--- create db object.
     app.run(host='127.0.0.1', port=8080, debug=True)
+    

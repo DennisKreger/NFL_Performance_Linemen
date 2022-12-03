@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Player</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/searchpanes/2.1.0/css/searchPanes.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.5.0/css/select.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/2.1.0/js/dataTables.searchPanes.min.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/2.1.0/js/searchPanes.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+
+    <script>
+        var offenseReady = false;
+        var defenseReady = false;
+        var selectedOffensePlayerNflId = 0;
+        var selectedDefensePlayerNflId = 0;
+
+        async function getPlayerData(playerNflId) {
+            let myOffenseObject = await fetch("/playerinfo/" + playerNflId);
+            let offenseTableData = await myOffenseObject.text();
+            return JSON.parse(offenseTableData);
+        }
+
+
+        function setDocumentReady(team) {
+            if (team == 'offense') {
+                console.log("Setting offense ready")
+                offenseReady = true;
+            }
+            else if (team == 'defense') {
+                console.log("Setting defense ready")                    
+                defenseReady = true;
+            }
+
+            if (offenseReady && defenseReady) {
+                console.log("Releasing hold")
+                $.holdReady(false);
+            }
+        }
+
+        $.holdReady(true);
+        $(document).ready(function () {
+            var offenseTable = $('#offense').DataTable({
+                searchPanes: {
+                    layout: "columns-2",
+                    viewTotal: true
+                },
+                columnDefs: [{
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                }],
+                select: {
+                    style: 'os',
+                    selector: 'td:first-child'
+                },
+                order: [[1, 'asc']],
+
+            });
+
+            var defenseTable = $('#defense').DataTable({
+                searchPanes: {
+                    layout: "columns-2",
+                    viewTotal: true
+                },
+                columnDefs: [{
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                }],
+                select: {
+                    style: 'os',
+                    selector: 'td:first-child'
+                },
+                order: [[1, 'asc']]
+
+            });
+
+            dom: 'Plfrtip';
+
+            offenseTable.searchPanes.container().prependTo(offenseTable.table().container());
+            offenseTable.searchPanes.resizePanes();
+            defenseTable.searchPanes.container().prependTo(defenseTable.table().container());
+            defenseTable.searchPanes.resizePanes();
+
+
+
+            offenseTable
+            .on( 'select', function ( e, dt, type, indexes ) {
+                var rowData = offenseTable.rows( indexes ).data().toArray();
+                var tableArray = offenseTable.rows( indexes ).data();
+                selectedOffensePlayerNflId = tableArray[0][1];
+                console.log('Selected Offense Player Nfl Id: ' + selectedOffensePlayerNflId);                     
+            } )
+            .on( 'deselect', function ( e, dt, type, indexes ) {
+                console.log("Deselect fired on offense")
+                var rowData = offenseTable.rows( indexes ).data().toArray();
+                console.log(' selection: ' + JSON.stringify( rowData ) );            
+            } );
+
+            defenseTable
+            .on( 'select', function ( e, dt, type, indexes ) {
+                var rowData = defenseTable.rows( indexes ).data().toArray();
+                var tableArray = defenseTable.rows( indexes ).data();
+                selectedDefensePlayerNflId = tableArray[0][1];
+                console.log('Selected Defense Player Nfl Id: ' + selectedDefensePlayerNflId);
+            } )
+            .on( 'deselect', function ( e, dt, type, indexes ) {
+                console.log("Deselect fired on defense")
+                var rowData = defenseTable.rows( indexes ).data().toArray();
+                console.log(' selection: ' + JSON.stringify( rowData ) );            
+            } );
+
+        });
+
+
+       
+
+
+    </script>
+
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html">Big Data Bowl</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </form>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <img src="images/big-data-bowl.png" class="img-fluid" alt="Big Data Bowl">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Home</div>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <div class="sb-sidenav-menu-heading">INTERFACE</div>
+                        <a class="nav-link" href="games.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Game
+                        </a>
+                        <a class="nav-link" href="player.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Player
+                        </a>
+                        <a class="nav-link" href="plays.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Plays
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+
+                <!-- Jumbotron -->
+                <div class="p-5 text-center bg-image rounded-3" style="
+                            background-image: url('images/big-data-bowl-header.png');
+                        ">
+                    <div class="mask">
+                        <div class="d-flex  h-100">
+                            <div class="text-white">
+                                <h1 class="mt-4">Player Matchup Prediction</h1>
+                                <ol class="breadcrumb mb-4">
+                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Player</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Jumbotron -->
+                <div class="container-fluid px-4">
+                    <br>
+                    <p>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" 
+                                id="predict"
+                                data-bs-target="#collapseExample" aria-expanded="false" 
+                                aria-controls="collapseExample">
+                          Predict Player Matchup
+                        </button>
+                      </p>
+                      <div class="collapse" id="collapseExample">
+
+                        <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="card mb-4">
+                                        <div class="card-header">
+                                            <h3>Selected Offensive Player</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Bryan Bulaga</h5>
+                                            <p class="card-text">Position: C<br>
+                                                                 Team: LAC<br>
+                                                                 Height: 6'6"<br>
+                                                                 Weight: 335 lbs<br>                                                                 
+                                                                 Birthdate: 3/21/1989<br>
+                                                                 College: Iowa<br>
+                                                                 Division: Big 10</p>
+                                          </div>
+                                          <img src="images/pressure_by_player_defense.png" class="card-img-bottom" alt="Pressure Allowed by Player">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="card mb-4">
+                                        <div class="card-header">
+                                            <h3>Selected Defensive Player</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">NDAMUKONG SUH</h5>
+                                            <p class="card-text">Position: DT<br>
+                                                                 Team: TB<br>
+                                                                 Height: 6'4"<br>
+                                                                 Weight: 307 lbs<br>
+                                                                 Birthdate: 1/6/1987<br>
+                                                                 College: Nebraska<br>
+                                                                 Division: Big 10</p>
+                                          </div>
+                                          <img src="images/pressure_by_player_defense2.png" class="card-img-bottom" alt="Pressure by Player">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-body" id="prediction">
+                                <a>The predicted winner of this player matchup is ...</a>
+                                <img src="images/player-matchup.png" class="img-fluid" alt="Player Matchup">
+                            </div>
+                          </div>   
+    
+    
+                </div>
+
+                <div class="container-fluid">
+                        <div class="row">
+                            <h3 class="mt-4">Select players to predict the outcome</h3>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h3>Offensive Player</h3>
+                                    </div>
+                                    <table class="card-table">
+                                        <thead>
+                                        </thead>
+                                        <tbody>
+                                            <table id="offense" class="display" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Select</th>
+                                                        <th>NFL Id</th>
+                                                        <th>Team</th>
+                                                        <th>Number</th>
+                                                        <th>Name</th>
+                                                        <th>Position</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <script>
+                                                        var offenseTbodyRef = document.getElementById('offense').getElementsByTagName('tbody')[0];
+                                                        async function getData() {
+                                                            let myOffenseObject = await fetch("/playermatchup/C,G,T");
+                                                            let offenseTableData = await myOffenseObject.text();
+                                                            let offensePlayers = JSON.parse(offenseTableData);
+                                                            //console.log(offensePlayers)
+                                                            function printValues(obj) {
+                                                                for (var k in obj) {
+                                                                    //console.log("k:" + k)
+                                                                    for (var player in obj[k]) {
+                                                                        // Insert a row at the end of table
+                                                                        var newRow = offenseTbodyRef.insertRow();
+                                                                        newRow.insertCell();
+                                                                        for (var key in obj[k][player]) {
+                                                                            let val = obj[k][player][key]
+                                                                            //console.log(val)
+                                                                            // Insert a cell at the end of the row
+                                                                            var newCell = newRow.insertCell();
+                                                                            // Append a text node to the cell
+                                                                            var newText = document.createTextNode(val);
+                                                                            newCell.appendChild(newText);
+                                                                        }
+                                                                    }
+                                                                }
+                                                                setDocumentReady('offense');
+                                                            };
+                                                            printValues(offensePlayers);
+                                                        }
+                                                        getData();
+                                                    </script>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Select</th>
+                                                        <th>NFL Id</th>
+                                                        <th>Team</th>
+                                                        <th>Number</th>
+                                                        <th>Name</th>
+                                                        <th>Position</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h3>Defensive Player</h3>
+                                    </div>
+                                    <table class="card-table">
+                                        <thead>
+                                        </thead>
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                        <table id="defense" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Select</th>
+                                                    <th>NFL Id</th>
+                                                    <th>Team</th>
+                                                    <th>Number</th>
+                                                    <th>Name</th>
+                                                    <th>Position</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <script>
+                                                    var defenseTbodyRef = document.getElementById('defense').getElementsByTagName('tbody')[0];
+                                                    async function getData() {
+                                                        let myDefenseObject = await fetch("/playermatchup/DT,DE,NG,OLB,ILB");
+                                                        let defenseTableData = await myDefenseObject.text();
+                                                        let defensePlayers = JSON.parse(defenseTableData);
+                                                        //console.log(defensePlayers)
+                                                        function printValues(obj) {
+                                                            for (var k in obj) {
+                                                                //console.log("k:" + k)
+                                                                for (var player in obj[k]) {
+                                                                    // Insert a row at the end of table
+                                                                    var newRow = defenseTbodyRef.insertRow();
+                                                                    newRow.insertCell();
+                                                                    for (var key in obj[k][player]) {
+                                                                        let val = obj[k][player][key]
+                                                                        //console.log(val)
+                                                                        // Insert a cell at the end of the row
+                                                                        var newCell = newRow.insertCell();
+                                                                        // Append a text node to the cell
+                                                                        var newText = document.createTextNode(val);
+                                                                        newCell.appendChild(newText);
+                                                                    }
+                                                                }
+                                                            }
+                                                            setDocumentReady('defense');
+                                                        };
+                                                        printValues(defensePlayers);
+                                                    }
+                                                    getData();
+                                                </script>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Select</th>
+                                                    <th>NFL Id</th>
+                                                    <th>Team</th>
+                                                    <th>Number</th>
+                                                    <th>Name</th>
+                                                    <th>Position</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+</body>
+
+</html>

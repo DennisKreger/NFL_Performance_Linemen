@@ -3,11 +3,6 @@
 ## Running API on local dev environment
 
 ### Install required dependencies:
-```
-pip install psycopg2-binary
-pip install flask-sqlalchemy
-pip install Flask-Migrate
-```
 
 In the api folder, run the following command:
 ```
@@ -29,6 +24,7 @@ In the api folder, run the following command:
 ```
 python main.py
 ```
+
 
 ## Running API on Google Cloud AppEngine
 
