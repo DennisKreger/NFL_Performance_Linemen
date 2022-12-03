@@ -111,6 +111,7 @@
                 console.log('Selected Offense Player Nfl Id: ' + selectedOffensePlayerNflId);  
                 $('#selectedOffensivePlayer').load('/htmlplayerinfo/offense/' + selectedOffensePlayerNflId);                   
                 $('#pressure_by_player_offense').load('/htmlplayerpressure/offense/' + selectedOffensePlayerNflId);        
+  
             } )
             .on( 'deselect', function ( e, dt, type, indexes ) {
                 console.log("Deselect fired on offense")
@@ -140,7 +141,10 @@
         });
 
 
-       
+       function predict() {
+        console.log("predicting");
+        $('#prediction').load('/plot');     
+       };
 
 
     </script>
@@ -217,7 +221,7 @@
                     <br>
                     <p>
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" 
-                                id="predict"
+                                id="predict" onclick="predict()"
                                 data-bs-target="#collapseExample" aria-expanded="false" 
                                 aria-controls="collapseExample">
                           Predict Player Matchup
@@ -251,10 +255,12 @@
                                 </div>
                             </div>
 
-                            <div class="card card-body" id="prediction">
+                            <div class="card card-body">
                                 <a>The predicted winner of this player matchup is ...</a>
-                                <img src="images/player-matchup.png" class="img-fluid" alt="Player Matchup">
-                            </div>
+                                <div id="prediction">
+
+                                </div>
+                           </div>
                           </div>   
     
     

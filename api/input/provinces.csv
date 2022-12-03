@@ -1,0 +1,973 @@
+province,year,population,region
+Adana,2007,2006650,Mediterranean Region
+Adana,2008,2026319,Mediterranean Region
+Adana,2009,2062226,Mediterranean Region
+Adana,2010,2085225,Mediterranean Region
+Adana,2011,2108805,Mediterranean Region
+Adana,2012,2125635,Mediterranean Region
+Adana,2013,2149260,Mediterranean Region
+Adana,2014,2165595,Mediterranean Region
+Adana,2015,2183167,Mediterranean Region
+Adana,2016,2201670,Mediterranean Region
+Adana,2017,2216475,Mediterranean Region
+Adana,2018,2220125,Mediterranean Region
+Adiyaman,2007,582762,Southeast Anatolia Region
+Adiyaman,2008,585067,Southeast Anatolia Region
+Adiyaman,2009,588475,Southeast Anatolia Region
+Adiyaman,2010,590935,Southeast Anatolia Region
+Adiyaman,2011,593931,Southeast Anatolia Region
+Adiyaman,2012,595261,Southeast Anatolia Region
+Adiyaman,2013,597184,Southeast Anatolia Region
+Adiyaman,2014,597835,Southeast Anatolia Region
+Adiyaman,2015,602774,Southeast Anatolia Region
+Adiyaman,2016,610484,Southeast Anatolia Region
+Adiyaman,2017,615076,Southeast Anatolia Region
+Adiyaman,2018,624513,Southeast Anatolia Region
+Afyonkarahisar,2007,701572,Aegean Region
+Afyonkarahisar,2008,697365,Aegean Region
+Afyonkarahisar,2009,701326,Aegean Region
+Afyonkarahisar,2010,697559,Aegean Region
+Afyonkarahisar,2011,698626,Aegean Region
+Afyonkarahisar,2012,703948,Aegean Region
+Afyonkarahisar,2013,707123,Aegean Region
+Afyonkarahisar,2014,706371,Aegean Region
+Afyonkarahisar,2015,709015,Aegean Region
+Afyonkarahisar,2016,714523,Aegean Region
+Afyonkarahisar,2017,715693,Aegean Region
+Afyonkarahisar,2018,725568,Aegean Region
+Agri,2007,530879,Eastern Anatolia Region
+Agri,2008,532180,Eastern Anatolia Region
+Agri,2009,537665,Eastern Anatolia Region
+Agri,2010,542022,Eastern Anatolia Region
+Agri,2011,555479,Eastern Anatolia Region
+Agri,2012,552404,Eastern Anatolia Region
+Agri,2013,551177,Eastern Anatolia Region
+Agri,2014,549435,Eastern Anatolia Region
+Agri,2015,547210,Eastern Anatolia Region
+Agri,2016,542255,Eastern Anatolia Region
+Agri,2017,536285,Eastern Anatolia Region
+Agri,2018,539657,Eastern Anatolia Region
+Aksaray,2007,366109,Central Anatolia Region
+Aksaray,2008,370598,Central Anatolia Region
+Aksaray,2009,376907,Central Anatolia Region
+Aksaray,2010,377505,Central Anatolia Region
+Aksaray,2011,378823,Central Anatolia Region
+Aksaray,2012,379915,Central Anatolia Region
+Aksaray,2013,382806,Central Anatolia Region
+Aksaray,2014,384252,Central Anatolia Region
+Aksaray,2015,386514,Central Anatolia Region
+Aksaray,2016,396673,Central Anatolia Region
+Aksaray,2017,402404,Central Anatolia Region
+Aksaray,2018,412172,Central Anatolia Region
+Amasya,2007,328674,Black Sea Region
+Amasya,2008,323675,Black Sea Region
+Amasya,2009,324268,Black Sea Region
+Amasya,2010,334786,Black Sea Region
+Amasya,2011,323079,Black Sea Region
+Amasya,2012,322283,Black Sea Region
+Amasya,2013,321977,Black Sea Region
+Amasya,2014,321913,Black Sea Region
+Amasya,2015,322167,Black Sea Region
+Amasya,2016,326351,Black Sea Region
+Amasya,2017,329888,Black Sea Region
+Amasya,2018,337508,Black Sea Region
+Ankara,2007,4466756,Central Anatolia Region
+Ankara,2008,4548939,Central Anatolia Region
+Ankara,2009,4650802,Central Anatolia Region
+Ankara,2010,4771716,Central Anatolia Region
+Ankara,2011,4890893,Central Anatolia Region
+Ankara,2012,4965542,Central Anatolia Region
+Ankara,2013,5045083,Central Anatolia Region
+Ankara,2014,5150072,Central Anatolia Region
+Ankara,2015,5270575,Central Anatolia Region
+Ankara,2016,5346518,Central Anatolia Region
+Ankara,2017,5445026,Central Anatolia Region
+Ankara,2018,5503985,Central Anatolia Region
+Antalya,2007,1789295,Mediterranean Region
+Antalya,2008,1859275,Mediterranean Region
+Antalya,2009,1919729,Mediterranean Region
+Antalya,2010,1978333,Mediterranean Region
+Antalya,2011,2043482,Mediterranean Region
+Antalya,2012,2092537,Mediterranean Region
+Antalya,2013,2158265,Mediterranean Region
+Antalya,2014,2222562,Mediterranean Region
+Antalya,2015,2288456,Mediterranean Region
+Antalya,2016,2328555,Mediterranean Region
+Antalya,2017,2364396,Mediterranean Region
+Antalya,2018,2426356,Mediterranean Region
+Ardahan,2007,112721,Eastern Anatolia Region
+Ardahan,2008,112242,Eastern Anatolia Region
+Ardahan,2009,108169,Eastern Anatolia Region
+Ardahan,2010,105454,Eastern Anatolia Region
+Ardahan,2011,107455,Eastern Anatolia Region
+Ardahan,2012,106643,Eastern Anatolia Region
+Ardahan,2013,102782,Eastern Anatolia Region
+Ardahan,2014,100809,Eastern Anatolia Region
+Ardahan,2015,99265,Eastern Anatolia Region
+Ardahan,2016,98335,Eastern Anatolia Region
+Ardahan,2017,97096,Eastern Anatolia Region
+Ardahan,2018,98907,Eastern Anatolia Region
+Artvin,2007,168092,Black Sea Region
+Artvin,2008,166584,Black Sea Region
+Artvin,2009,165580,Black Sea Region
+Artvin,2010,164759,Black Sea Region
+Artvin,2011,166394,Black Sea Region
+Artvin,2012,167082,Black Sea Region
+Artvin,2013,169334,Black Sea Region
+Artvin,2014,169674,Black Sea Region
+Artvin,2015,168370,Black Sea Region
+Artvin,2016,168068,Black Sea Region
+Artvin,2017,166143,Black Sea Region
+Artvin,2018,174010,Black Sea Region
+Aydin,2007,946971,Aegean Region
+Aydin,2008,965500,Aegean Region
+Aydin,2009,979155,Aegean Region
+Aydin,2010,989862,Aegean Region
+Aydin,2011,999163,Aegean Region
+Aydin,2012,1006541,Aegean Region
+Aydin,2013,1020957,Aegean Region
+Aydin,2014,1041979,Aegean Region
+Aydin,2015,1053506,Aegean Region
+Aydin,2016,1068260,Aegean Region
+Aydin,2017,1080839,Aegean Region
+Aydin,2018,1097746,Aegean Region
+Balikesir,2007,1118313,Marmara Region
+Balikesir,2008,1130276,Marmara Region
+Balikesir,2009,1140085,Marmara Region
+Balikesir,2010,1152323,Marmara Region
+Balikesir,2011,1154314,Marmara Region
+Balikesir,2012,1160731,Marmara Region
+Balikesir,2013,1162761,Marmara Region
+Balikesir,2014,1189057,Marmara Region
+Balikesir,2015,1186688,Marmara Region
+Balikesir,2016,1196176,Marmara Region
+Balikesir,2017,1204824,Marmara Region
+Balikesir,2018,1226575,Marmara Region
+Bartin,2007,182131,Black Sea Region
+Bartin,2008,185368,Black Sea Region
+Bartin,2009,188449,Black Sea Region
+Bartin,2010,187758,Black Sea Region
+Bartin,2011,187291,Black Sea Region
+Bartin,2012,188436,Black Sea Region
+Bartin,2013,189139,Black Sea Region
+Bartin,2014,189405,Black Sea Region
+Bartin,2015,190708,Black Sea Region
+Bartin,2016,192389,Black Sea Region
+Bartin,2017,193577,Black Sea Region
+Bartin,2018,198999,Black Sea Region
+Batman,2007,472487,Southeast Anatolia Region
+Batman,2008,485616,Southeast Anatolia Region
+Batman,2009,497998,Southeast Anatolia Region
+Batman,2010,510200,Southeast Anatolia Region
+Batman,2011,524499,Southeast Anatolia Region
+Batman,2012,534205,Southeast Anatolia Region
+Batman,2013,547581,Southeast Anatolia Region
+Batman,2014,557593,Southeast Anatolia Region
+Batman,2015,566633,Southeast Anatolia Region
+Batman,2016,576899,Southeast Anatolia Region
+Batman,2017,585252,Southeast Anatolia Region
+Batman,2018,599103,Southeast Anatolia Region
+Bayburt,2007,76609,Black Sea Region
+Bayburt,2008,75675,Black Sea Region
+Bayburt,2009,74710,Black Sea Region
+Bayburt,2010,74412,Black Sea Region
+Bayburt,2011,76724,Black Sea Region
+Bayburt,2012,75797,Black Sea Region
+Bayburt,2013,75620,Black Sea Region
+Bayburt,2014,80607,Black Sea Region
+Bayburt,2015,78550,Black Sea Region
+Bayburt,2016,90154,Black Sea Region
+Bayburt,2017,80417,Black Sea Region
+Bayburt,2018,82274,Black Sea Region
+Bilecik,2007,203777,Marmara Region
+Bilecik,2008,193169,Marmara Region
+Bilecik,2009,202061,Marmara Region
+Bilecik,2010,225381,Marmara Region
+Bilecik,2011,203849,Marmara Region
+Bilecik,2012,204116,Marmara Region
+Bilecik,2013,208888,Marmara Region
+Bilecik,2014,209925,Marmara Region
+Bilecik,2015,212361,Marmara Region
+Bilecik,2016,218297,Marmara Region
+Bilecik,2017,221693,Marmara Region
+Bilecik,2018,223448,Marmara Region
+Bingol,2007,251552,Eastern Anatolia Region
+Bingol,2008,256091,Eastern Anatolia Region
+Bingol,2009,255745,Eastern Anatolia Region
+Bingol,2010,255170,Eastern Anatolia Region
+Bingol,2011,262263,Eastern Anatolia Region
+Bingol,2012,262507,Eastern Anatolia Region
+Bingol,2013,265514,Eastern Anatolia Region
+Bingol,2014,266019,Eastern Anatolia Region
+Bingol,2015,267184,Eastern Anatolia Region
+Bingol,2016,269560,Eastern Anatolia Region
+Bingol,2017,273354,Eastern Anatolia Region
+Bingol,2018,281205,Eastern Anatolia Region
+Bitlis,2007,327886,Eastern Anatolia Region
+Bitlis,2008,326897,Eastern Anatolia Region
+Bitlis,2009,328489,Eastern Anatolia Region
+Bitlis,2010,328767,Eastern Anatolia Region
+Bitlis,2011,336624,Eastern Anatolia Region
+Bitlis,2012,337253,Eastern Anatolia Region
+Bitlis,2013,337156,Eastern Anatolia Region
+Bitlis,2014,338023,Eastern Anatolia Region
+Bitlis,2015,340449,Eastern Anatolia Region
+Bitlis,2016,341225,Eastern Anatolia Region
+Bitlis,2017,341474,Eastern Anatolia Region
+Bitlis,2018,349396,Eastern Anatolia Region
+Bolu,2007,270417,Black Sea Region
+Bolu,2008,268882,Black Sea Region
+Bolu,2009,271545,Black Sea Region
+Bolu,2010,271208,Black Sea Region
+Bolu,2011,276506,Black Sea Region
+Bolu,2012,281080,Black Sea Region
+Bolu,2013,283496,Black Sea Region
+Bolu,2014,284789,Black Sea Region
+Bolu,2015,291095,Black Sea Region
+Bolu,2016,299896,Black Sea Region
+Bolu,2017,303184,Black Sea Region
+Bolu,2018,311810,Black Sea Region
+Burdur,2007,251181,Mediterranean Region
+Burdur,2008,247437,Mediterranean Region
+Burdur,2009,251550,Mediterranean Region
+Burdur,2010,258868,Mediterranean Region
+Burdur,2011,250527,Mediterranean Region
+Burdur,2012,254341,Mediterranean Region
+Burdur,2013,257267,Mediterranean Region
+Burdur,2014,256898,Mediterranean Region
+Burdur,2015,258339,Mediterranean Region
+Burdur,2016,261401,Mediterranean Region
+Burdur,2017,264779,Mediterranean Region
+Burdur,2018,269926,Mediterranean Region
+Bursa,2007,2439876,Marmara Region
+Bursa,2008,2507963,Marmara Region
+Bursa,2009,2550645,Marmara Region
+Bursa,2010,2605495,Marmara Region
+Bursa,2011,2652126,Marmara Region
+Bursa,2012,2688171,Marmara Region
+Bursa,2013,2740970,Marmara Region
+Bursa,2014,2787539,Marmara Region
+Bursa,2015,2842547,Marmara Region
+Bursa,2016,2901396,Marmara Region
+Bursa,2017,2936803,Marmara Region
+Bursa,2018,2994521,Marmara Region
+Canakkale,2007,476128,Marmara Region
+Canakkale,2008,474791,Marmara Region
+Canakkale,2009,477735,Marmara Region
+Canakkale,2010,490397,Marmara Region
+Canakkale,2011,486445,Marmara Region
+Canakkale,2012,493691,Marmara Region
+Canakkale,2013,502328,Marmara Region
+Canakkale,2014,511790,Marmara Region
+Canakkale,2015,513341,Marmara Region
+Canakkale,2016,519793,Marmara Region
+Canakkale,2017,530417,Marmara Region
+Canakkale,2018,540662,Marmara Region
+Cankiri,2007,174012,Central Anatolia Region
+Cankiri,2008,176093,Central Anatolia Region
+Cankiri,2009,185019,Central Anatolia Region
+Cankiri,2010,179067,Central Anatolia Region
+Cankiri,2011,177211,Central Anatolia Region
+Cankiri,2012,184406,Central Anatolia Region
+Cankiri,2013,190909,Central Anatolia Region
+Cankiri,2014,183550,Central Anatolia Region
+Cankiri,2015,180945,Central Anatolia Region
+Cankiri,2016,183880,Central Anatolia Region
+Cankiri,2017,186074,Central Anatolia Region
+Cankiri,2018,216362,Central Anatolia Region
+Corum,2007,549828,Black Sea Region
+Corum,2008,545444,Black Sea Region
+Corum,2009,540704,Black Sea Region
+Corum,2010,535405,Black Sea Region
+Corum,2011,534578,Black Sea Region
+Corum,2012,529975,Black Sea Region
+Corum,2013,532080,Black Sea Region
+Corum,2014,527220,Black Sea Region
+Corum,2015,525180,Black Sea Region
+Corum,2016,527863,Black Sea Region
+Corum,2017,528422,Black Sea Region
+Corum,2018,536483,Black Sea Region
+Denizli,2007,907325,Aegean Region
+Denizli,2008,917836,Aegean Region
+Denizli,2009,926362,Aegean Region
+Denizli,2010,931823,Aegean Region
+Denizli,2011,942278,Aegean Region
+Denizli,2012,950557,Aegean Region
+Denizli,2013,963464,Aegean Region
+Denizli,2014,978700,Aegean Region
+Denizli,2015,993442,Aegean Region
+Denizli,2016,1005687,Aegean Region
+Denizli,2017,1018735,Aegean Region
+Denizli,2018,1027782,Aegean Region
+Diyarbakir,2007,1460714,Southeast Anatolia Region
+Diyarbakir,2008,1492828,Southeast Anatolia Region
+Diyarbakir,2009,1515011,Southeast Anatolia Region
+Diyarbakir,2010,1528958,Southeast Anatolia Region
+Diyarbakir,2011,1570943,Southeast Anatolia Region
+Diyarbakir,2012,1592167,Southeast Anatolia Region
+Diyarbakir,2013,1607437,Southeast Anatolia Region
+Diyarbakir,2014,1635048,Southeast Anatolia Region
+Diyarbakir,2015,1654196,Southeast Anatolia Region
+Diyarbakir,2016,1673119,Southeast Anatolia Region
+Diyarbakir,2017,1699901,Southeast Anatolia Region
+Diyarbakir,2018,1732396,Southeast Anatolia Region
+Duzce,2007,323328,Black Sea Region
+Duzce,2008,328611,Black Sea Region
+Duzce,2009,335156,Black Sea Region
+Duzce,2010,338188,Black Sea Region
+Duzce,2011,342146,Black Sea Region
+Duzce,2012,346493,Black Sea Region
+Duzce,2013,351509,Black Sea Region
+Duzce,2014,355549,Black Sea Region
+Duzce,2015,360388,Black Sea Region
+Duzce,2016,370371,Black Sea Region
+Duzce,2017,377610,Black Sea Region
+Duzce,2018,387844,Black Sea Region
+Edirne,2007,396462,Aegean Region
+Edirne,2008,394644,Aegean Region
+Edirne,2009,395463,Aegean Region
+Edirne,2010,390428,Aegean Region
+Edirne,2011,399316,Aegean Region
+Edirne,2012,399708,Aegean Region
+Edirne,2013,398582,Aegean Region
+Edirne,2014,400280,Aegean Region
+Edirne,2015,402537,Aegean Region
+Edirne,2016,401701,Aegean Region
+Edirne,2017,406855,Aegean Region
+Edirne,2018,411528,Aegean Region
+Elazig,2007,541258,Eastern Anatolia Region
+Elazig,2008,547562,Eastern Anatolia Region
+Elazig,2009,550667,Eastern Anatolia Region
+Elazig,2010,552646,Eastern Anatolia Region
+Elazig,2011,558556,Eastern Anatolia Region
+Elazig,2012,562703,Eastern Anatolia Region
+Elazig,2013,568239,Eastern Anatolia Region
+Elazig,2014,568753,Eastern Anatolia Region
+Elazig,2015,574304,Eastern Anatolia Region
+Elazig,2016,578789,Eastern Anatolia Region
+Elazig,2017,583671,Eastern Anatolia Region
+Elazig,2018,595638,Eastern Anatolia Region
+Erzincan,2007,213538,Eastern Anatolia Region
+Erzincan,2008,210645,Eastern Anatolia Region
+Erzincan,2009,213288,Eastern Anatolia Region
+Erzincan,2010,224949,Eastern Anatolia Region
+Erzincan,2011,215277,Eastern Anatolia Region
+Erzincan,2012,217886,Eastern Anatolia Region
+Erzincan,2013,219996,Eastern Anatolia Region
+Erzincan,2014,223633,Eastern Anatolia Region
+Erzincan,2015,222918,Eastern Anatolia Region
+Erzincan,2016,226032,Eastern Anatolia Region
+Erzincan,2017,231511,Eastern Anatolia Region
+Erzincan,2018,236034,Eastern Anatolia Region
+Erzurum,2007,784941,Eastern Anatolia Region
+Erzurum,2008,774967,Eastern Anatolia Region
+Erzurum,2009,774207,Eastern Anatolia Region
+Erzurum,2010,769085,Eastern Anatolia Region
+Erzurum,2011,780847,Eastern Anatolia Region
+Erzurum,2012,778195,Eastern Anatolia Region
+Erzurum,2013,766729,Eastern Anatolia Region
+Erzurum,2014,763320,Eastern Anatolia Region
+Erzurum,2015,762321,Eastern Anatolia Region
+Erzurum,2016,762021,Eastern Anatolia Region
+Erzurum,2017,760476,Eastern Anatolia Region
+Erzurum,2018,767848,Eastern Anatolia Region
+Eskisehir,2007,724849,Central Anatolia Region
+Eskisehir,2008,741739,Central Anatolia Region
+Eskisehir,2009,755427,Central Anatolia Region
+Eskisehir,2010,764584,Central Anatolia Region
+Eskisehir,2011,781247,Central Anatolia Region
+Eskisehir,2012,789750,Central Anatolia Region
+Eskisehir,2013,799724,Central Anatolia Region
+Eskisehir,2014,812320,Central Anatolia Region
+Eskisehir,2015,826716,Central Anatolia Region
+Eskisehir,2016,844842,Central Anatolia Region
+Eskisehir,2017,860620,Central Anatolia Region
+Eskisehir,2018,871187,Central Anatolia Region
+Gaziantep,2007,1560023,Southeast Anatolia Region
+Gaziantep,2008,1612223,Southeast Anatolia Region
+Gaziantep,2009,1653670,Southeast Anatolia Region
+Gaziantep,2010,1700763,Southeast Anatolia Region
+Gaziantep,2011,1753596,Southeast Anatolia Region
+Gaziantep,2012,1799558,Southeast Anatolia Region
+Gaziantep,2013,1844438,Southeast Anatolia Region
+Gaziantep,2014,1889466,Southeast Anatolia Region
+Gaziantep,2015,1931836,Southeast Anatolia Region
+Gaziantep,2016,1974244,Southeast Anatolia Region
+Gaziantep,2017,2005515,Southeast Anatolia Region
+Gaziantep,2018,2028563,Southeast Anatolia Region
+Giresun,2007,417505,Black Sea Region
+Giresun,2008,421766,Black Sea Region
+Giresun,2009,421860,Black Sea Region
+Giresun,2010,419256,Black Sea Region
+Giresun,2011,419498,Black Sea Region
+Giresun,2012,419555,Black Sea Region
+Giresun,2013,425007,Black Sea Region
+Giresun,2014,429984,Black Sea Region
+Giresun,2015,426686,Black Sea Region
+Giresun,2016,444467,Black Sea Region
+Giresun,2017,437393,Black Sea Region
+Giresun,2018,453912,Black Sea Region
+Gumushane,2007,130825,Black Sea Region
+Gumushane,2008,131367,Black Sea Region
+Gumushane,2009,130976,Black Sea Region
+Gumushane,2010,129618,Black Sea Region
+Gumushane,2011,132374,Black Sea Region
+Gumushane,2012,135216,Black Sea Region
+Gumushane,2013,141412,Black Sea Region
+Gumushane,2014,146353,Black Sea Region
+Gumushane,2015,151449,Black Sea Region
+Gumushane,2016,172034,Black Sea Region
+Gumushane,2017,170173,Black Sea Region
+Gumushane,2018,162748,Black Sea Region
+Hakkari,2007,246469,Eastern Anatolia Region
+Hakkari,2008,258590,Eastern Anatolia Region
+Hakkari,2009,256761,Eastern Anatolia Region
+Hakkari,2010,251302,Eastern Anatolia Region
+Hakkari,2011,272165,Eastern Anatolia Region
+Hakkari,2012,279982,Eastern Anatolia Region
+Hakkari,2013,273041,Eastern Anatolia Region
+Hakkari,2014,276287,Eastern Anatolia Region
+Hakkari,2015,278775,Eastern Anatolia Region
+Hakkari,2016,267813,Eastern Anatolia Region
+Hakkari,2017,275761,Eastern Anatolia Region
+Hakkari,2018,286470,Eastern Anatolia Region
+Hatay,2007,1386224,Mediterranean Region
+Hatay,2008,1413287,Mediterranean Region
+Hatay,2009,1448418,Mediterranean Region
+Hatay,2010,1480571,Mediterranean Region
+Hatay,2011,1474223,Mediterranean Region
+Hatay,2012,1483674,Mediterranean Region
+Hatay,2013,1503066,Mediterranean Region
+Hatay,2014,1519836,Mediterranean Region
+Hatay,2015,1533507,Mediterranean Region
+Hatay,2016,1555165,Mediterranean Region
+Hatay,2017,1575226,Mediterranean Region
+Hatay,2018,1609856,Mediterranean Region
+Igdir,2007,181866,Eastern Anatolia Region
+Igdir,2008,184025,Eastern Anatolia Region
+Igdir,2009,183486,Eastern Anatolia Region
+Igdir,2010,184418,Eastern Anatolia Region
+Igdir,2011,188857,Eastern Anatolia Region
+Igdir,2012,190409,Eastern Anatolia Region
+Igdir,2013,190424,Eastern Anatolia Region
+Igdir,2014,192056,Eastern Anatolia Region
+Igdir,2015,192435,Eastern Anatolia Region
+Igdir,2016,192785,Eastern Anatolia Region
+Igdir,2017,194775,Eastern Anatolia Region
+Igdir,2018,197456,Eastern Anatolia Region
+Isparta,2007,419845,Mediterranean Region
+Isparta,2008,407463,Mediterranean Region
+Isparta,2009,420796,Mediterranean Region
+Isparta,2010,448298,Mediterranean Region
+Isparta,2011,411245,Mediterranean Region
+Isparta,2012,416663,Mediterranean Region
+Isparta,2013,417774,Mediterranean Region
+Isparta,2014,418780,Mediterranean Region
+Isparta,2015,421766,Mediterranean Region
+Isparta,2016,427324,Mediterranean Region
+Isparta,2017,433830,Mediterranean Region
+Isparta,2018,441412,Mediterranean Region
+Istanbul,2007,12573836,Marmara Region
+Istanbul,2008,12697164,Marmara Region
+Istanbul,2009,12915158,Marmara Region
+Istanbul,2010,13255685,Marmara Region
+Istanbul,2011,13624240,Marmara Region
+Istanbul,2012,13854740,Marmara Region
+Istanbul,2013,14160467,Marmara Region
+Istanbul,2014,14377018,Marmara Region
+Istanbul,2015,14657434,Marmara Region
+Istanbul,2016,14804116,Marmara Region
+Istanbul,2017,15029231,Marmara Region
+Istanbul,2018,15067724,Marmara Region
+Izmir,2007,3739353,Aegean Region
+Izmir,2008,3795978,Aegean Region
+Izmir,2009,3868308,Aegean Region
+Izmir,2010,3948848,Aegean Region
+Izmir,2011,3965232,Aegean Region
+Izmir,2012,4005459,Aegean Region
+Izmir,2013,4061074,Aegean Region
+Izmir,2014,4113072,Aegean Region
+Izmir,2015,4168415,Aegean Region
+Izmir,2016,4223545,Aegean Region
+Izmir,2017,4279677,Aegean Region
+Izmir,2018,4320519,Aegean Region
+Kahramanmaras,2007,1004414,Mediterranean Region
+Kahramanmaras,2008,1029298,Mediterranean Region
+Kahramanmaras,2009,1037491,Mediterranean Region
+Kahramanmaras,2010,1044816,Mediterranean Region
+Kahramanmaras,2011,1054210,Mediterranean Region
+Kahramanmaras,2012,1063174,Mediterranean Region
+Kahramanmaras,2013,1075706,Mediterranean Region
+Kahramanmaras,2014,1089038,Mediterranean Region
+Kahramanmaras,2015,1096610,Mediterranean Region
+Kahramanmaras,2016,1112634,Mediterranean Region
+Kahramanmaras,2017,1127623,Mediterranean Region
+Kahramanmaras,2018,1144851,Mediterranean Region
+Karabuk,2007,218463,Black Sea Region
+Karabuk,2008,216248,Black Sea Region
+Karabuk,2009,218564,Black Sea Region
+Karabuk,2010,227610,Black Sea Region
+Karabuk,2011,219728,Black Sea Region
+Karabuk,2012,225145,Black Sea Region
+Karabuk,2013,230251,Black Sea Region
+Karabuk,2014,231333,Black Sea Region
+Karabuk,2015,236978,Black Sea Region
+Karabuk,2016,242347,Black Sea Region
+Karabuk,2017,244453,Black Sea Region
+Karabuk,2018,248014,Black Sea Region
+Karaman,2007,226049,Central Anatolia Region
+Karaman,2008,230145,Central Anatolia Region
+Karaman,2009,231872,Central Anatolia Region
+Karaman,2010,232633,Central Anatolia Region
+Karaman,2011,234005,Central Anatolia Region
+Karaman,2012,235424,Central Anatolia Region
+Karaman,2013,237939,Central Anatolia Region
+Karaman,2014,240362,Central Anatolia Region
+Karaman,2015,242196,Central Anatolia Region
+Karaman,2016,245610,Central Anatolia Region
+Karaman,2017,246672,Central Anatolia Region
+Karaman,2018,251913,Central Anatolia Region
+Kars,2007,312205,Eastern Anatolia Region
+Kars,2008,312128,Eastern Anatolia Region
+Kars,2009,306536,Eastern Anatolia Region
+Kars,2010,301766,Eastern Anatolia Region
+Kars,2011,305755,Eastern Anatolia Region
+Kars,2012,304821,Eastern Anatolia Region
+Kars,2013,300874,Eastern Anatolia Region
+Kars,2014,296466,Eastern Anatolia Region
+Kars,2015,292660,Eastern Anatolia Region
+Kars,2016,289786,Eastern Anatolia Region
+Kars,2017,287654,Eastern Anatolia Region
+Kars,2018,288878,Eastern Anatolia Region
+Kastamonu,2007,360366,Black Sea Region
+Kastamonu,2008,360424,Black Sea Region
+Kastamonu,2009,359823,Black Sea Region
+Kastamonu,2010,361222,Black Sea Region
+Kastamonu,2011,359759,Black Sea Region
+Kastamonu,2012,359808,Black Sea Region
+Kastamonu,2013,368093,Black Sea Region
+Kastamonu,2014,368907,Black Sea Region
+Kastamonu,2015,372633,Black Sea Region
+Kastamonu,2016,376945,Black Sea Region
+Kastamonu,2017,372373,Black Sea Region
+Kastamonu,2018,383373,Black Sea Region
+Kayseri,2007,1165088,Central Anatolia Region
+Kayseri,2008,1184386,Central Anatolia Region
+Kayseri,2009,1205872,Central Anatolia Region
+Kayseri,2010,1234651,Central Anatolia Region
+Kayseri,2011,1255349,Central Anatolia Region
+Kayseri,2012,1274968,Central Anatolia Region
+Kayseri,2013,1295355,Central Anatolia Region
+Kayseri,2014,1322376,Central Anatolia Region
+Kayseri,2015,1341056,Central Anatolia Region
+Kayseri,2016,1358980,Central Anatolia Region
+Kayseri,2017,1376722,Central Anatolia Region
+Kayseri,2018,1389680,Central Anatolia Region
+Kilis,2007,118457,Southeast Anatolia Region
+Kilis,2008,120991,Southeast Anatolia Region
+Kilis,2009,122104,Southeast Anatolia Region
+Kilis,2010,123135,Southeast Anatolia Region
+Kilis,2011,124452,Southeast Anatolia Region
+Kilis,2012,124320,Southeast Anatolia Region
+Kilis,2013,128586,Southeast Anatolia Region
+Kilis,2014,128781,Southeast Anatolia Region
+Kilis,2015,130655,Southeast Anatolia Region
+Kilis,2016,130825,Southeast Anatolia Region
+Kilis,2017,136319,Southeast Anatolia Region
+Kilis,2018,142541,Southeast Anatolia Region
+Kirikkale,2007,280234,Central Anatolia Region
+Kirikkale,2008,279325,Central Anatolia Region
+Kirikkale,2009,280834,Central Anatolia Region
+Kirikkale,2010,276647,Central Anatolia Region
+Kirikkale,2011,274992,Central Anatolia Region
+Kirikkale,2012,274727,Central Anatolia Region
+Kirikkale,2013,274658,Central Anatolia Region
+Kirikkale,2014,271092,Central Anatolia Region
+Kirikkale,2015,270271,Central Anatolia Region
+Kirikkale,2016,277984,Central Anatolia Region
+Kirikkale,2017,278749,Central Anatolia Region
+Kirikkale,2018,286602,Central Anatolia Region
+Kirklareli,2007,333256,Marmara Region
+Kirklareli,2008,336942,Marmara Region
+Kirklareli,2009,333179,Marmara Region
+Kirklareli,2010,332791,Marmara Region
+Kirklareli,2011,340199,Marmara Region
+Kirklareli,2012,341218,Marmara Region
+Kirklareli,2013,340559,Marmara Region
+Kirklareli,2014,343723,Marmara Region
+Kirklareli,2015,346973,Marmara Region
+Kirklareli,2016,351684,Marmara Region
+Kirklareli,2017,356050,Marmara Region
+Kirklareli,2018,360860,Marmara Region
+Kirsehir,2007,223170,Central Anatolia Region
+Kirsehir,2008,222735,Central Anatolia Region
+Kirsehir,2009,223102,Central Anatolia Region
+Kirsehir,2010,221876,Central Anatolia Region
+Kirsehir,2011,221015,Central Anatolia Region
+Kirsehir,2012,221209,Central Anatolia Region
+Kirsehir,2013,223498,Central Anatolia Region
+Kirsehir,2014,222707,Central Anatolia Region
+Kirsehir,2015,225562,Central Anatolia Region
+Kirsehir,2016,229975,Central Anatolia Region
+Kirsehir,2017,234529,Central Anatolia Region
+Kirsehir,2018,241868,Central Anatolia Region
+Kocaeli,2007,1437926,Marmara Region
+Kocaeli,2008,1490358,Marmara Region
+Kocaeli,2009,1522408,Marmara Region
+Kocaeli,2010,1560138,Marmara Region
+Kocaeli,2011,1601720,Marmara Region
+Kocaeli,2012,1634691,Marmara Region
+Kocaeli,2013,1676202,Marmara Region
+Kocaeli,2014,1722795,Marmara Region
+Kocaeli,2015,1780055,Marmara Region
+Kocaeli,2016,1830772,Marmara Region
+Kocaeli,2017,1883270,Marmara Region
+Kocaeli,2018,1906391,Marmara Region
+Konya,2007,1959082,Central Anatolia Region
+Konya,2008,1969868,Central Anatolia Region
+Konya,2009,1992675,Central Anatolia Region
+Konya,2010,2013845,Central Anatolia Region
+Konya,2011,2038555,Central Anatolia Region
+Konya,2012,2052281,Central Anatolia Region
+Konya,2013,2079225,Central Anatolia Region
+Konya,2014,2108808,Central Anatolia Region
+Konya,2015,2130544,Central Anatolia Region
+Konya,2016,2161303,Central Anatolia Region
+Konya,2017,2180149,Central Anatolia Region
+Konya,2018,2205609,Central Anatolia Region
+Kutahya,2007,583910,Aegean Region
+Kutahya,2008,565884,Aegean Region
+Kutahya,2009,571804,Aegean Region
+Kutahya,2010,590496,Aegean Region
+Kutahya,2011,564264,Aegean Region
+Kutahya,2012,573421,Aegean Region
+Kutahya,2013,572059,Aegean Region
+Kutahya,2014,571554,Aegean Region
+Kutahya,2015,571463,Aegean Region
+Kutahya,2016,573642,Aegean Region
+Kutahya,2017,572256,Aegean Region
+Kutahya,2018,577941,Aegean Region
+Malatya,2007,722065,Eastern Anatolia Region
+Malatya,2008,733789,Eastern Anatolia Region
+Malatya,2009,736884,Eastern Anatolia Region
+Malatya,2010,740643,Eastern Anatolia Region
+Malatya,2011,757930,Eastern Anatolia Region
+Malatya,2012,762366,Eastern Anatolia Region
+Malatya,2013,762538,Eastern Anatolia Region
+Malatya,2014,769544,Eastern Anatolia Region
+Malatya,2015,772904,Eastern Anatolia Region
+Malatya,2016,781305,Eastern Anatolia Region
+Malatya,2017,786676,Eastern Anatolia Region
+Malatya,2018,797036,Eastern Anatolia Region
+Manisa,2007,1319920,Aegean Region
+Manisa,2008,1316750,Aegean Region
+Manisa,2009,1331957,Aegean Region
+Manisa,2010,1379484,Aegean Region
+Manisa,2011,1340074,Aegean Region
+Manisa,2012,1346162,Aegean Region
+Manisa,2013,1359463,Aegean Region
+Manisa,2014,1367905,Aegean Region
+Manisa,2015,1380366,Aegean Region
+Manisa,2016,1396945,Aegean Region
+Manisa,2017,1413041,Aegean Region
+Manisa,2018,1429643,Aegean Region
+Mardin,2007,745778,Southeast Anatolia Region
+Mardin,2008,750697,Southeast Anatolia Region
+Mardin,2009,737852,Southeast Anatolia Region
+Mardin,2010,744606,Southeast Anatolia Region
+Mardin,2011,764033,Southeast Anatolia Region
+Mardin,2012,773026,Southeast Anatolia Region
+Mardin,2013,779738,Southeast Anatolia Region
+Mardin,2014,788996,Southeast Anatolia Region
+Mardin,2015,796591,Southeast Anatolia Region
+Mardin,2016,796237,Southeast Anatolia Region
+Mardin,2017,809719,Southeast Anatolia Region
+Mardin,2018,829195,Southeast Anatolia Region
+Mersin,2007,1595938,Mediterranean Region
+Mersin,2008,1602908,Mediterranean Region
+Mersin,2009,1640888,Mediterranean Region
+Mersin,2010,1647899,Mediterranean Region
+Mersin,2011,1667939,Mediterranean Region
+Mersin,2012,1682848,Mediterranean Region
+Mersin,2013,1705774,Mediterranean Region
+Mersin,2014,1727255,Mediterranean Region
+Mersin,2015,1745221,Mediterranean Region
+Mersin,2016,1773852,Mediterranean Region
+Mersin,2017,1793931,Mediterranean Region
+Mersin,2018,1814468,Mediterranean Region
+Mugla,2007,766156,Aegean Region
+Mugla,2008,791424,Aegean Region
+Mugla,2009,802381,Aegean Region
+Mugla,2010,817503,Aegean Region
+Mugla,2011,838324,Aegean Region
+Mugla,2012,851145,Aegean Region
+Mugla,2013,866665,Aegean Region
+Mugla,2014,894509,Aegean Region
+Mugla,2015,908877,Aegean Region
+Mugla,2016,923773,Aegean Region
+Mugla,2017,938751,Aegean Region
+Mugla,2018,967487,Aegean Region
+Mus,2007,405509,Eastern Anatolia Region
+Mus,2008,404309,Eastern Anatolia Region
+Mus,2009,404484,Eastern Anatolia Region
+Mus,2010,406886,Eastern Anatolia Region
+Mus,2011,414706,Eastern Anatolia Region
+Mus,2012,413260,Eastern Anatolia Region
+Mus,2013,412553,Eastern Anatolia Region
+Mus,2014,411216,Eastern Anatolia Region
+Mus,2015,408728,Eastern Anatolia Region
+Mus,2016,406501,Eastern Anatolia Region
+Mus,2017,404544,Eastern Anatolia Region
+Mus,2018,407992,Eastern Anatolia Region
+Nevsehir,2007,280058,Central Anatolia Region
+Nevsehir,2008,281699,Central Anatolia Region
+Nevsehir,2009,284025,Central Anatolia Region
+Nevsehir,2010,282337,Central Anatolia Region
+Nevsehir,2011,283247,Central Anatolia Region
+Nevsehir,2012,285190,Central Anatolia Region
+Nevsehir,2013,285460,Central Anatolia Region
+Nevsehir,2014,286250,Central Anatolia Region
+Nevsehir,2015,286767,Central Anatolia Region
+Nevsehir,2016,290895,Central Anatolia Region
+Nevsehir,2017,292365,Central Anatolia Region
+Nevsehir,2018,298339,Central Anatolia Region
+Nigde,2007,331677,Central Anatolia Region
+Nigde,2008,338447,Central Anatolia Region
+Nigde,2009,339921,Central Anatolia Region
+Nigde,2010,337931,Central Anatolia Region
+Nigde,2011,337553,Central Anatolia Region
+Nigde,2012,340270,Central Anatolia Region
+Nigde,2013,343658,Central Anatolia Region
+Nigde,2014,343898,Central Anatolia Region
+Nigde,2015,346114,Central Anatolia Region
+Nigde,2016,351468,Central Anatolia Region
+Nigde,2017,352727,Central Anatolia Region
+Nigde,2018,364707,Central Anatolia Region
+Ordu,2007,715409,Black Sea Region
+Ordu,2008,719278,Black Sea Region
+Ordu,2009,723507,Black Sea Region
+Ordu,2010,719183,Black Sea Region
+Ordu,2011,714390,Black Sea Region
+Ordu,2012,741371,Black Sea Region
+Ordu,2013,731452,Black Sea Region
+Ordu,2014,724268,Black Sea Region
+Ordu,2015,728949,Black Sea Region
+Ordu,2016,750588,Black Sea Region
+Ordu,2017,742341,Black Sea Region
+Ordu,2018,771932,Black Sea Region
+Osmaniye,2007,452880,Mediterranean Region
+Osmaniye,2008,464704,Mediterranean Region
+Osmaniye,2009,471804,Mediterranean Region
+Osmaniye,2010,479221,Mediterranean Region
+Osmaniye,2011,485357,Mediterranean Region
+Osmaniye,2012,492135,Mediterranean Region
+Osmaniye,2013,498981,Mediterranean Region
+Osmaniye,2014,506807,Mediterranean Region
+Osmaniye,2015,512873,Mediterranean Region
+Osmaniye,2016,522175,Mediterranean Region
+Osmaniye,2017,527724,Mediterranean Region
+Osmaniye,2018,534415,Mediterranean Region
+Rize,2007,316252,Black Sea Region
+Rize,2008,319410,Black Sea Region
+Rize,2009,319569,Black Sea Region
+Rize,2010,319637,Black Sea Region
+Rize,2011,323012,Black Sea Region
+Rize,2012,324152,Black Sea Region
+Rize,2013,328205,Black Sea Region
+Rize,2014,329779,Black Sea Region
+Rize,2015,328979,Black Sea Region
+Rize,2016,331048,Black Sea Region
+Rize,2017,331041,Black Sea Region
+Rize,2018,348608,Black Sea Region
+Sakarya,2007,835222,Marmara Region
+Sakarya,2008,851292,Marmara Region
+Sakarya,2009,861570,Marmara Region
+Sakarya,2010,872872,Marmara Region
+Sakarya,2011,888556,Marmara Region
+Sakarya,2012,902267,Marmara Region
+Sakarya,2013,917373,Marmara Region
+Sakarya,2014,932706,Marmara Region
+Sakarya,2015,953181,Marmara Region
+Sakarya,2016,976948,Marmara Region
+Sakarya,2017,990214,Marmara Region
+Sakarya,2018,1010700,Marmara Region
+Samsun,2007,1228959,Black Sea Region
+Samsun,2008,1233677,Black Sea Region
+Samsun,2009,1250076,Black Sea Region
+Samsun,2010,1252693,Black Sea Region
+Samsun,2011,1251729,Black Sea Region
+Samsun,2012,1251722,Black Sea Region
+Samsun,2013,1261810,Black Sea Region
+Samsun,2014,1269989,Black Sea Region
+Samsun,2015,1279884,Black Sea Region
+Samsun,2016,1295927,Black Sea Region
+Samsun,2017,1312990,Black Sea Region
+Samsun,2018,1335716,Black Sea Region
+Sanliurfa,2007,1523099,Southeast Anatolia Region
+Sanliurfa,2008,1574224,Southeast Anatolia Region
+Sanliurfa,2009,1613737,Southeast Anatolia Region
+Sanliurfa,2010,1663371,Southeast Anatolia Region
+Sanliurfa,2011,1716254,Southeast Anatolia Region
+Sanliurfa,2012,1762075,Southeast Anatolia Region
+Sanliurfa,2013,1801980,Southeast Anatolia Region
+Sanliurfa,2014,1845667,Southeast Anatolia Region
+Sanliurfa,2015,1892320,Southeast Anatolia Region
+Sanliurfa,2016,1940627,Southeast Anatolia Region
+Sanliurfa,2017,1985753,Southeast Anatolia Region
+Sanliurfa,2018,2035809,Southeast Anatolia Region
+Siirt,2007,291528,Southeast Anatolia Region
+Siirt,2008,299819,Southeast Anatolia Region
+Siirt,2009,303622,Southeast Anatolia Region
+Siirt,2010,300695,Southeast Anatolia Region
+Siirt,2011,310468,Southeast Anatolia Region
+Siirt,2012,310879,Southeast Anatolia Region
+Siirt,2013,314153,Southeast Anatolia Region
+Siirt,2014,318366,Southeast Anatolia Region
+Siirt,2015,320351,Southeast Anatolia Region
+Siirt,2016,322664,Southeast Anatolia Region
+Siirt,2017,324394,Southeast Anatolia Region
+Siirt,2018,331670,Southeast Anatolia Region
+Sinop,2007,198412,Black Sea Region
+Sinop,2008,200791,Black Sea Region
+Sinop,2009,201134,Black Sea Region
+Sinop,2010,202740,Black Sea Region
+Sinop,2011,203027,Black Sea Region
+Sinop,2012,201311,Black Sea Region
+Sinop,2013,204568,Black Sea Region
+Sinop,2014,204526,Black Sea Region
+Sinop,2015,204133,Black Sea Region
+Sinop,2016,205478,Black Sea Region
+Sinop,2017,207427,Black Sea Region
+Sinop,2018,219733,Black Sea Region
+Sirnak,2007,416001,Southeast Anatolia Region
+Sirnak,2008,429287,Southeast Anatolia Region
+Sirnak,2009,430424,Southeast Anatolia Region
+Sirnak,2010,430109,Southeast Anatolia Region
+Sirnak,2011,457997,Southeast Anatolia Region
+Sirnak,2012,466982,Southeast Anatolia Region
+Sirnak,2013,475255,Southeast Anatolia Region
+Sirnak,2014,488966,Southeast Anatolia Region
+Sirnak,2015,490184,Southeast Anatolia Region
+Sirnak,2016,483788,Southeast Anatolia Region
+Sirnak,2017,503236,Southeast Anatolia Region
+Sirnak,2018,524190,Southeast Anatolia Region
+Sivas,2007,638464,Central Anatolia Region
+Sivas,2008,631112,Central Anatolia Region
+Sivas,2009,633347,Central Anatolia Region
+Sivas,2010,642224,Central Anatolia Region
+Sivas,2011,627056,Central Anatolia Region
+Sivas,2012,623535,Central Anatolia Region
+Sivas,2013,623824,Central Anatolia Region
+Sivas,2014,623116,Central Anatolia Region
+Sivas,2015,618617,Central Anatolia Region
+Sivas,2016,621224,Central Anatolia Region
+Sivas,2017,621301,Central Anatolia Region
+Sivas,2018,646608,Central Anatolia Region
+Tekirdag,2007,728396,Marmara Region
+Tekirdag,2008,770772,Marmara Region
+Tekirdag,2009,783310,Marmara Region
+Tekirdag,2010,798109,Marmara Region
+Tekirdag,2011,829873,Marmara Region
+Tekirdag,2012,852321,Marmara Region
+Tekirdag,2013,874475,Marmara Region
+Tekirdag,2014,906732,Marmara Region
+Tekirdag,2015,937910,Marmara Region
+Tekirdag,2016,972875,Marmara Region
+Tekirdag,2017,1005463,Marmara Region
+Tekirdag,2018,1029927,Marmara Region
+Tokat,2007,620722,Black Sea Region
+Tokat,2008,617158,Black Sea Region
+Tokat,2009,624439,Black Sea Region
+Tokat,2010,617802,Black Sea Region
+Tokat,2011,608299,Black Sea Region
+Tokat,2012,613990,Black Sea Region
+Tokat,2013,598708,Black Sea Region
+Tokat,2014,597920,Black Sea Region
+Tokat,2015,593990,Black Sea Region
+Tokat,2016,602662,Black Sea Region
+Tokat,2017,602086,Black Sea Region
+Tokat,2018,612646,Black Sea Region
+Trabzon,2007,740569,Black Sea Region
+Trabzon,2008,748982,Black Sea Region
+Trabzon,2009,765127,Black Sea Region
+Trabzon,2010,763714,Black Sea Region
+Trabzon,2011,757353,Black Sea Region
+Trabzon,2012,757898,Black Sea Region
+Trabzon,2013,758237,Black Sea Region
+Trabzon,2014,766782,Black Sea Region
+Trabzon,2015,768417,Black Sea Region
+Trabzon,2016,779379,Black Sea Region
+Trabzon,2017,786326,Black Sea Region
+Trabzon,2018,807903,Black Sea Region
+Tunceli,2007,84022,Eastern Anatolia Region
+Tunceli,2008,86449,Eastern Anatolia Region
+Tunceli,2009,83061,Eastern Anatolia Region
+Tunceli,2010,76699,Eastern Anatolia Region
+Tunceli,2011,85062,Eastern Anatolia Region
+Tunceli,2012,86276,Eastern Anatolia Region
+Tunceli,2013,85428,Eastern Anatolia Region
+Tunceli,2014,86527,Eastern Anatolia Region
+Tunceli,2015,86076,Eastern Anatolia Region
+Tunceli,2016,82193,Eastern Anatolia Region
+Tunceli,2017,82498,Eastern Anatolia Region
+Tunceli,2018,88198,Eastern Anatolia Region
+Usak,2007,334115,Aegean Region
+Usak,2008,334111,Aegean Region
+Usak,2009,335860,Aegean Region
+Usak,2010,338019,Aegean Region
+Usak,2011,339731,Aegean Region
+Usak,2012,342269,Aegean Region
+Usak,2013,346508,Aegean Region
+Usak,2014,349459,Aegean Region
+Usak,2015,353048,Aegean Region
+Usak,2016,358736,Aegean Region
+Usak,2017,364971,Aegean Region
+Usak,2018,367514,Aegean Region
+Van,2007,979671,Eastern Anatolia Region
+Van,2008,1004369,Eastern Anatolia Region
+Van,2009,1022310,Eastern Anatolia Region
+Van,2010,1035418,Eastern Anatolia Region
+Van,2011,1022532,Eastern Anatolia Region
+Van,2012,1051975,Eastern Anatolia Region
+Van,2013,1070113,Eastern Anatolia Region
+Van,2014,1085542,Eastern Anatolia Region
+Van,2015,1096397,Eastern Anatolia Region
+Van,2016,1100190,Eastern Anatolia Region
+Van,2017,1106891,Eastern Anatolia Region
+Van,2018,1123784,Eastern Anatolia Region
+Yalova,2007,181758,Marmara Region
+Yalova,2008,197412,Marmara Region
+Yalova,2009,202531,Marmara Region
+Yalova,2010,203741,Marmara Region
+Yalova,2011,206535,Marmara Region
+Yalova,2012,211799,Marmara Region
+Yalova,2013,220122,Marmara Region
+Yalova,2014,226514,Marmara Region
+Yalova,2015,233009,Marmara Region
+Yalova,2016,241665,Marmara Region
+Yalova,2017,251203,Marmara Region
+Yalova,2018,262234,Marmara Region
+Yozgat,2007,492127,Central Anatolia Region
+Yozgat,2008,484206,Central Anatolia Region
+Yozgat,2009,487365,Central Anatolia Region
+Yozgat,2010,476096,Central Anatolia Region
+Yozgat,2011,465696,Central Anatolia Region
+Yozgat,2012,453211,Central Anatolia Region
+Yozgat,2013,444211,Central Anatolia Region
+Yozgat,2014,432560,Central Anatolia Region
+Yozgat,2015,419440,Central Anatolia Region
+Yozgat,2016,421041,Central Anatolia Region
+Yozgat,2017,418650,Central Anatolia Region
+Yozgat,2018,424981,Central Anatolia Region
+Zonguldak,2007,615890,Black Sea Region
+Zonguldak,2008,619151,Black Sea Region
+Zonguldak,2009,619812,Black Sea Region
+Zonguldak,2010,619703,Black Sea Region
+Zonguldak,2011,612406,Black Sea Region
+Zonguldak,2012,606527,Black Sea Region
+Zonguldak,2013,601567,Black Sea Region
+Zonguldak,2014,598796,Black Sea Region
+Zonguldak,2015,595907,Black Sea Region
+Zonguldak,2016,597524,Black Sea Region
+Zonguldak,2017,596892,Black Sea Region
+Zonguldak,2018,599698,Black Sea Region

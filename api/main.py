@@ -8,7 +8,13 @@ import pg8000
 import datetime
 from os import environ, path
 from flask_cors import CORS
-
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from flask import Flask, render_template
+from io import BytesIO
+import base64
+import barchartrace
 
 # Init App
 app = Flask(__name__)
@@ -476,7 +482,10 @@ def teams():
         } for team in teams]
     return {"teams": results}
 
-
+@app.route('/plot')
+def plot():
+    html = barchartrace.renderHtml()
+    return render_template('plot.html', html=html)
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
