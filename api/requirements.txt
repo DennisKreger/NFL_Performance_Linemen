@@ -7,3 +7,7 @@ pg8000==1.29.3
 python-dotenv==0.20.0
 flask_sqlalchemy_session==1.1
 Flask-Cors>=3.0
+matplotlib
+seaborn
+ipython
+pandas
