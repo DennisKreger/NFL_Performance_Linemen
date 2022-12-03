@@ -146,7 +146,7 @@ def make_plot(home, visitor, home_win, confidence):
         linewidth=9
     )
     plt.plot(
-        [5+(home_win-0.5)*20*(confidence-0.5),5+(home_win-0.5)*20*(confidence-0.5)],
+        [5+(0.5-home_win)*20*(confidence-0.5),5+(0.5-home_win)*20*(confidence-0.5)],
         [0.4,1.6],
         color='black',
         linewidth=4,
