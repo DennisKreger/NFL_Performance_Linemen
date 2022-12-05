@@ -26,10 +26,13 @@
     <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
 
     <script>
+        var selectedGameId = 0;
+        var selectedPlayId = 0;
+
+
         $.holdReady(true);
         $(document).ready(function () {
-            //$('#example').DataTable();
-            var table = $('#example').DataTable({
+            var table = $('#plays').DataTable({
                 searchPanes: {
                     layout: "columns-3",
                     viewTotal: true
@@ -93,7 +96,36 @@
             ]
             table.searchPanes.container().prependTo(table.table().container());
             table.searchPanes.resizePanes();
+
+            table
+            .on( 'select', function ( e, dt, type, indexes ) {
+                var rowData = table.rows( indexes ).data().toArray();
+                var tableArray = table.rows( indexes ).data();
+                selectedGameId = tableArray[0][1];
+                selectedPlayId = tableArray[0][1];
+                console.log('Selected Game Id: ' + selectedGameId);  
+                console.log('Selected Play Id: ' + selectedPlayId);  
+            } )
+            .on( 'deselect', function ( e, dt, type, indexes ) {
+                var rowData = table.rows( indexes ).data().toArray();
+                var tableArray = table.rows( indexes ).data();
+                selectedGameId = tableArray[0][1];
+                selectedPlayId = tableArray[0][1];
+                console.log('Deselected Game Id: ' + selectedGameId);  
+                console.log('Deselected Play Id: ' + selectedPlayId);    
+                selectedGameId = 0;
+                selectedPlayId = 0;
+            } );
+
         });
+
+        function predict() {
+            console.log("predicting");
+            $('#simulation').load('/playsimulation/' + selectedGameId + '/' + selectedPlayId);                   
+            $('#pressure').load('/playpressure/' + selectedGameId + '/' + selectedPlayId);     
+           };
+    
+    
     </script>
 </head>
 
@@ -170,20 +202,30 @@
                         <br>
                         <p>
                             <a>Select a Play from the table below to watch a simulation of the play.</a><br>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" 
+                            id="predict" onclick="predict()"
+                            data-bs-target="#collapsePrediction" aria-expanded="false" 
+                            aria-controls="collapsePrediction">
                                 Simulate Play
                             </button>
                             </p>
-                            <div class="collapse" id="collapseExample">
+                            <div class="collapse" id="collapsePrediction">
                             <div class="card card-body" id="prediction">
                                 <a>Play Simulation</a>
-                                <img src="images/simulation.png" class="img-fluid" alt="Win Prediction">
-                                <img src="images/pressure.png" class="img-fluid" alt="Win Prediction">                                
+                                <div id="simulation">
+
+                                </div>
                             </div>
-                            </div>                        
+                            <div class="card card-body" id="prediction">
+                                <a>Play Pressure</a>
+                                <div id="pressure">
+
+                                </div>                              
+                            </div>
+                  
                     </div>
                     <div class="container-fluid px-4">
-                        <table id="example" class="display" style="width:100%">
+                        <table id="plays" class="display" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Select</th>
@@ -210,7 +252,7 @@
                             </thead>
                             <tbody>
                                 <script>
-                                    var tbodyRef = document.getElementById('example').getElementsByTagName('tbody')[0];
+                                    var tbodyRef = document.getElementById('plays').getElementsByTagName('tbody')[0];
                                     async function getData() {
                                         let myObject = await fetch("/plays");
                                         let tableData = await myObject.text();

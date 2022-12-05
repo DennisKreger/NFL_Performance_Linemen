@@ -379,7 +379,8 @@ def position_team_players(teamAbbr, positions):
 
 @app.route('/plays')
 def get_plays():
-    plays = Plays.query.all()
+    #plays = Plays.query.all()
+    plays = Plays.query.filter(Plays.gameId == 2021091206).all()
 
     results = [
         {
@@ -484,7 +485,16 @@ def htmlplayerpressure(team, nflId):
     image="pressure_by_player_defense.png"
     return render_template('playerpressure.html', results=image, team=team)
 
+@app.route('/playsimulation/<gameId>/<playId>',methods=['GET'])
+def playsimulation(gameId, playId):
+    #Call to python here
+    return render_template('playsimulation.html')
 
+@app.route('/playpressure/<gameId>/<playId>',methods=['GET'])
+def playpressure(gameId, playId):
+    #Call to python here
+    return render_template('playpressure.html')
+   
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
