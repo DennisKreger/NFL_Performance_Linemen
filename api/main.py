@@ -493,7 +493,7 @@ def playsimulation(gameId, playId):
 @app.route('/playpressure/<gameId>/<playId>',methods=['GET'])
 def playpressure(gameId, playId):
     #Call to python here
-    html = dynamicPressureGauge.renderHtml();
+    html = dynamicPressureGauge.renderHtml(gameId,playId);
     return render_template('playpressure.html', html=html)
    
 
