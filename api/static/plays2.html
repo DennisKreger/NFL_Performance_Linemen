@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Game Selection</title>
+    <title>Plays</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -26,11 +26,17 @@
     <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
 
     <script>
-        var selectedGameId = 0;
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const selectedGameId = urlParams.get('gameId')
+        console.log(selectedGameId);
 
-        $.holdReady(true)
+        var selectedPlayId = 0;
+
+
+        $.holdReady(true);
         $(document).ready(function () {
-            var gamesTable = $('#gamesTable').DataTable({
+            var table = $('#plays').DataTable({
                 searchPanes: {
                     layout: "columns-3",
                     viewTotal: true
@@ -48,31 +54,84 @@
 
             });
             dom: 'Plfrtip';
+            columnDefs: [
+                {
+                    searchPanes: {
+                        show: true
+                    },
+                    targets: [0]
+                },
+                {
+                    searchPanes: {
+                        show: true
+                    },
+                    targets: [1]
+                },
+                {
+                    searchPanes: {
+                        show: true
+                    },
+                    targets: [2]
+                },
+                {
+                    searchPanes: {
+                        show: true
+                    },
+                    targets: [3]
+                },
+                {
+                    searchPanes: {
+                        show: true
+                    },
+                    targets: [4]
+                },
+                {
+                    searchPanes: {
+                        show: true
+                    },
+                    targets: [5]
+                },
+                {
+                    searchPanes: {
+                        show: true
+                    },
+                    targets: [6]
+                }
+            ]
+            table.searchPanes.container().prependTo(table.table().container());
+            table.searchPanes.resizePanes();
 
-            gamesTable.searchPanes.container().prependTo(gamesTable.table().container());
-            gamesTable.searchPanes.resizePanes();
-
-            gamesTable
+            table
             .on( 'select', function ( e, dt, type, indexes ) {
-                var rowData = gamesTable.rows( indexes ).data().toArray();
-                var tableArray = gamesTable.rows( indexes ).data();
+                var rowData = table.rows( indexes ).data().toArray();
+                var tableArray = table.rows( indexes ).data();
                 selectedGameId = tableArray[0][1];
+                selectedPlayId = tableArray[0][1];
                 console.log('Selected Game Id: ' + selectedGameId);  
-
+                console.log('Selected Play Id: ' + selectedPlayId);  
             } )
             .on( 'deselect', function ( e, dt, type, indexes ) {
-                var rowData = gamesTable.rows( indexes ).data().toArray();
-                var tableArray = gamesTable.rows( indexes ).data();
+                var rowData = table.rows( indexes ).data().toArray();
+                var tableArray = table.rows( indexes ).data();
                 selectedGameId = tableArray[0][1];
-                console.log('Deselected Game Id: ' + selectedGameId);    
+                selectedPlayId = tableArray[0][1];
+                console.log('Deselected Game Id: ' + selectedGameId);  
+                console.log('Deselected Play Id: ' + selectedPlayId);    
                 selectedGameId = 0;
+                selectedPlayId = 0;
+                $('#simulation').empty();
+                $('#pressure').empty();
             } );
 
-        })
+        });
+
+        function predict() {
+            console.log("predicting");
+            $('#simulation').load('/playsimulation/' + selectedGameId + '/' + selectedPlayId);                   
+            $('#pressure').load('/playpressure/' + selectedGameId + '/' + selectedPlayId);     
+           };
     
-        function goToPlays() {
-            window.location.href = "/static/plays2.html?gameId=" + selectedGameId;
-        }
+    
     </script>
 </head>
 
@@ -145,51 +204,76 @@
                     <div class="row">
                     
                     </div>
-                        <div class="container-fluid px-4">
+                    <div class="container-fluid px-4">
                         <br>
                         <p>
-                                <button id="select" class="btn btn-primary" 
-                                type="button" onclick="goToPlays()">
-                                    Continue to Play Selection
-                                </button>
-                        </p>
+                            <a>Select a Play from the table below to watch a simulation of the play.</a><br>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" 
+                            id="predict" onclick="predict()"
+                            data-bs-target="#collapsePrediction" aria-expanded="false" 
+                            aria-controls="collapsePrediction">
+                                Simulate Play
+                            </button>
+                            </p>
+                            <div class="collapse" id="collapsePrediction">
+                            <div class="card card-body" id="prediction">
+                                <a>Play Simulation</a>
+                                <div id="simulation">
+
+                                </div>
+                            </div>
+                            <div class="card card-body" id="prediction">
+                                <a>Play Pressure</a>
+                                <div id="pressure">
+
+                                </div>                              
+                            </div>
                   
                     </div>
-
-                     <div class="container-fluid px-4">
-                        <a>Select a game from the table below to choose a play to analyze.</a><br>
-                        <table id="gamesTable" class="display" style="width:100%">
+                    <div class="container-fluid px-4">
+                        <table id="plays" class="display" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Select</th>
                                     <th>Game Id</th>
-                                    <th>Season</th>
-                                    <th>Week</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Home Team</th>
-                                    <th>Away Team</th>                                                                    
+                                    <th>Play Id</th>
+                                    <th>Play Description</th>
+                                    <th>Quarter</th>
+                                    <th>Down</th>
+                                    <th>Yards to Go</th>
+                                    <th>Possession Team</th>
+                                    <th>Defensive Team</th>
+                                    <th>Side</th>
+                                    <th>Yardline</th>
+                                    <th>Game Clock</th>
+                                    <th>Presnap Home Score</th>
+                                    <th>Presnap Visitor Score</th>
+                                    <th>Offensive Formation</th>
+                                    <th>Offense Personnel</th>
+                                    <th>Defense Personnel</th>
+                                    <th>Dropback Type</th>
+                                    <th>Pass Coverage</th>
+                                    <th>Pass Coverage Type</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <script>
-                                    var gamesTbodyRef = document.getElementById('gamesTable').getElementsByTagName('tbody')[0];
-                                    async function getGamesData() {
-                                        let myObject = await fetch("/games");
+                                    var tbodyRef = document.getElementById('plays').getElementsByTagName('tbody')[0];
+                                    async function getData() {
+                                        let myObject = await fetch("/plays/" + selectedGameId);
                                         let tableData = await myObject.text();
-                                        //console.log(tableData)
-                                        let games = JSON.parse(tableData);
+                                        console.log(tableData)
+                                        let plays = JSON.parse(tableData);
 
 
-                                        function printGameValues(obj) {
+                                        function printValues(obj) {
                                             for (var k in obj) {
-                                                //console.log(k)
-                                                for (var game in obj[k]) {
+                                                for (var play in obj[k]) {
                                                     // Insert a row at the end of table
-                                                    var newRow = gamesTbodyRef.insertRow();
+                                                    var newRow = tbodyRef.insertRow();
                                                     newRow.insertCell();
-                                                    for (var key in obj[k][game]) {
-                                                        let val = obj[k][game][key]
+                                                    for (var key in obj[k][play]) {
+                                                        let val = obj[k][play][key]
                                                         // Insert a cell at the end of the row
                                                         var newCell = newRow.insertCell();
                                                         // Append a text node to the cell
@@ -197,14 +281,13 @@
                                                         newCell.appendChild(newText);
                                                     }
                                                 }
-                                                console.log("Done")
                                             }
                                             $.holdReady(false);
                                         };
-                                        printGameValues(games);
+                                        printValues(plays);
 
                                     }
-                                    getGamesData();
+                                    getData();
                                 </script>
 
                             </tbody>
@@ -212,18 +295,28 @@
                                 <tr>
                                     <th>Select</th>
                                     <th>Game Id</th>
-                                    <th>Season</th>
-                                    <th>Week</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Home Team</th>
-                                    <th>Away Team</th> 
+                                    <th>Play Id</th>
+                                    <th>Play Description</th>
+                                    <th>Quarter</th>
+                                    <th>Down</th>
+                                    <th>Yards to Go</th>
+                                    <th>Possession Team</th>
+                                    <th>Defensive Team</th>
+                                    <th>Side</th>
+                                    <th>Yardline</th>
+                                    <th>Game Clock</th>
+                                    <th>Presnap Home Score</th>
+                                    <th>Presnap Visitor Score</th>
+                                    <th>Offensive Formation</th>
+                                    <th>Offense Personnel</th>
+                                    <th>Defense Personnel</th>
+                                    <th>Dropback Type</th>
+                                    <th>Pass Coverage</th>
+                                    <th>Pass Coverage Type</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
-
-
             </main>
         </div>
     </div>

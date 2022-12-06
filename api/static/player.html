@@ -118,7 +118,8 @@
                 var rowData = offenseTable.rows( indexes ).data().toArray();
                 console.log(' selection: ' + JSON.stringify( rowData ) );      
                 $('#selectedOffensivePlayer').empty();
-                $('#pressure_by_player_offense').empty();      
+                $('#pressure_by_player_offense').empty();     
+                selectedOffensePlayerNflId = 0; 
             } );
 
             defenseTable
@@ -136,6 +137,7 @@
                 console.log(' selection: ' + JSON.stringify( rowData ) );          
                 $('#selectedDefensivePlayer').empty();
                 $('#pressure_by_player_defense').empty();  
+                selectedDefensePlayerNflId = 0;
             } );
 
         });

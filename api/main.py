@@ -10,6 +10,7 @@ from os import environ, path
 from flask_cors import CORS
 from flask import Flask, render_template
 import barchartrace
+#import dynamicPressureGauge
 
 # Init App
 app = Flask(__name__)
@@ -379,7 +380,36 @@ def position_team_players(teamAbbr, positions):
 
 @app.route('/plays')
 def get_plays():
+    #plays = Plays.query.all()
     plays = Plays.query.all()
+
+    results = [
+        {
+            "gameId": play.gameId,
+            "playId": play.playId,
+            "playDescription": play.playDescription,
+            "quarter": play.quarter,
+            "down": play.down, 
+            "yardsToGo": play.yardsToGo,
+            "possessionTeam": play.possessionTeam,
+            "defensiveTeam": play.defensiveTeam, 
+            "yardlineSide": play.yardlineSide, 
+            "yardlineNumber": play.yardlineNumber,
+            "gameClock": play.gameClock, 
+            "preSnapHomeScore": play.preSnapHomeScore, 
+            "preSnapVisitorScore": play.preSnapVisitorScore,
+            "offenseFormation": play.offenseFormation,
+            "personnelO": play.personnelO,
+            "personnelD": play.personnelD,
+            "dropbackType": play.dropbackType,
+            "pff_passCoverage": play.pff_passCoverage,            
+            "pff_passCoverageType": play.pff_passCoverageType
+        } for play in plays]    
+    return {"plays": results}
+
+@app.route('/plays/<gameId>')
+def get_selectedplays(gameId):
+    plays = Plays.query.filter(Plays.gameId == int(gameId)).all()
 
     results = [
         {
@@ -460,7 +490,7 @@ def games():
         "homeTeamAbbr": game.homeTeamAbbr,
         "visitorTeamAbbr": game.visitorTeamAbbr
         } for game in games]
-    return {"count": len(results), "games": results}
+    return {"games": results}
 
 @app.route('/teams',methods=['GET'])
 def teams():
@@ -484,7 +514,21 @@ def htmlplayerpressure(team, nflId):
     image="pressure_by_player_defense.png"
     return render_template('playerpressure.html', results=image, team=team)
 
+@app.route('/playsimulation/<gameId>/<playId>',methods=['GET'])
+def playsimulation(gameId, playId):
+    #Call to python here
+    return render_template('playsimulation.html')
 
+@app.route('/playpressure/<gameId>/<playId>',methods=['GET'])
+def playpressure(gameId, playId):
+    #Call to python here
+    #html = dynamicPressureGauge.returnHtml(gameId,playId);
+    html = "<div></div>"
+    return render_template('playpressure.html', html=html)
+
+
+
+   
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
