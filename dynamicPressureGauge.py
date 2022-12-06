@@ -252,12 +252,14 @@ def pickingPressurePlay(gameId,playId):
 
     playDescription = pff_joined_df.playDescription.loc[1]
 
+    gameDescription = pff_joined_df.gameId.loc[0]
+
     for index, row in df.iterrows():
         top_pressure |= set(row[row > -1].sort_values(ascending=False).head(6).index)
 
     df = df[top_pressure]
 
-    return bcr.bar_chart_race(df = df,n_bars=6,sort='desc',title=f'{playDescription}',filename=f'test.html')
+    return bcr.bar_chart_race(df = df,n_bars=6,sort='desc',title=f'{playDescription}',filename=f'{gameDescription}.html')
 
 returnHtml(2021090900,137)
 
