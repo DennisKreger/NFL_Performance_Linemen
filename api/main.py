@@ -10,7 +10,7 @@ from os import environ, path
 from flask_cors import CORS
 from flask import Flask, render_template
 import barchartrace
-#import dynamicPressureGauge
+import dynamicPressureGauge
 
 # Init App
 app = Flask(__name__)
@@ -522,8 +522,8 @@ def playsimulation(gameId, playId):
 @app.route('/playpressure/<gameId>/<playId>',methods=['GET'])
 def playpressure(gameId, playId):
     #Call to python here
-    #html = dynamicPressureGauge.returnHtml(gameId,playId);
-    html = "<div></div>"
+    html = dynamicPressureGauge.returnHtml(gameId,playId);
+    # html = "<div></div>"
     return render_template('playpressure.html', html=html)
 
 
