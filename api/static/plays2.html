@@ -26,9 +26,9 @@
     <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
 
     <script>
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const selectedGameId = urlParams.get('gameId')
+        var queryString = window.location.search;
+        var urlParams = new URLSearchParams(queryString);
+        var selectedGameId = urlParams.get('gameId')
         console.log(selectedGameId);
 
         var selectedPlayId = 0;
@@ -106,7 +106,7 @@
                 var rowData = table.rows( indexes ).data().toArray();
                 var tableArray = table.rows( indexes ).data();
                 selectedGameId = tableArray[0][1];
-                selectedPlayId = tableArray[0][1];
+                selectedPlayId = tableArray[0][2];
                 console.log('Selected Game Id: ' + selectedGameId);  
                 console.log('Selected Play Id: ' + selectedPlayId);  
             } )
@@ -204,9 +204,10 @@
                     <div class="row">
                     
                     </div>
-                    <div class="container-fluid px-4">
-                        <br>
-                        <p>
+                    <div class="card">
+                        <div class="card-body">
+                            <br>
+                            <p>
                             <a>Select a Play from the table below to watch a simulation of the play.</a><br>
                             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" 
                             id="predict" onclick="predict()"
@@ -216,6 +217,7 @@
                             </button>
                             </p>
                             <div class="collapse" id="collapsePrediction">
+                        </div>
                             <div class="card card-body" id="prediction">
                                 <a>Play Simulation</a>
                                 <div id="simulation">
