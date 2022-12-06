@@ -6,7 +6,6 @@ import matplotlib.ticker as ticker
 
 import matplotlib.animation as animation
 from IPython.display import HTML
-#import plotly.graph_objects as go
 from random import sample
 import datetime
 

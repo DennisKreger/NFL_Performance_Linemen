@@ -11,3 +11,6 @@ matplotlib
 seaborn
 ipython
 pandas
+scipy
+gunicorn
+
