@@ -1,12 +1,8 @@
-# Call winpred(home, visitor) for winning team name and html for win slider.
-# NOTE: Needs access to win-prediction-linear.pkl
-
 # Import dependencies
 import pandas as pd
 from scipy.stats import norm
 import pickle, mpld3
 import matplotlib.pyplot as plt
-import sklearn
 
 team_abbr = {
     'TB': 'Tampa Bay Buccaneers',
@@ -143,6 +139,7 @@ season_stats = season_stats[season_stats['Next Season'] == 2021]
 
 
 def make_plot(home, visitor, home_win, confidence):
+    plt.clf()
     if home in team_abbr.keys():
         home = team_abbr[home]
     if visitor in team_abbr.keys():
@@ -185,10 +182,12 @@ def make_plot(home, visitor, home_win, confidence):
         solid_capstyle='round'
     )
     ax = plt.gca()
-    ax.set_aspect(1)
+    ax.set_aspect('equal', adjustable='box')
     ax.set_ylim(-0.5,2.5)
     plt.axis('off')
-    return mpld3.fig_to_html(plt.figure())
+    filename = f'images/winpred_temp.jpg'
+    plt.savefig(f'static/{filename}', bbox_inches ='tight')
+    return filename
 
 def winpred(home, visitor):
 
@@ -242,16 +241,16 @@ def winpred(home, visitor):
     correct_pdf = norm.pdf(predicted_score_difference,0,stdev_correct)
     incorrect_pdf = norm.pdf(predicted_score_difference,0,stdev_incorrect)
     prediction_confidence = correct_pdf / (correct_pdf + incorrect_pdf)
-    
+    print(prediction_confidence)
     if prediction_confidence < 0.5:
-        return ('Too close to call!', 0.5)
+        return make_plot(home, visitor, 0, prediction_confidence)
 
     if predicted_score_difference > 0:
-        return prediction_data_cleaned['Team'].iloc[1], make_plot(home, visitor, 0, prediction_confidence)
+        return make_plot(home, visitor, 1, prediction_confidence)
     else:
-        return prediction_data_cleaned['Team'].iloc[0], make_plot(home, visitor, 1, prediction_confidence)
+        return make_plot(home, visitor, 0, prediction_confidence)
 
 
 if __name__ == "__main__":
     print('Testing...')
-    print(winpred('Green Bay Packers', 'Philadelphia Eagles'))
+    print(winpred('GB', 'DAL'))

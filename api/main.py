@@ -10,10 +10,9 @@ from os import environ, path
 from flask_cors import CORS
 from flask import Flask, render_template
 import dynamicPressureGauge
-import maxteampressurebyplay
 import playermatchuppressure
-import winpredmodel
-import UserPickupdated
+# import UserPickupdated
+import matplotlib.pyplot as plt
 
 # Init App
 app = Flask(__name__)
@@ -525,35 +524,36 @@ def playpressure(gameId, playId):
 
 @app.route('/pressurehometeam/<team>',methods=['GET'])
 def pressurehometeam(team):
+    import teampressure
     #Call to python here
-    html = maxteampressurebyplay.generate_plot(team);
-    # return render_template('hometeampressure.html')
-    return html;
+    home_team_pressure_image = teampressure.generate_plot_home(team)
+    return f'<img src={home_team_pressure_image} style="max-width:100%;max-height:100%>'
 
 @app.route('/pressureawayteam/<team>',methods=['GET'])
 def pressureawayteam(team):
+    import teampressure
     #Call to python here
-    html = maxteampressurebyplay.generate_plot(team);
-    # return render_template('awayteampressure.html', html=html)
-    return html;
+    away_team_pressure_image = teampressure.generate_plot_away(team)
+    return f'<img src={away_team_pressure_image} style="max-width:100%;max-height:100%>'
+
 
 @app.route('/winprediction/<hometeam>/<awayteam>',methods=['GET'])
 def winprediction(hometeam, awayteam):
+    import winpredmodel
     #Call to python here
-    html = winpredmodel.winpred(hometeam,awayteam);
-    # return render_template('winprediction.html', html=html)
-    return html;
+    image = winpredmodel.winpred(hometeam,awayteam)
+    return f'<img src={image} style="max-width:100%;max-height:100%">'
 
 @app.route('/htmlplayerpressure/<nflIdDefense>/<nflIdOffense>',methods=['GET'])
 def htmlplayerpressure(nflIdDefense, nflIdOffense):
-    html = playermatchuppressure.player_matchup(int(nflIdDefense), int(nflIdOffense));
-    # return render_template('playerpressure.html', html=html)
-    return html;
+    import playermatchuppressure
+    image = playermatchuppressure.player_matchup(int(nflIdDefense), int(nflIdOffense));
+    return f'<img src={image} style="max-width:100%;max-height:100%">'
 
-@app.route('/playanimation/<gameId>/<playId>', methods='GET')
+@app.route('/playanimation/<gameId>/<playId>', methods=['GET'])
 def playanimation(gameId, playId):
-    html = UserPickupdated.returnHtml(gameId,playId);
-    return render_template('animation.html', html=html)
+    # html = UserPickupdated.returnHtml(gameId,playId)
+    return render_template('animation.html', html=None)
    
 
 if __name__ == '__main__':

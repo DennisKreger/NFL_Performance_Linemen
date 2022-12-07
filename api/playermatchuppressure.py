@@ -6,7 +6,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from scipy.stats import norm
 from statistics import mean, stdev
-import math
+import math, kaleido
 import plotly.graph_objects as go
 
 plt.switch_backend('Agg') 
@@ -49,10 +49,10 @@ def player_matchup(nflId_defense, nflId_offense):
         title = {'text': "Pressure Metric"},
         gauge = {'axis': {'range': [None, 1000]},}))
 
-    fig.write_html('player_matchup_temp.html')
-    with open('player_matchup_temp.html','r') as html_file:
-        html = html_file.read()
-    html_file.close()
+    filename = f'images/player-matchup_temp.jpg'
+    fig.write_image(f'static/{filename}', engine="kaleido")
     
-    #return format_pct(pressure_metric_defense), format_pct(pressure_metric_offense), html
-    return html
+    return filename
+
+if __name__ == '__main__':
+    print(player_matchup(30869, 35442))

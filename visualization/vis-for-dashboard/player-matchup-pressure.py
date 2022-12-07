@@ -54,3 +54,6 @@ def player_matchup(nflId_defense, nflId_offense):
     html_file.close()
     
     return format_pct(pressure_metric_defense), format_pct(pressure_metric_offense), html
+
+if __name__ == '__main__':
+    print(player_matchup(30869, 35442))

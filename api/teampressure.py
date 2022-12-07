@@ -3,9 +3,6 @@
 # Import dependencies
 import pandas as pd
 from matplotlib import pyplot as plt
-import mpld3
-
-plt.switch_backend('Agg') 
 
 # Read data
 red_zone_qb_proximity = pd.read_csv('https://storage.googleapis.com/big-data-bowl/redZoneQBProximity.csv')
@@ -22,7 +19,7 @@ red_zone_qb_proximity_team
 
 max_pressure = red_zone_qb_proximity_team[red_zone_qb_proximity_team['matchupOpposing'] == 1][['playId', 'distance', 'team']].groupby('playId').min().reset_index()
 
-def generate_plot(team):
+def generate_plot_home(team):
     fig, ax1 = plt.subplots()
     max_pressure[max_pressure['team'] == team]['distance'].plot.density(figsize=(10,4),
                               xlim=(5,0))
@@ -31,5 +28,19 @@ def generate_plot(team):
     plt.xlabel('Distance from QB')
     plt.ylabel('Frequency')
     plt.title(f'Max Pressure by Play - {team}')
-    return mpld3.fig_to_html(fig)
+    filename = f'images/pressure-home_temp.jpg'
+    fig.savefig(f'static/{filename}', bbox_inches='tight')
+    return filename
 
+def generate_plot_away(team):
+    fig, ax1 = plt.subplots()
+    max_pressure[max_pressure['team'] == team]['distance'].plot.density(figsize=(10,4),
+                              xlim=(5,0))
+    ax2 = ax1.twinx()
+    ax2.hist(max_pressure[max_pressure['team'] == team]['distance'], alpha=0.1, bins=18)
+    plt.xlabel('Distance from QB')
+    plt.ylabel('Frequency')
+    plt.title(f'Max Pressure by Play - {team}')
+    filename = f'images/pressure-away_temp.jpg'
+    fig.savefig(f'static/{filename}', bbox_inches='tight')
+    return filename
