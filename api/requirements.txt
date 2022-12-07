@@ -19,5 +19,6 @@ sklearn
 scikit-learn
 raceplotly
 kaleido
+ConfigParser
 gunicorn
 

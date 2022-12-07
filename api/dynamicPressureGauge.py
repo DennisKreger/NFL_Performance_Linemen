@@ -16,17 +16,17 @@ warnings.filterwarnings("ignore")
 from scipy.spatial.distance import pdist, squareform
 from IPython.display import HTML
 
+from os import environ, path
+from dotenv import load_dotenv
 
-
-# Store environment variable
-#from getpass import getpass
-#dbPassword = getpass('Enter database password')
-
+basedir = path.abspath(path.dirname(__file__))
+load_dotenv(path.join(basedir, '.env'))
+dbPassword = environ.get('DB_PASSWORD')
 
 param_dic = {
         'database': 'big-data-bowl',
         'user': 'postgres',
-        'password': 'FqvVEru,Vs7y',
+        'password': dbPassword,
         'host': '34.72.136.99',
         'port': 5432,
 }
@@ -222,7 +222,7 @@ def pickingPressurePlay(gameId,playId):
     df = df[top_pressure]
 
     html = bcr.bar_chart_race(df = df,n_bars=6,sort='desc',title=f'{playDescription}')
-    return HTML(html)
+    return html
 
 #returnHtml(2021090900,137)
 
