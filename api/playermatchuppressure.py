@@ -50,7 +50,7 @@ def player_matchup(nflId_defense, nflId_offense):
         title = {'text': "Pressure Metric"},
         gauge = {'axis': {'range': [None, 1000]},}))
 
-    filename = f'images/player-matchup_temp.jpg'
+    filename = f'images/player-matchup_'+str(nflId_defense)+'_'+str(nflId_offense)+'.jpg'
     fig.write_image(f'static/{filename}', engine="kaleido")
     
     return filename

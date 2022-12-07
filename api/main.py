@@ -528,22 +528,23 @@ def pressurehometeam(team):
     import teampressure
     #Call to python here
     home_team_pressure_image = teampressure.generate_plot_home(team)
-    return f'<img src={home_team_pressure_image} style="max-width:100%;max-height:100%>'
+    #return f'<img src={home_team_pressure_image} style="max-width:100%;max-height:100%>'
+    return render_template('hometeampressure.html', image=home_team_pressure_image)
 
 @app.route('/pressureawayteam/<team>',methods=['GET'])
 def pressureawayteam(team):
     import teampressure
     #Call to python here
     away_team_pressure_image = teampressure.generate_plot_away(team)
-    return f'<img src={away_team_pressure_image} style="max-width:100%;max-height:100%>'
+    #return f'<img src={away_team_pressure_image} style="max-width:100%;max-height:100%>'
+    return render_template('awayteampressure.html', image=away_team_pressure_image)
 
 
 @app.route('/winprediction/<hometeam>/<awayteam>',methods=['GET'])
 def winprediction(hometeam, awayteam):
     import winpredmodel
-    #Call to python here
     image = winpredmodel.winpred(hometeam,awayteam)
-    return f'<img src={image} style="max-width:100%;max-height:100%">'
+    return render_template('winprediction.html', image=image)
 
 @app.route('/htmlplayerpressure/<nflIdDefense>/<nflIdOffense>',methods=['GET'])
 def htmlplayerpressure(nflIdDefense, nflIdOffense):
