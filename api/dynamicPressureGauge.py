@@ -222,7 +222,8 @@ def pickingPressurePlay(gameId,playId):
     df = df[top_pressure]
 
     html = bcr.bar_chart_race(df = df,n_bars=6,sort='desc',title=f'{playDescription}')
-    return html
+    print(html)
+    return html.data
 
 #returnHtml(2021090900,137)
 
