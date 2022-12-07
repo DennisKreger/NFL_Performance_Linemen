@@ -13,6 +13,7 @@ import dynamicPressureGauge
 import maxteampressurebyplay
 import playermatchuppressure
 import winpredmodel
+import UserPickupdated
 
 # Init App
 app = Flask(__name__)
@@ -549,6 +550,10 @@ def htmlplayerpressure(nflIdDefense, nflIdOffense):
     # return render_template('playerpressure.html', html=html)
     return html;
 
+@app.route('/playanimation/<gameId>/<playId>', methods='GET')
+def playanimation(gameId, playId):
+    html = UserPickupdated.returnHtml(gameId,playId);
+    return render_template('animation.html', html=html)
    
 
 if __name__ == '__main__':
@@ -562,4 +567,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all() # <--- create db object.
     app.run(host='127.0.0.1', port=8080, debug=True)
-    
