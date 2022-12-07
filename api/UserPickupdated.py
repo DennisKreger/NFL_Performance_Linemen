@@ -1,8 +1,13 @@
 # Import dependencies 
 import pandas as pd
 import numpy as np
+
 import psycopg2
 import sys
+
+pd.options.mode.chained_assignment = None 
+pd.set_option('display.max_columns', None)
+
 import json
 import plotly.express as px
 import plotly
@@ -22,7 +27,6 @@ warnings.filterwarnings("ignore")
 from os import environ, path
 from dotenv import load_dotenv
 
-
 basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, '.env'))
 dbPassword = environ.get('DB_PASSWORD')
@@ -34,6 +38,7 @@ param_dic = {
         'host': '34.72.136.99',
         'port': 5432,
 }
+
 def connect(params_dic):
     """ Connect to the PostgreSQL database server """
     conn = None
@@ -64,6 +69,7 @@ def postgresql_to_dataframe(conn, select_query, column_names):
     tupples = cursor.fetchall()
     cursor.close()
     
+    
     # We just need to turn it into a pandas dataframe
     df = pd.DataFrame(tupples, columns=column_names)
     return df
@@ -74,15 +80,68 @@ def postgresql_to_dataframe(conn, select_query, column_names):
 # playId = 137
 
 
-# This function is designed for the user to pick specific plays to analyze
-def pickingAnimatedPlay(df):
-    # do work
-    return userInputs(df)
-
 # User input on selecting a play 
 # Select Team, Formation, Pass Result
-def userInputs(df):
+def animate(gameId,playId):
     print("inside userInputs")
+    
+    
+    conn = connect(param_dic)
+    column_names = [
+    "gameId", 
+    "playId", 
+    "nflId",
+    "displayName",
+    "officialPosition",
+    "playDescription",
+    "frameId",
+    "team",
+    "x",
+    "y",
+    "absoluteYardlineNumber",
+    "yardsToGo",
+    "down",
+    "quarter",
+    "gameClock",
+    "pff_positionLinedUp",
+    "pff_role"
+    ]
+    query = f"SELECT trd.\"gameId\", \
+    trd.\"playId\", \
+    trd.\"nflId\",  \
+    pl.\"displayName\", \
+    pl.\"officialPosition\",  \
+    ply.\"playDescription\", \
+    trd.\"frameId\", \
+    trd.\"team\",        \
+    trd.\"x\",        \
+    trd.\"y\",        \
+    ply.\"absoluteYardlineNumber\", \
+    ply.\"yardsToGo\",  \
+    ply.\"down\", \
+    ply.\"quarter\", \
+    ply.\"gameClock\",  \
+    pff.\"pff_positionLinedUp\", \
+    pff.\"pff_role\" \
+    FROM trackingdata as trd                                            \
+    LEFT JOIN players as pl                                             \
+    ON trd.\"nflId\" = pl.\"nflID\" \
+    LEFT JOIN plays as ply \
+    ON trd.\"playId\" = ply.\"playId\"      \
+    LEFT JOIN pffscoutingdata as pff \
+    ON trd.\"playId\" = pff.\"playId\"   \
+    WHERE trd.\"gameId\" = {gameId} AND trd.\"playId\" = {playId} "
+
+    # Execute the "SELECT" query
+    pff_joined_df = postgresql_to_dataframe(conn, query, column_names)
+    print(pff_joined_df)
+    print(pff_joined_df.head())
+
+    df = pff_joined_df.loc[pff_joined_df['gameId']==gameId]
+    df = df.loc[df['playId']==playId]
+    
+    print(df.head())
+    
     # Colors for each NFL team and Color for Football
     colors = {
     'ARI':"#97233F", 
@@ -119,18 +178,16 @@ def userInputs(df):
     'WAS':"#5A1414", 
     'football':'#CBB67C'}
   
-    # An empty Pandas DataFrame is created to hold and return all user inputs
-    gameList = df
-
     # Creating Animation from selected play
                         
-    selected_play_df = gameList
-    selected_tracking_df = gameList
+    selected_play_df = df
+    selected_tracking_df = df
 
     sorted_frame_list = selected_tracking_df.frameId.unique()
     sorted_frame_list.sort()
 
     # get play General information 
+    print(selected_play_df.columns)
     line_of_scrimmage = selected_play_df.absoluteYardlineNumber.values[0]
     first_down_marker = line_of_scrimmage + selected_play_df.yardsToGo.values[0]
     down = selected_play_df.down.values[0]
@@ -250,7 +307,7 @@ def userInputs(df):
         print("plotting players")
         # Plot Players
         for team in selected_tracking_df.team.unique():
-            #print(team)
+            print(team)
             plot_df = selected_tracking_df[(selected_tracking_df.team==team)&(selected_tracking_df.frameId==frameId)].copy()
             if team != "football":
                 hover_text_array=[]
@@ -322,20 +379,8 @@ def userInputs(df):
 
 
 def returnHTML(gameId,playId):
-    print("generating html")
-    print(gameId)
-    print(playId)
 
-    print(joined_all.count())
-    print(joined_all.head())
-    # load data here
-    print("df loaded")
-    df = joined_all.loc[(joined_all['gameId']==int(gameId)) & (joined_all['playId']==int(playId))]
-    print(df.count())
-    print(df.head())
-
-    print("joined data")
-    field_animation = pickingAnimatedPlay(df)
+    field_animation = animate(int(gameId),int(playId))
     print("completed field animation")
     buffer = io.StringIO()
     field_animation.write_html(buffer)

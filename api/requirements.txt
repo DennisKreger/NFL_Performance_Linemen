@@ -21,4 +21,6 @@ raceplotly
 kaleido
 ConfigParser
 gunicorn
+psycopg2-binary
+
 
