@@ -70,8 +70,8 @@ def postgresql_to_dataframe(conn, select_query, column_names):
 
 
 # Connect to the database
-gameId = 2021090900
-playId = 137
+# gameId = 2021090900
+# playId = 137
 
 
 # This function is designed for the user to pick specific plays to analyze
