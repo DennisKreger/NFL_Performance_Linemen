@@ -1,17 +1,11 @@
-# %%
 # Importing required libraries
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
+
 import psycopg2
 import sys
 
 import bar_chart_race as bcr
-
-import matplotlib.animation as animation
-from IPython.display import HTML
-
 
 pd.options.mode.chained_assignment = None 
 pd.set_option('display.max_columns', None)
@@ -22,12 +16,12 @@ warnings.filterwarnings("ignore")
 from scipy.spatial.distance import pdist, squareform
 
 
-# %%
+
 # Store environment variable
 from getpass import getpass
 dbPassword = getpass('Enter database password')
 
-# %%
+
 param_dic = {
         'database': 'big-data-bowl',
         'user': 'postgres',
@@ -48,7 +42,7 @@ def connect(params_dic):
     print("Connection successful")
     return conn
 
-# %%
+
 def postgresql_to_dataframe(conn, select_query, column_names):
     """
     Tranform a SELECT query into a pandas dataframe
@@ -69,12 +63,12 @@ def postgresql_to_dataframe(conn, select_query, column_names):
     df = pd.DataFrame(tupples, columns=column_names)
     return df
 
-# %%
+
 # Connect to the database
 gameId = 2021090900
 playId = 137
 
-# %%
+
 def returnHtml(gameId,playId):
     # do work
     return pickingPressurePlay(gameId,playId)
@@ -143,30 +137,7 @@ def pickingPressurePlay(gameId,playId):
         # clear the index name for prettyfication 
         one_frame.index.name = None
 
-        defense = [
-        'OLB','MLB','ILB','DE','SS','FS','CB','DT','NT',
-        'OLB1','OLB2','OLB3','OLB4','OLB5',
-        'MLB1','MLB2','MLB3','MLB4','MLB5',
-        'ILB1','ILB2','ILB3','ILB4','ILB5',
-        'DE1','DE2','DE3','DE4','DE5',
-        'SS1','SS2','SS3','SS4','SS5',
-        'FS1','FS2','FS3','FS4','FS5',
-        'CB1','CB2','CB3','CB4','CB5','CB6','CB7',
-        'DT1','DT2','DT3','DT4','DT5',
-        'NT1','NT2','NT3','NT4','NT5'
-        ]
-
-        offense = (
-        'QB','RB','WR','TE','FB','T','G','C',
-        'QB1','QB2','QB3',
-        'RB1','RB2','RB3','RB4',
-        'WR','WR1','WR2','WR3','WR4','WR5','WR6','WR7','WR8',
-        'TE','TE1','TE2','TE3','TE4',
-        'FB1','FB2','FB3',
-        'T','T1','T2','T3','T4',
-        'G','G1','G2','G3','G4',
-        'C','C1','C2','C3'
-        )
+        
 
 
         one_frame = one_frame[['nflId','gameId','playId','displayName','officialPosition','playDescription','frameId','x','y','QB']]
@@ -221,17 +192,7 @@ def pickingPressurePlay(gameId,playId):
 
     df = pressureDF[['officialPosition','pressureValue','frameId']]
     df = df_presnap.pivot_table(values = 'pressureValue',index=['frameId'], columns = 'officialPosition')
-    offense = [
-        'QB','RB','WR','TE','FB','T','G','C',
-        'QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8',
-        'RB1','RB2','RB3','RB4','RB5','RB6','RB7','RB8',
-        'WR','WR1','WR2','WR3','WR4','WR5','WR6','WR7','WR8',
-        'TE','TE1','TE2','TE3','TE4','TE5','TE6','TE7','TE8',
-        'FB1','FB2','FB3','FB4',
-        'T','T1','T2','T3','T4','T5','T6','T7','T8',
-        'G','G1','G2','G3','G4','G5','G6','G7','G8',
-        'C','C1','C2','C3','C4','C5','C6','C7','C8',
-        ]
+    
 
     df.drop(list(df.filter(regex = '1')), axis = 1, inplace = True)
     df.drop(list(df.filter(regex = '2')), axis = 1, inplace = True)
