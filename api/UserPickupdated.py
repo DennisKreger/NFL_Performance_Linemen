@@ -1,6 +1,8 @@
 # Import dependencies 
 import pandas as pd
 import numpy as np
+import psycopg2
+import sys
 import json
 import plotly.express as px
 import plotly
@@ -17,38 +19,59 @@ pd.set_option('display.max_columns', None)
 
 import warnings 
 warnings.filterwarnings("ignore")
+from os import environ, path
+from dotenv import load_dotenv
 
-# Import Data
-games = pd.read_csv("https://storage.googleapis.com/big-data-bowl/games.csv")
-plays = pd.read_csv("https://storage.googleapis.com/big-data-bowl/plays.csv")
-players = pd.read_csv("https://storage.googleapis.com/big-data-bowl/players.csv")
-week1 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week1.csv", low_memory=False)
-#week2 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week2.csv", low_memory=False)
-#week3 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week3.csv", low_memory=False)
-#week4 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week4.csv", low_memory=False)
-#week5 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week5.csv", low_memory=False)
-#week6 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week6.csv", low_memory=False)
-#week7 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week7.csv", low_memory=False)
-#week8 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week8.csv", low_memory=False)
 
-pffScoutingData = pd.read_csv("https://storage.googleapis.com/big-data-bowl/pffScoutingData.csv")
+basedir = path.abspath(path.dirname(__file__))
+load_dotenv(path.join(basedir, '.env'))
+dbPassword = environ.get('DB_PASSWORD')
 
-tracking = week1
-#.append([
-#    week2,
-#    week3,
-#    week4,
-#    week5,
-#    week6,
-#    week7,
-#    week8,])
+param_dic = {
+        'database': 'big-data-bowl',
+        'user': 'postgres',
+        'password': dbPassword,
+        'host': '34.72.136.99',
+        'port': 5432,
+}
+def connect(params_dic):
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # connect to the PostgreSQL server
+        print('Connecting to the PostgreSQL database...')
+        conn = psycopg2.connect(**params_dic)
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+        sys.exit(1) 
+    print("Connection successful")
+    return conn
 
-joined_all = pd.merge(games,plays,how="inner",on = "gameId")
-joined_all = pd.merge(joined_all,tracking,how="inner",on=["gameId","playId"])
-# left join on players to keep football records
-joined_all = pd.merge(joined_all,players,how="left",on = "nflId")
-joined_all = pd.merge(joined_all,pffScoutingData,how="left",on=["gameId","playId",'nflId'])
 
+def postgresql_to_dataframe(conn, select_query, column_names):
+    """
+    Tranform a SELECT query into a pandas dataframe
+    """
+    cursor = conn.cursor()
+    try:
+        cursor.execute(select_query)
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("Error: %s" % error)
+        cursor.close()
+        return 1
+    
+    # Naturally we get a list of tupples
+    tupples = cursor.fetchall()
+    cursor.close()
+    
+    # We just need to turn it into a pandas dataframe
+    df = pd.DataFrame(tupples, columns=column_names)
+    return df
+
+
+# Connect to the database
+gameId = 2021090900
+playId = 137
 
 
 # This function is designed for the user to pick specific plays to analyze
