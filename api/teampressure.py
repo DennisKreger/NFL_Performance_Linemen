@@ -20,6 +20,8 @@ red_zone_qb_proximity_team
 max_pressure = red_zone_qb_proximity_team[red_zone_qb_proximity_team['matchupOpposing'] == 1][['playId', 'distance', 'team']].groupby('playId').min().reset_index()
 
 def generate_plot_home(team):
+    plt.clf()
+    
     fig, ax1 = plt.subplots()
     max_pressure[max_pressure['team'] == team]['distance'].plot.density(figsize=(10,4),
                               xlim=(5,0))
@@ -33,6 +35,8 @@ def generate_plot_home(team):
     return filename
 
 def generate_plot_away(team):
+    plt.clf()
+
     fig, ax1 = plt.subplots()
     max_pressure[max_pressure['team'] == team]['distance'].plot.density(figsize=(10,4),
                               xlim=(5,0))
