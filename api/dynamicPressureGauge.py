@@ -66,8 +66,8 @@ def postgresql_to_dataframe(conn, select_query, column_names):
 
 
 # Connect to the database
-gameId = 2021090900
-playId = 137
+# gameId = 2021090900
+# playId = 137
 
 
 def returnHtml(gameId,playId):
