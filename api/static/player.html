@@ -145,7 +145,7 @@
 
        function predict() {
         console.log("predicting");
-        $('#prediction').load('/plot');     
+        $('#prediction').load('/htmlplayerpressure/' + selectedDefensePlayerNflId + '/' + selectedOffensePlayerNflId);     
        };
 
 
@@ -238,9 +238,6 @@
                                             <h3>Selected Offensive Player</h3>
                                         </div>
                                         <div id="selectedOffensivePlayer" class="card-body">
-
-                                        </div>
-                                        <div id="pressure_by_player_offense" class="card-body">
                                         </div>
                                     </div>
                                 </div>
@@ -250,8 +247,6 @@
                                             <h3>Selected Defensive Player</h3>
                                         </div>
                                         <div id="selectedDefensivePlayer" class="card-body">
-                                        </div>
-                                        <div id="pressure_by_player_defense" class="card-body">
                                         </div>
                                     </div>
                                 </div>

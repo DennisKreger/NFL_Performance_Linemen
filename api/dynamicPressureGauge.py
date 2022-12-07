@@ -1,17 +1,13 @@
-
 # Importing required libraries
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-import psycopg2
-import sys
-
-import bar_chart_race as bcr
 
 import matplotlib.animation as animation
 from IPython.display import HTML
-
+from random import sample
+import datetime
 
 pd.options.mode.chained_assignment = None 
 pd.set_option('display.max_columns', None)
@@ -20,242 +16,258 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from scipy.spatial.distance import pdist, squareform
+plt.switch_backend('Agg') 
 
 
-# Store environment variable
-from getpass import getpass
-dbPassword = getpass('Enter database password')
 
-param_dic = {
-        'database': 'big-data-bowl',
-        'user': 'postgres',
-        'password': dbPassword,
-        'host': '34.72.136.99',
-        'port': 5432,
-}
-def connect(params_dic):
-    """ Connect to the PostgreSQL database server """
-    conn = None
-    try:
-        # connect to the PostgreSQL server
-        print('Connecting to the PostgreSQL database...')
-        conn = psycopg2.connect(**params_dic)
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-        sys.exit(1) 
-    print("Connection successful")
-    return conn
+# Read data
+# Import Data
+games = pd.read_csv("https://storage.googleapis.com/big-data-bowl/games.csv", low_memory=False)
+plays = pd.read_csv("https://storage.googleapis.com/big-data-bowl/plays.csv", low_memory=False)
+players = pd.read_csv("https://storage.googleapis.com/big-data-bowl/players.csv", low_memory=False)
 
-def postgresql_to_dataframe(conn, select_query, column_names):
-    """
-    Tranform a SELECT query into a pandas dataframe
-    """
-    cursor = conn.cursor()
-    try:
-        cursor.execute(select_query)
-    except (Exception, psycopg2.DatabaseError) as error:
-        print("Error: %s" % error)
-        cursor.close()
-        return 1
-    
-    # Naturally we get a list of tupples
-    tupples = cursor.fetchall()
-    cursor.close()
-    
-    # We just need to turn it into a pandas dataframe
-    df = pd.DataFrame(tupples, columns=column_names)
-    return df
+week1 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week1.csv", low_memory=False)
+#week2 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week2.csv", low_memory=False)
+#week3 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week3.csv", low_memory=False)
+#week4 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week4.csv", low_memory=False)
+#week5 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week5.csv", low_memory=False)
+#week6 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week6.csv", low_memory=False)
+#week7 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week7.csv", low_memory=False)
+#week8 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week8.csv", low_memory=False)
+
+pffScoutingData = pd.read_csv("https://storage.googleapis.com/big-data-bowl/pffScoutingData.csv", low_memory=False)
 
 
-# Connect to the database
-gameId = 2021090900
-playId = 137
+tracking = week1
+    #.append([
+    #week2,
+    #week3,
+    #week4,
+    #week5,
+    #week6,
+    #week7,
+    #week8
+#])
+
+print(tracking.head())
+# Merge Data
+print("merging data")
+joined_all = pd.merge(games,plays,how="inner",on = "gameId")
+print(joined_all.count())
+joined_all = pd.merge(joined_all,tracking,how="inner",on=["gameId","playId"])
+print(joined_all.count())
+# left join on players to keep football records
+joined_all = pd.merge(joined_all,players,how="left",on = "nflId")
+print(joined_all.count())
+joined_all = pd.merge(joined_all,pffScoutingData,how="left",on=["gameId","playId",'nflId'])
+print(joined_all.count())
+print(joined_all.head())
+
+
+
+# This function is designed for the user to pick specific plays to analyze
 
 def returnHtml(gameId,playId):
     # do work
-    return pickingPressurePlay(gameId,playId)
+    print("generating html")
+    print(gameId)
+    print(playId)
+    return pickingPressurePlay(int(gameId),int(playId))
 
 # User input on selecting a play 
 # Select Team, Formation, Pass Result
 def pickingPressurePlay(gameId,playId):
+    print("inside pickingPressurePlay")
+    
+    def draw_barchart(frame):
+        print("inside draw_barchart")
+        dff = df[df['frameId'].eq(frame)].sort_values(by='pressureValue', ascending=True)
+        ax.clear()
+        ax.barh(dff['displayName'], dff['pressureValue'].round(decimals = 3), color=[colors[group_lk[x]] for x in dff['displayName']])
+        dx = dff['pressureValue'].max() / 200
+        for i, (value, name) in enumerate(zip(dff['pressureValue'].round(decimals = 3), dff['displayName'])):
+            ax.text(value-dx, i-.05,     name,           size=14, weight=800, ha='right', va='bottom')
+            ax.text(value-dx, i+.25, group_lk[name], size=10, color='#444444', ha='right', va='baseline')
+            ax.text(value-dx*10, i-.25,     value,  size=14, ha='left',  va='center')
+        # ... polished styles
+        ax.text(1, 0.4, frame, transform=ax.transAxes, color='#777777', size=46, ha='right', weight=500)
+        ax.text(0, 1.06, 'pressureValue', transform=ax.transAxes, size=12, color='#777777')
+        ax.xaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,.0f}'))
+        ax.xaxis.set_ticks_position('top')
+        ax.tick_params(axis='x', colors='#777777', labelsize=12)
+        ax.set_yticks([])
+        ax.margins(0, 0.01)
+        ax.grid(which='major', axis='x', linestyle='-')
+        ax.set_axisbelow(True)
+        ax.text(0, 1.12, f'{playDescription}',
+                transform=ax.transAxes, size=24, weight=600, ha='left')
+        ax.text(1, 0, 'by Dennis K.', transform=ax.transAxes, ha='right',
+                color='#777777', bbox=dict(facecolor='white', alpha=0.8, edgecolor='white'))
+        plt.box(False)
+        
+    
 
 
-    conn = connect(param_dic)
-    column_names = [
-    "gameId", 
-    "playId", 
-    "nflId",
-    "displayName",
-    "officialPosition",
-    "playDescription",
-    "frameId",
-    "x",
-    "y"
-    ]
-    query = f"SELECT ALL trd.\"gameId\", \
-    trd.\"playId\", \
-    trd.\"nflId\",  \
-    pl.\"displayName\", \
-    pl.\"officialPosition\",  \
-    ply.\"playDescription\", \
-    trd.\"frameId\", \
-    trd.\"x\",        \
-    trd.\"y\"         \
-    FROM trackingdata as trd                                            \
-    LEFT JOIN players as pl                                             \
-    ON trd.\"nflId\" = pl.\"nflID\" \
-    LEFT JOIN plays as ply \
-    ON trd.\"playId\" = ply.\"playId\"       \
-    WHERE trd.\"gameId\" = {gameId} AND trd.\"playId\" = {playId} "
-
-    # Execute the "SELECT" query
-    pff_joined_df = postgresql_to_dataframe(conn, query, column_names)
-
-    df = pff_joined_df.loc[pff_joined_df['gameId']==gameId]
+    print(joined_all.count())
+    print(joined_all.head())
+    # load data here
+    print("df loaded")
+    df = joined_all.loc[joined_all['gameId']==gameId]
+    print(df.count())
     df = df.loc[df['playId']==playId]
+    print(df.count())
+    print(df.head())
+
+    print("joined data")
+
+    # Create empty Pandas DataFrames for user to input and for pre_snap information 
+    #gameList = pd.DataFrame()
 
     df_presnap = pd.DataFrame()
 
-    for oneFrame in pff_joined_df['frameId'].unique():
-        one_frame = df.loc[df['frameId'] == oneFrame]
+    # Creating the pressure Gauge                        
+    pressureDF = pd.DataFrame()
+
+    print("before gid loop")
+    print(df.head())
+
+    # loop through each game 
+    for gid in df['gameId'].unique():
+        print("inside for gid loop")
+        # subset the data down to one game
+        one_game = df.loc[df['gameId']==gid]
+    
+        # loop through each play
+        for pid in one_game['playId'].unique():
+            print("Inside onne_game")
+
+            # subset game data down to one play 
+            one_play = df.loc[df['playId']==pid]
+
+            for oneFrame in one_play['frameId'].unique():
+                print("inside one_frame")
+                one_frame = one_play.loc[one_play['frameId'] == oneFrame]
 
 
-        # reset index (saving the original index as a column) and set new index as player ID 
-        one_frame = one_frame.reset_index().set_index('nflId')
-        one_frame = one_frame[one_frame.displayName.notnull()]
+                # reset index (saving the original index as a column) and set new index as player ID 
+                one_frame = one_frame.reset_index().set_index('nflId')
 
-        # turn PFF player positioning info into unique positions given the play (for modeling purposes)
-        one_frame['officialPosition'] = one_frame['officialPosition'] + one_frame.groupby('officialPosition', as_index=False).cumcount().astype(str).str.replace('0', '')
+                # turn PFF player positioning info into unique positions given the play (for modeling purposes)
+                one_frame['officialPosition'] = one_frame['officialPosition'] + one_frame.groupby('officialPosition', as_index=False).cumcount().astype(str).str.replace('0', '')
+                
+                # get pairwise distance, turn it into a pairwise matrix, set it in a pandas dataframe with index as nflId and columns as positions 
+                _df = pd.DataFrame(squareform(pdist(one_frame.loc[:, ['x','y']])), index=one_frame.index, columns=one_frame['officialPosition'].unique())
 
-        # get pairwise distance, turn it into a pairwise matrix, set it in a pandas dataframe with index as nflId and columns as positions 
-        _df = pd.DataFrame(squareform(pdist(one_frame.loc[:, ['x','y']])), index=one_frame.index, columns=one_frame['officialPosition'].unique())
+                # concat pairwise matrix column-wise onto original one_frame data
+                one_frame = pd.concat([one_frame,_df], axis=1).rename(columns={np.nan:'dist_from_ball'})
 
-        # concat pairwise matrix column-wise onto original one_frame data
-        one_frame = pd.concat([one_frame,_df], axis=1).rename(columns={np.nan:'dist_from_ball'})
+                # change index back to nflId column, set the column "index" to the true index 
+                one_frame = one_frame.reset_index().set_index('index')
 
-        # change index back to nflId column, set the column "index" to the true index 
-        one_frame = one_frame.reset_index().set_index('index')
+                # clear the index name for prettyfication 
+                one_frame.index.name = None
 
-        # clear the index name for prettyfication 
-        one_frame.index.name = None
-
-        defense = [
-        'OLB','MLB','ILB','DE','SS','FS','CB','DT','NT',
-        'OLB1','OLB2','OLB3','OLB4','OLB5',
-        'MLB1','MLB2','MLB3','MLB4','MLB5',
-        'ILB1','ILB2','ILB3','ILB4','ILB5',
-        'DE1','DE2','DE3','DE4','DE5',
-        'SS1','SS2','SS3','SS4','SS5',
-        'FS1','FS2','FS3','FS4','FS5',
-        'CB1','CB2','CB3','CB4','CB5','CB6','CB7',
-        'DT1','DT2','DT3','DT4','DT5',
-        'NT1','NT2','NT3','NT4','NT5'
-        ]
-
-        offense = (
-        'QB','RB','WR','TE','FB','T','G','C',
-        'QB1','QB2','QB3',
-        'RB1','RB2','RB3','RB4',
-        'WR','WR1','WR2','WR3','WR4','WR5','WR6','WR7','WR8',
-        'TE','TE1','TE2','TE3','TE4',
-        'FB1','FB2','FB3',
-        'T','T1','T2','T3','T4',
-        'G','G1','G2','G3','G4',
-        'C','C1','C2','C3'
-        )
+                # append to output dataframe
+                df_presnap = df_presnap.append(one_frame)
 
 
-        one_frame = one_frame[['nflId','gameId','playId','displayName','officialPosition','playDescription','frameId','x','y','QB']]
+                # creating distance from QB
+                
+
+                # creating pressure value
+                pressureValue = 1 / df_presnap['QB']
+
+                df_presnap['pressureValue'] = pressureValue
+
+                # Creating Pressure DF
+                pressureDF = df_presnap[df_presnap.team != 'football']
 
 
+    # fill the nulled sparse positions with -1, indicating that position was not apparent on a given play and/or frame
+    positions = [x for x in df_presnap.columns.values if x not in one_game.columns.values]
+    df_presnap.loc[:, positions] = df_presnap.loc[:, positions].fillna(-1)  
+    # df_presnap.loc[:, ['frameId','nflId', 'officialPosition', 'gameId', 'playId','QB', 'dist_from_ball']]
+    print(pressureDF)
+    pressureDF.loc[:,['pressureValue','officialPosition']]
+    # Creating Animated Pressure Gauge for individual plays
 
-        # append to output dataframe
-        df_presnap = df_presnap.append(one_frame)
+    defense = [
+    'OLB','MLB','ILB','DE','SS','FS','CB','DT','NT',
+    'OLB1','OLB2','OLB3','OLB4','OLB5',
+    'MLB1','MLB2','MLB3','MLB4','MLB5',
+    'ILB1','ILB2','ILB3','ILB4','ILB5',
+    'DE1','DE2','DE3','DE4','DE5',
+    'SS1','SS2','SS3','SS4','SS5',
+    'FS1','FS2','FS3','FS4','FS5',
+    'CB1','CB2','CB3','CB4','CB5','CB6','CB7',
+    'DT1','DT2','DT3','DT4','DT5',
+    'NT1','NT2','NT3','NT4','NT5'
+    ]
 
-        # creating distance from QB
-
-
-        # creating pressure value
-        pressureValue = (1 / df_presnap['QB'])*100
-
-        df_presnap['pressureValue'] = pressureValue
-
-        pressureDF = df_presnap
-
-        # Using DataFrame.isin() to Create Filter
-        # Replace infinite updated data with nan
-        pressureDF.replace([np.inf, -np.inf], np.nan, inplace=True)
-        # Drop rows with NaN
-        pressureDF.dropna(inplace=True)
-
-        with pd.option_context('mode.use_inf_as_na', True):
-            pressureDF.dropna(inplace=True)
-        
-        pressureDF = pressureDF.replace([np.inf, -np.inf], np.nan).dropna(axis=0)
-
-        pd.set_option('mode.use_inf_as_na', True)
-        pressureDF.dropna(inplace=True)
-
-        df_filter = pressureDF.isin([np.nan, np.inf, -np.inf])
-        # Mask df with the filter
-        pressureDF = pressureDF[~df_filter]
-        pressureDF.dropna(inplace=True)
-
-
-        pressureDF = pressureDF[pressureDF.replace([np.inf, -np.inf], np.nan).notnull().all(axis=1)]
-
-
-        
-
-
-                        # fill the nulled sparse positions with -1, indicating that position was not apparent on a given play and/or frame
-        positions = [x for x in df_presnap.columns.values if x not in one_frame.columns.values]
-        df_presnap.loc[:, positions] = df_presnap.loc[:, positions].fillna(-1)  
-
-        pressureDF.loc[:,['pressureValue','officialPosition']]
-        # Creating Animated Pressure Gauge for individual plays
-
-    df = pressureDF[['officialPosition','pressureValue','frameId']]
-    df = df_presnap.pivot_table(values = 'pressureValue',index=['frameId'], columns = 'officialPosition')
     offense = [
-        'QB','RB','WR','TE','FB','T','G','C',
-        'QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8',
-        'RB1','RB2','RB3','RB4','RB5','RB6','RB7','RB8',
-        'WR','WR1','WR2','WR3','WR4','WR5','WR6','WR7','WR8',
-        'TE','TE1','TE2','TE3','TE4','TE5','TE6','TE7','TE8',
-        'FB1','FB2','FB3','FB4',
-        'T','T1','T2','T3','T4','T5','T6','T7','T8',
-        'G','G1','G2','G3','G4','G5','G6','G7','G8',
-        'C','C1','C2','C3','C4','C5','C6','C7','C8',
-        ]
+    'QB','RB','WR','TE','FB','T','G','C',
+    'QB1','QB2','QB3',
+    'RB1','RB2','RB3','RB4',
+    'WR','WR1','WR2','WR3','WR4','WR5','WR6','WR7','WR8',
+    'TE','TE1','TE2','TE3','TE4',
+    'FB1','FB2','FB3',
+    'T','T1','T2','T3','T4',
+    'G','G1','G2','G3','G4',
+    'C','C1','C2','C3'
+    ]
 
-    df.drop(list(df.filter(regex = '1')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '2')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '3')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '4')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '5')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '6')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '7')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '8')), axis = 1, inplace = True)
-    df = df.loc[:, df.columns != 'C']
-    df = df.loc[:, df.columns != 'G']
-    df = df.loc[:, df.columns != 'T']
-    df = df.loc[:, df.columns != 'RB']
-    df = df.loc[:, df.columns != 'WR']
-    df = df.loc[:, df.columns != 'TE']
-    df.iloc[:,0:-1] = df.iloc[:,0:-1]
-    top_pressure = set()
+    pressureRange = pressureDF[['frameId','officialPosition','pressureValue','displayName', 'gameId','playDescription']]
 
-    playDescription = pff_joined_df.playDescription.loc[1]
+    for offender in offense:
+        pressureRange = pressureRange[pressureRange.officialPosition != offender]
+        
+    
 
-    gameDescription = pff_joined_df.gameId.loc[0]
+    df = pressureRange 
 
-    for index, row in df.iterrows():
-        top_pressure |= set(row[row > -1].sort_values(ascending=False).head(6).index)
+    current_frame = 1
+    frameMin = df['frameId'].min()
+    frameMax = df['frameId'].max()
+    playDescription = df.playDescription.values[0]
+    if len(playDescription.split(" "))>15 and len(playDescription)>115:
+        playDescription = " ".join(playDescription.split(" ")[0:16]) + "<br>" + " ".join(playDescription.split(" ")[16:])
+    dff = df[df['frameId'].eq(current_frame)].sort_values(by='pressureValue',ascending=False)
 
-    df = df[top_pressure]
+    
+    colors = dict(zip([
+    'OLB','MLB','ILB','DE','SS','FS','CB','DT','NT',
+    'OLB1','OLB2','OLB3','OLB4','OLB5',
+    'MLB1','MLB2','MLB3','MLB4','MLB5',
+    'ILB1','ILB2','ILB3','ILB4','ILB5',
+    'DE1','DE2','DE3','DE4','DE5',
+    'SS1','SS2','SS3','SS4','SS5',
+    'FS1','FS2','FS3','FS4','FS5',
+    'CB1','CB2','CB3','CB4','CB5','CB6','CB7',
+    'DT1','DT2','DT3','DT4','DT5',
+    'NT1','NT2','NT3','NT4','NT5'],
+    ['#adb0ff', '#ffb3ff', '#90d595', '#e48381', '#aafbff', '#f7bb5f', '#eafb50',
+    '#adb0ff', '#ffb3ff', '#90d595', '#e48381', '#aafbff', '#f7bb5f', '#eafb50',
+    '#adb0ff', '#ffb3ff', '#90d595', '#e48381', '#aafbff', '#f7bb5f', '#eafb50',
+    '#adb0ff', '#ffb3ff', '#90d595', '#e48381', '#aafbff', '#f7bb5f', '#eafb50',
+    '#adb0ff', '#ffb3ff', '#90d595', '#e48381', '#aafbff', '#f7bb5f', '#eafb50',
+    '#adb0ff', '#ffb3ff', '#90d595', '#e48381', '#aafbff', '#f7bb5f', '#eafb50',
+    '#adb0ff', '#ffb3ff', '#90d595', '#e48381', '#aafbff', '#f7bb5f', '#eafb50',
+    '#adb0ff', '#ffb3ff', '#90d595', '#e48381', '#aafbff', '#f7bb5f', '#eafb50',]
+    ))
 
-    return bcr.bar_chart_race(df = df,n_bars=6,sort='desc',title=f'{playDescription}',filename=f'{gameDescription}.html')
+    group_lk = df.set_index('displayName')['officialPosition'].to_dict()
+
+    dff = dff[::-1]   # flip values from top to bottom
+    
+    fig, ax = plt.subplots(figsize=(10, 10))
+    animator = animation.FuncAnimation(fig, draw_barchart, frames=range(frameMin, frameMax))
+    return HTML(animator.to_jshtml()) 
+
+
+    
+
+    
+
 
 # returnHtml(2021090900,137)
 

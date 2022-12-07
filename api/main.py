@@ -9,8 +9,10 @@ import datetime
 from os import environ, path
 from flask_cors import CORS
 from flask import Flask, render_template
-import barchartrace
 import dynamicPressureGauge
+import maxteampressurebyplay
+import playermatchuppressure
+import winpredmodel
 
 # Init App
 app = Flask(__name__)
@@ -504,15 +506,9 @@ def teams():
 
 @app.route('/plot')
 def plot():
-    html = barchartrace.renderHtml()
+    html = ""
     return render_template('plot.html', html=html)
 
-
-@app.route('/htmlplayerpressure/<team>/<nflId>',methods=['GET'])
-def htmlplayerpressure(team, nflId):
-    
-    image="pressure_by_player_defense.png"
-    return render_template('playerpressure.html', results=image, team=team)
 
 @app.route('/playsimulation/<gameId>/<playId>',methods=['GET'])
 def playsimulation(gameId, playId):
@@ -523,10 +519,35 @@ def playsimulation(gameId, playId):
 def playpressure(gameId, playId):
     #Call to python here
     html = dynamicPressureGauge.returnHtml(gameId,playId);
-    # html = "<div></div>"
     return render_template('playpressure.html', html=html)
 
 
+@app.route('/pressurehometeam/<team>',methods=['GET'])
+def pressurehometeam(team):
+    #Call to python here
+    html = maxteampressurebyplay.generate_plot(team);
+    # return render_template('hometeampressure.html')
+    return html;
+
+@app.route('/pressureawayteam/<team>',methods=['GET'])
+def pressureawayteam(team):
+    #Call to python here
+    html = maxteampressurebyplay.generate_plot(team);
+    # return render_template('awayteampressure.html', html=html)
+    return html;
+
+@app.route('/winprediction/<hometeam>/<awayteam>',methods=['GET'])
+def winprediction(hometeam, awayteam):
+    #Call to python here
+    html = winpredmodel.winpred(hometeam,awayteam);
+    # return render_template('winprediction.html', html=html)
+    return html;
+
+@app.route('/htmlplayerpressure/<nflIdDefense>/<nflIdOffense>',methods=['GET'])
+def htmlplayerpressure(nflIdDefense, nflIdOffense):
+    html = playermatchuppressure.player_matchup(int(nflIdDefense), int(nflIdOffense));
+    # return render_template('playerpressure.html', html=html)
+    return html;
 
    
 

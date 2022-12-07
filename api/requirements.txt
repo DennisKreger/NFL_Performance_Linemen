@@ -12,5 +12,10 @@ seaborn
 ipython
 pandas
 scipy
+plotly
+mpld3
+bar-chart-race
+sklearn
+scikit-learn
 gunicorn
 

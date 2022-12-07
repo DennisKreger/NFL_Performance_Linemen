@@ -125,6 +125,14 @@
                 } );
     
             });
+
+            function predict() {
+                console.log("predicting");
+                //$('#pressureHomeTeam').load('/pressurehometeam/' + selectedHomeTeam);     
+                $('#pressureAwayTeam').load('/pressureawayteam/' + selectedAwayTeam);   
+                $('#winprediction').load('/winprediction/' + selectedHomeTeam + '/' +  selectedAwayTeam);
+            };
+        
         </script>        
 
     
@@ -194,7 +202,10 @@
                         <div class="container-fluid px-4">
                             <br>
                             <p>
-                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                <button class="btn btn-primary" type="button" 
+                                id="predict" onclick="predict()"
+                                data-bs-toggle="collapse" data-bs-target="#collapseExample" 
+                                aria-expanded="false" aria-controls="collapseExample">
                                   Predict Game Outcome
                                 </button>
                               </p>
@@ -208,7 +219,8 @@
                                             <div class="card-body">
                                                 <h4 id="selectedHomeTeam"></h4>
                                             </div>
-                                            <img src="images/pressure_by_play_team1.png" class="img-fluid" alt="Max Pressure by Play">
+                                            <div  id="pressureHomeTeam">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
@@ -219,14 +231,14 @@
                                             <div class="card-body">
                                                 <h4 id="selectedAwayTeam"></h4>
                                             </div>
-                                            <img src="images/pressure_by_play_team2.png" class="img-fluid" alt="Max Pressure by Play">
+                                            <div id="pressureAwayTeam">
+                                           </div>
                                         </div>
                                     </div>
                                 </div>
     
-                                <div class="card card-body" id="prediction">
+                                <div class="card card-body" id="winprediction">
                                     <a>The predicted winner of this game is ...</a>
-                                    <img src="images/win-prediction.png" class="img-fluid" alt="Win Prediction">
                                 </div>
                               </div>                        
                         </div>
