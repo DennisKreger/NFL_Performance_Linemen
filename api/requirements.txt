@@ -17,5 +17,7 @@ mpld3
 bar-chart-race
 sklearn
 scikit-learn
+raceplotly
+kaleido
 gunicorn
 

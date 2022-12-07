@@ -8,6 +8,7 @@ from scipy.stats import norm
 from statistics import mean, stdev
 import math, kaleido
 import plotly.graph_objects as go
+from IPython.display import HTML
 
 plt.switch_backend('Agg') 
 

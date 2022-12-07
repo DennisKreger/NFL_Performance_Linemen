@@ -4,10 +4,10 @@ import numpy as np
 import json
 import plotly.express as px
 import plotly
-import plotly.animation as animation
+#import plotly.animation as animation
 import plotly.graph_objects as go
-import plotly.io
-from raceplotly.plots import barplot
+#import plotly.io
+#from raceplotly.plots import barplot
 from IPython.display import HTML
 import io
 from base64 import b64encode
@@ -23,24 +23,25 @@ games = pd.read_csv("https://storage.googleapis.com/big-data-bowl/games.csv")
 plays = pd.read_csv("https://storage.googleapis.com/big-data-bowl/plays.csv")
 players = pd.read_csv("https://storage.googleapis.com/big-data-bowl/players.csv")
 week1 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week1.csv", low_memory=False)
-week2 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week2.csv", low_memory=False)
-week3 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week3.csv", low_memory=False)
-week4 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week4.csv", low_memory=False)
-week5 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week5.csv", low_memory=False)
-week6 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week6.csv", low_memory=False)
-week7 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week7.csv", low_memory=False)
-week8 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week8.csv", low_memory=False)
+#week2 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week2.csv", low_memory=False)
+#week3 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week3.csv", low_memory=False)
+#week4 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week4.csv", low_memory=False)
+#week5 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week5.csv", low_memory=False)
+#week6 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week6.csv", low_memory=False)
+#week7 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week7.csv", low_memory=False)
+#week8 = pd.read_csv("https://storage.googleapis.com/big-data-bowl/week8.csv", low_memory=False)
 
 pffScoutingData = pd.read_csv("https://storage.googleapis.com/big-data-bowl/pffScoutingData.csv")
 
-tracking = week1.append([
-    week2,
-    week3,
-    week4,
-    week5,
-    week6,
-    week7,
-    week8,])
+tracking = week1
+#.append([
+#    week2,
+#    week3,
+#    week4,
+#    week5,
+#    week6,
+#    week7,
+#    week8,])
 
 joined_all = pd.merge(games,plays,how="inner",on = "gameId")
 joined_all = pd.merge(joined_all,tracking,how="inner",on=["gameId","playId"])

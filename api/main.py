@@ -11,7 +11,7 @@ from flask_cors import CORS
 from flask import Flask, render_template
 import dynamicPressureGauge
 import playermatchuppressure
-# import UserPickupdated
+import UserPickupdated
 import matplotlib.pyplot as plt
 
 # Init App
@@ -518,8 +518,9 @@ def playsimulation(gameId, playId):
 @app.route('/playpressure/<gameId>/<playId>',methods=['GET'])
 def playpressure(gameId, playId):
     #Call to python here
-    html = dynamicPressureGauge.returnHtml(gameId,playId);
-    return render_template('playpressure.html', html=html)
+    html = dynamicPressureGauge.returnHtml(int(gameId),int(playId));
+    # return render_template('playpressure_tmp.html', html=html)
+    return html
 
 
 @app.route('/pressurehometeam/<team>',methods=['GET'])
@@ -552,8 +553,10 @@ def htmlplayerpressure(nflIdDefense, nflIdOffense):
 
 @app.route('/playanimation/<gameId>/<playId>', methods=['GET'])
 def playanimation(gameId, playId):
-    # html = UserPickupdated.returnHtml(gameId,playId)
-    return render_template('animation.html', html=None)
+    html = UserPickupdated.returnHTML(gameId,playId);
+    #return render_template('animation.html', html=html)
+    return html;
+
    
 
 if __name__ == '__main__':
