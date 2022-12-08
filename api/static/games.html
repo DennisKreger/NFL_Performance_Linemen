@@ -102,7 +102,7 @@
                     var tableArray = homeTable.rows( indexes ).data();
                     selectedHomeTeam = tableArray[0][1];
                     console.log('Selected Home Team: ' + selectedHomeTeam); 
-                    homeTeamSelection.replaceWith('<h4 id=\x22selectedHomeTeam\x22>'+selectedHomeTeam+'</h4>');
+                    homeTeamSelection.replaceWith('<h4 id=\x22selectedHomeTeam\x22>'+team_abbr[selectedHomeTeam]+'</h4>');
                     $('#pressureHomeTeam').load('/pressurehometeam/' + selectedHomeTeam, () => predict());
                 } )
                 .on( 'deselect', function ( e, dt, type, indexes ) {
@@ -124,7 +124,7 @@
                     var tableArray = awayTable.rows( indexes ).data();
                     selectedAwayTeam = tableArray[0][1];
                     console.log('Selected Away Team: ' + selectedAwayTeam);
-                    awayTeamSelection.replaceWith('<h4 id=\x22selectedAwayTeam\x22>'+selectedAwayTeam+'</h4>');
+                    awayTeamSelection.replaceWith('<h4 id=\x22selectedAwayTeam\x22>'+team_abbr[selectedAwayTeam]+'</h4>');
                     $('#pressureAwayTeam').load('/pressureawayteam/' + selectedAwayTeam, () => predict());
                 } )
                 .on( 'deselect', function ( e, dt, type, indexes ) {
@@ -387,6 +387,7 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        <script src="js/data.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     </body>
 </html>
