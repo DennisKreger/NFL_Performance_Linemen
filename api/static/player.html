@@ -111,7 +111,7 @@
                 console.log('Selected Offense Player Nfl Id: ' + selectedOffensePlayerNflId);  
                 $('#selectedOffensivePlayer').load('/htmlplayerinfo/offense/' + selectedOffensePlayerNflId);                   
                 $('#pressure_by_player_offense').load('/htmlplayerpressure/offense/' + selectedOffensePlayerNflId);        
-  
+                predict();
             } )
             .on( 'deselect', function ( e, dt, type, indexes ) {
                 console.log("Deselect fired on offense")
@@ -120,6 +120,7 @@
                 $('#selectedOffensivePlayer').empty();
                 $('#pressure_by_player_offense').empty();     
                 selectedOffensePlayerNflId = 0; 
+                predict();
             } );
 
             defenseTable
@@ -130,6 +131,7 @@
                 console.log('Selected Defense Player Nfl Id: ' + selectedDefensePlayerNflId);
                 $('#selectedDefensivePlayer').load('/htmlplayerinfo/defense/' + selectedDefensePlayerNflId); 
                 $('#pressure_by_player_defense').load('/htmlplayerpressure/defense/' + selectedDefensePlayerNflId);                
+                predict();
             } )
             .on( 'deselect', function ( e, dt, type, indexes ) {
                 console.log("Deselect fired on defense")
@@ -138,16 +140,30 @@
                 $('#selectedDefensivePlayer').empty();
                 $('#pressure_by_player_defense').empty();  
                 selectedDefensePlayerNflId = 0;
+                predict();
             } );
 
         });
 
 
-       function predict() {
-        document.getElementById('prediction').innerHTML = '';
-        console.log("predicting");
-        $('#prediction').load('/htmlplayerpressure/' + selectedDefensePlayerNflId + '/' + selectedOffensePlayerNflId);     
-       };
+        function predict() {
+            if ((selectedDefensePlayerNflId == 0) | (selectedDefensePlayerNflId == 0)) {
+                document.getElementById('prediction').innerHTML = '<i>Select players below to view predicted pressure.</i>';
+            } else {
+                document.getElementById('prediction').innerHTML = '';
+                console.log("predicting");
+                $('#prediction').load('/htmlplayerpressure/' + selectedDefensePlayerNflId + '/' + selectedOffensePlayerNflId);     
+            }
+        };
+
+        function toggleCollapse() {
+            button = document.getElementById('predict');
+            if (button.classList.contains('collapsed')) {
+                button.innerHTML = 'Show Matchup';
+            } else {
+                button.innerHTML = 'Hide Matchup';
+            }
+        }
 
 
     </script>
@@ -224,10 +240,10 @@
                     <br>
                     <p>
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" 
-                                id="predict" onclick="predict()"
+                                id="predict" onclick="toggleCollapse()"
                                 data-bs-target="#collapseExample" aria-expanded="false" 
                                 aria-controls="collapseExample">
-                          Predict Player Matchup
+                          Show Matchup
                         </button>
                       </p>
                       <div class="collapse" id="collapseExample">
@@ -256,7 +272,7 @@
                             <div class="card card-body">
                                 <a>The predicted pressure outcome of this matchup is ...</a>
                                 <div id="prediction">
-
+                                    <i>Select players below to view predicted pressure.</i>
                                 </div>
                            </div>
                           </div>   
