@@ -45,15 +45,23 @@ def player_matchup(nflId_defense, nflId_offense):
     
     fig = go.Figure(go.Indicator(
         domain = {'x': [0, 1], 'y': [0, 1]},
-        value = 1000*math.pow(matchup_metric,1/4),
-        mode = "gauge+number+delta",
+        value = 3000*matchup_metric,
+        mode = "gauge+number",
         title = {'text': "Pressure Metric"},
-        gauge = {'axis': {'range': [None, 1000]},}))
+        gauge = {'axis': {'range': [None, 100]},
+            'bar': {'color': "gray"},
+            'steps' : [
+                {'range': [0, 33], 'color': "lightgreen"},
+                {'range': [33, 66], 'color': "lightyellow"},
+                {'range': [66, 100], 'color': "indianred"}],}))
 
-    filename = f'images/player-matchup_'+str(nflId_defense)+'_'+str(nflId_offense)+'.jpg'
+    filename = f'images/player-matchup_{nflId_defense}-{nflId_offense}.jpg'
     fig.write_image(f'static/{filename}', engine="kaleido")
     
-    return filename
+    if pressure_metric_offense == pressure_metric_offense and pressure_metric_defense == pressure_metric_defense:
+        return filename, ''
+    else:
+        return filename, 'ERROR: Insufficient data to evaluate this player matchup.'
 
 if __name__ == '__main__':
     print(player_matchup(30869, 35442))

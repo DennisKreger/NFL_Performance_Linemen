@@ -185,7 +185,7 @@ def make_plot(home, visitor, home_win, confidence):
     ax.set_aspect('equal', adjustable='datalim')
     ax.set_ylim(-0.5,2.5)
     plt.axis('off')
-    filename = f'images/winpred_temp.jpg'
+    filename = f'images/winpred_{home.replace(" ", "-")}_{visitor.replace(" ", "-")}.jpg'
     plt.savefig(f'static/{filename}', bbox_inches ='tight')
     return filename
 

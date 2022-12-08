@@ -549,14 +549,14 @@ def winprediction(hometeam, awayteam):
 @app.route('/htmlplayerpressure/<nflIdDefense>/<nflIdOffense>',methods=['GET'])
 def htmlplayerpressure(nflIdDefense, nflIdOffense):
     import playermatchuppressure
-    image = playermatchuppressure.player_matchup(int(nflIdDefense), int(nflIdOffense));
-    return f'<img src={image} style="max-width:100%;max-height:100%">'
+    image, text = playermatchuppressure.player_matchup(int(nflIdDefense), int(nflIdOffense));
+    return render_template('playerpressure.html', image=image, text=text)
 
 @app.route('/playanimation/<gameId>/<playId>', methods=['GET'])
 def playanimation(gameId, playId):
-    html = UserPickupdated.returnHTML(gameId,playId);
+    html = UserPickupdated.returnHTML(gameId,playId)
     #return render_template('animation.html', html=html)
-    return html;
+    return html
 
    
 

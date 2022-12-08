@@ -127,6 +127,7 @@
             });
 
             function predict() {
+                document.getElementById('collapseExample').classList.add('show');
                 function delay(time) {
                     return new Promise(resolve => setTimeout(resolve, time));
                 }
@@ -217,13 +218,11 @@
                             <br>
                             <p>
                                 <button class="btn btn-primary" type="button" 
-                                id="predict" onclick="predict()"
-                                data-bs-toggle="collapse" data-bs-target="#collapseExample" 
-                                aria-expanded="false" aria-controls="collapseExample">
+                                id="predict" onclick="predict()">
                                   Predict Game Outcome
                                 </button>
                               </p>
-                              <div>
+                              <div class="collapse" id="collapseExample">
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="card mb-4">

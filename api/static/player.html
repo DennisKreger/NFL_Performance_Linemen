@@ -144,6 +144,7 @@
 
 
        function predict() {
+        document.getElementById('prediction').innerHTML = '';
         console.log("predicting");
         $('#prediction').load('/htmlplayerpressure/' + selectedDefensePlayerNflId + '/' + selectedOffensePlayerNflId);     
        };
