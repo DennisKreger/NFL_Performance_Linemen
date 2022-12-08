@@ -14,13 +14,13 @@ team_abbr = {
     'HOU': 'Houston Texans',
     'IND': 'Indianapolis Colts',
     'TEN': 'Tennessee Titans',
-    'WAS': 'Washington Redskins',
+    'WAS': 'Washington Football Team',
     'KC': 'Kansas City Chiefs',
     'NE': 'New England Patriots',
     'NO': 'New Orleans Saints',
     'NYG': 'New York Giants',
     'LA': 'Los Angeles Rams',
-    'LV': 'Oakland Raiders',
+    'LV': 'Las Vegas Raiders',
     'CHI': 'Chicago Bears',
     'CLE': 'Cleveland Browns',
     'JAX': 'Jacksonville Jaguars',
@@ -72,7 +72,8 @@ team_colors_primary = {
     'Tampa Bay Buccaneers': '#d50a0a',
     'Tennessee Titans': '#002244',
     'Washington Redskins': '#773141',
-    'Washington Commanders': '#773141'
+    'Washington Commanders': '#773141',
+    'Washington Football Team': '#773141'
 }
 team_colors_secondary = {
     'Arizona Cardinals': '#000000',
@@ -108,7 +109,7 @@ team_colors_secondary = {
     'Tampa Bay Buccaneers': '#34302b',
     'Tennessee Titans': '#4b92db',
     'Washington Redskins': '#ffb612',
-    'Washington Commanders': '#ffb612'
+    'Washington Football Team': '#ffb612'
 }
 
 # Read offensive and defensive stats historical through 2011
@@ -215,7 +216,7 @@ def winpred(home, visitor):
             (col in ['Team_home', 'isHome_home'])
     ]]
     home_prediction_data.rename(columns={col: col.replace('_home', '').replace('_visitor', '_opposing') for col in home_prediction_data.columns}, inplace=True)
-
+    print(season_stats)
     visitor_prediction_data = prediction_data[[
         col for col in prediction_data.columns if \
             ('_offensive_visitor' in col) or \
@@ -264,4 +265,4 @@ def format_pct(dec):
 
 if __name__ == "__main__":
     print('Testing...')
-    print(winpred('GB', 'DAL'))
+    print(winpred('LV', 'WAS'))
