@@ -118,6 +118,14 @@ def pickingPressurePlay(gameId,playId):
     df = pff_joined_df.loc[pff_joined_df['gameId']==gameId]
     df = df.loc[df['playId']==playId]
 
+    df = df[df.officialPosition != 'C']
+    df = df[df.officialPosition != 'T']
+    df = df[df.officialPosition != 'G']
+    df = df[df.officialPosition != 'RB']
+    df = df[df.officialPosition != 'WR']
+    df = df[df.officialPosition != 'FB']
+    df = df[df.officialPosition != 'TE']
+
     df_presnap = pd.DataFrame()
     
     for oneFrame in pff_joined_df['frameId'].unique():
