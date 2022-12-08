@@ -128,8 +128,10 @@ def animate(gameId,playId):
     ON trd.\"nflId\" = pl.\"nflID\" \
     LEFT JOIN plays as ply \
     ON trd.\"playId\" = ply.\"playId\"      \
+    AND trd.\"gameId\" = ply.\"gameId\" \
     LEFT JOIN pffscoutingdata as pff \
     ON trd.\"playId\" = pff.\"playId\"   \
+    AND trd.\"gameId\" = pff.\"gameId\"   \
     WHERE trd.\"gameId\" = {gameId} AND trd.\"playId\" = {playId} "
 
     # Execute the "SELECT" query
@@ -176,7 +178,7 @@ def animate(gameId,playId):
     'TB':'#D50A0A', 
     'TEN':"#4B92DB", 
     'WAS':"#5A1414", 
-    'football':'#CBB67C'}
+    'football':'#FF10F0'}
   
     # Creating Animation from selected play
                         
