@@ -256,7 +256,7 @@ def winpred(home, visitor):
     else:
         return (
             f'The predicted winner is the {visitor} with a confidence of {format_pct(prediction_confidence)}.',
-            make_plot(home, visitor, 1, prediction_confidence)
+            make_plot(home, visitor, 0, prediction_confidence)
         )
 
 def format_pct(dec):
