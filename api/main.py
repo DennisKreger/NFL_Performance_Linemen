@@ -543,8 +543,8 @@ def pressureawayteam(team):
 @app.route('/winprediction/<hometeam>/<awayteam>',methods=['GET'])
 def winprediction(hometeam, awayteam):
     import winpredmodel
-    image = winpredmodel.winpred(hometeam,awayteam)
-    return render_template('winprediction.html', image=image)
+    winner, confidence, image = winpredmodel.winpred(hometeam,awayteam)
+    return render_template('winprediction.html', winner=winner, confidence=confidence, image=image)
 
 @app.route('/htmlplayerpressure/<nflIdDefense>/<nflIdOffense>',methods=['GET'])
 def htmlplayerpressure(nflIdDefense, nflIdOffense):

@@ -139,6 +139,7 @@ season_stats = season_stats[season_stats['Next Season'] == 2021]
 
 
 def make_plot(home, visitor, home_win, confidence):
+    plt.show()
     plt.clf()
     if home in team_abbr.keys():
         home = team_abbr[home]
@@ -241,15 +242,17 @@ def winpred(home, visitor):
     correct_pdf = norm.pdf(predicted_score_difference,0,stdev_correct)
     incorrect_pdf = norm.pdf(predicted_score_difference,0,stdev_incorrect)
     prediction_confidence = correct_pdf / (correct_pdf + incorrect_pdf)
-    print(prediction_confidence)
+
     if prediction_confidence < 0.5:
         return make_plot(home, visitor, 0, prediction_confidence)
 
     if predicted_score_difference > 0:
-        return make_plot(home, visitor, 1, prediction_confidence)
+        return (home, format_pct(prediction_confidence), make_plot(home, visitor, 1, prediction_confidence))
     else:
-        return make_plot(home, visitor, 0, prediction_confidence)
+        return (visitor, format_pct(prediction_confidence), make_plot(home, visitor, 0, prediction_confidence))
 
+def format_pct(dec):
+    return str(round(dec*100,2)) + '%'
 
 if __name__ == "__main__":
     print('Testing...')

@@ -127,10 +127,13 @@
             });
 
             function predict() {
+                function delay(time) {
+                    return new Promise(resolve => setTimeout(resolve, time));
+                }
                 console.log("predicting");
                 $('#pressureHomeTeam').load('/pressurehometeam/' + selectedHomeTeam);     
-                $('#pressureAwayTeam').load('/pressureawayteam/' + selectedAwayTeam);   
-                $('#winprediction').load('/winprediction/' + selectedHomeTeam + '/' +  selectedAwayTeam);
+                delay(1000).then(() => $('#pressureAwayTeam').load('/pressureawayteam/' + selectedAwayTeam));   
+                delay(2000).then(() => $('#winprediction').load('/winprediction/' + selectedHomeTeam + '/' +  selectedAwayTeam));
             };
         
         </script>        
