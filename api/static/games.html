@@ -93,60 +93,69 @@
                 awayTable.searchPanes.resizePanes();
 
 
-
+                
                 homeTable
                 .on( 'select', function ( e, dt, type, indexes ) {
+                    document.getElementById('winprediction').innerHTML = '';
                     var homeTeamSelection = $('#selectedHomeTeam');
                     var rowData = homeTable.rows( indexes ).data().toArray();
                     var tableArray = homeTable.rows( indexes ).data();
                     selectedHomeTeam = tableArray[0][1];
                     console.log('Selected Home Team: ' + selectedHomeTeam); 
                     homeTeamSelection.replaceWith('<h4 id=\x22selectedHomeTeam\x22>'+selectedHomeTeam+'</h4>');
+                    $('#pressureHomeTeam').load('/pressurehometeam/' + selectedHomeTeam, () => predict());
                 } )
                 .on( 'deselect', function ( e, dt, type, indexes ) {
+                    selectedHomeTeam = 'none';
+                    document.getElementById('winprediction').innerHTML = '';
+                    document.getElementById('pressureHomeTeam').innerHTML = '';
                     console.log("Deselect fired on home team")
                     var rowData = homeTable.rows( indexes ).data().toArray();
-                    console.log(' selection: ' + JSON.stringify( rowData ) );            
+                    console.log(' selection: ' + JSON.stringify( rowData ) ); 
+                    $('#selectedHomeTeam').replaceWith('<h4 id=\x22selectedHomeTeam\x22></h4>');           
                 } );
     
+                
                 awayTable
                 .on( 'select', function ( e, dt, type, indexes ) {
+                    document.getElementById('winprediction').innerHTML = '';
                     var awayTeamSelection = $('#selectedAwayTeam');
                     var rowData = awayTable.rows( indexes ).data().toArray();
                     var tableArray = awayTable.rows( indexes ).data();
                     selectedAwayTeam = tableArray[0][1];
                     console.log('Selected Away Team: ' + selectedAwayTeam);
                     awayTeamSelection.replaceWith('<h4 id=\x22selectedAwayTeam\x22>'+selectedAwayTeam+'</h4>');
+                    $('#pressureAwayTeam').load('/pressureawayteam/' + selectedAwayTeam, () => predict());
                 } )
                 .on( 'deselect', function ( e, dt, type, indexes ) {
+                    selectedAwayTeam = 'none';
+                    document.getElementById('winprediction').innerHTML = '';
+                    document.getElementById('pressureAwayTeam').innerHTML = '';
                     console.log("Deselect fired on defense")
                     var rowData = awayTable.rows( indexes ).data().toArray();
-                    console.log(' selection: ' + JSON.stringify( rowData ) );            
+                    console.log(' selection: ' + JSON.stringify( rowData ) );
+                    $('#selectedAwayTeam').replaceWith('<h4 id=\x22selectedAwayTeam\x22></h4>');            
                 } );
     
             });
 
+            var selectedHomeTeam = 'none';
+            var selectedAwayTeam = 'none';
             function predict() {
-                document.getElementById('collapseExample').classList.add('show');
-                function delay(time) {
-                    return new Promise(resolve => setTimeout(resolve, time));
+                if ((selectedHomeTeam != 'none') && (selectedAwayTeam != 'none')) {
+                    console.log("predicting");
+                    $('#winprediction').load('/winprediction/' + selectedHomeTeam + '/' +  selectedAwayTeam)
                 }
-
-                $("body").css("cursor", "progress");
-
-                document.getElementById('pressureHomeTeam').innerHTML = '';
-                document.getElementById('pressureAwayTeam').innerHTML = '';
-                document.getElementById('winprediction').innerHTML = '';
-
-                console.log("predicting");
-                $('#pressureHomeTeam').load(
-                    '/pressurehometeam/' + selectedHomeTeam, () => $('#pressureAwayTeam').load(
-                        '/pressureawayteam/' + selectedAwayTeam, () => $('#winprediction').load(
-                            '/winprediction/' + selectedHomeTeam + '/' +  selectedAwayTeam, () => $("body").css("cursor", "default")
-                        )
-                    )
-                );
             };
+
+            function toggleCollapse() {
+                button = document.getElementById('predict');
+                if (button.classList.contains('collapsed')) {
+                    button.innerHTML = 'Show Prediction';
+                } else {
+                    button.innerHTML = 'Hide Prediction';
+                }
+            }
         
         </script>        
 
@@ -217,9 +226,11 @@
                         <div class="container-fluid px-4">
                             <br>
                             <p>
-                                <button class="btn btn-primary" type="button" 
-                                id="predict" onclick="predict()">
-                                  Predict Game Outcome
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" 
+                                id="predict" onclick="toggleCollapse()"
+                                data-bs-target="#collapseExample" aria-expanded="false" 
+                                aria-controls="collapseExample">
+                                  Show Prediction
                                 </button>
                               </p>
                               <div class="collapse" id="collapseExample">
