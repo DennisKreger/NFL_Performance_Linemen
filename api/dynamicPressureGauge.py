@@ -91,7 +91,7 @@ def pickingPressurePlay(gameId,playId):
     "x",
     "y"
     ]
-   query = f"SELECT ALL trd.\"gameId\", \
+    query = f"SELECT ALL trd.\"gameId\", \
     trd.\"playId\", \
     trd.\"nflId\",  \
     pl.\"displayName\", \
