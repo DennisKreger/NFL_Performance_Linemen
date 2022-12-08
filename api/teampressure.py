@@ -27,7 +27,7 @@ def generate_plot_home(team):
                               xlim=(5,0))
     ax2 = ax1.twinx()
     ax2.hist(max_pressure[max_pressure['team'] == team]['distance'], alpha=0.1, bins=18)
-    plt.xlabel('Distance from QB')
+    ax1.set_xlabel('Distance from QB (yards)')
     plt.ylabel('Frequency')
     plt.title(f'Max Pressure by Play - {team}')
     filename = f'images/pressure-home_' + team + '.jpg'
@@ -42,9 +42,12 @@ def generate_plot_away(team):
                               xlim=(5,0))
     ax2 = ax1.twinx()
     ax2.hist(max_pressure[max_pressure['team'] == team]['distance'], alpha=0.1, bins=18)
-    plt.xlabel('Distance from QB')
+    ax1.set_xlabel('Distance from QB (yards)')
     plt.ylabel('Frequency')
     plt.title(f'Max Pressure by Play - {team}')
     filename = f'images/pressure-away_' + team + '.jpg'
     fig.savefig(f'static/{filename}', bbox_inches='tight')
     return filename
+
+if __name__ == '__main__':
+    generate_plot_away('GB')
