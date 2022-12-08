@@ -242,14 +242,23 @@ def winpred(home, visitor):
     correct_pdf = norm.pdf(predicted_score_difference,0,stdev_correct)
     incorrect_pdf = norm.pdf(predicted_score_difference,0,stdev_incorrect)
     prediction_confidence = correct_pdf / (correct_pdf + incorrect_pdf)
-
+    print(prediction_confidence)
     if prediction_confidence < 0.5:
-        return make_plot(home, visitor, 0, prediction_confidence)
+        return (
+            'This matchup is too close to call!',
+            make_plot(home, visitor, 0, 0.5)
+        )
 
     if predicted_score_difference > 0:
-        return (home, format_pct(prediction_confidence), make_plot(home, visitor, 1, prediction_confidence))
+        return (
+            f'The predicted winner is the {home} with a confidence of {format_pct(prediction_confidence)}.',
+            make_plot(home, visitor, 1, prediction_confidence)
+        )
     else:
-        return (visitor, format_pct(prediction_confidence), make_plot(home, visitor, 0, prediction_confidence))
+        return (
+            f'The predicted winner is the {visitor} with a confidence of {format_pct(prediction_confidence)}.',
+            make_plot(home, visitor, 1, prediction_confidence)
+        )
 
 def format_pct(dec):
     return str(round(dec*100,2)) + '%'
