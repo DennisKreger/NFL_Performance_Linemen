@@ -99,7 +99,7 @@ def pickingPressurePlay(gameId,playId):
     ply.\"playDescription\", \
     trd.\"frameId\", \
     trd.\"x\",        \
-    trd.\"y\"         \
+    trd.\"y\"        \
     FROM trackingdata as trd                                            \
     LEFT JOIN players as pl                                             \
     ON trd.\"nflId\" = pl.\"nflID\" \
@@ -108,7 +108,8 @@ def pickingPressurePlay(gameId,playId):
     AND trd.\"gameId\" = ply.\"gameId\" \
     LEFT JOIN pffscoutingdata as pff \
     ON trd.\"playId\" = pff.\"playId\"   \
-    AND trd.\"gameId\" = pff.\"gameId\"   \
+    AND trd.\"gameId\" = pff.\"gameId\" \
+    AND pl.\"nflID\" = pff.\"nflId\"   \
     WHERE trd.\"gameId\" = {gameId} AND trd.\"playId\" = {playId} "
 
     # Execute the "SELECT" query
@@ -118,7 +119,7 @@ def pickingPressurePlay(gameId,playId):
     df = df.loc[df['playId']==playId]
 
     df_presnap = pd.DataFrame()
-
+    
     for oneFrame in pff_joined_df['frameId'].unique():
         one_frame = df.loc[df['frameId'] == oneFrame]
 
@@ -143,11 +144,7 @@ def pickingPressurePlay(gameId,playId):
         one_frame.index.name = None
 
         
-
-
         one_frame = one_frame[['nflId','gameId','playId','displayName','officialPosition','playDescription','frameId','x','y','QB']]
-
-
 
         # append to output dataframe
         df_presnap = df_presnap.append(one_frame)
@@ -188,7 +185,7 @@ def pickingPressurePlay(gameId,playId):
         
 
 
-                        # fill the nulled sparse positions with -1, indicating that position was not apparent on a given play and/or frame
+        # fill the nulled sparse positions with -1, indicating that position was not apparent on a given play and/or frame
         positions = [x for x in df_presnap.columns.values if x not in one_frame.columns.values]
         df_presnap.loc[:, positions] = df_presnap.loc[:, positions].fillna(-1)  
 
@@ -196,28 +193,32 @@ def pickingPressurePlay(gameId,playId):
         # Creating Animated Pressure Gauge for individual plays
 
     df = pressureDF[['officialPosition','pressureValue','frameId']]
-    df = df_presnap.pivot_table(values = 'pressureValue',index=['frameId'], columns = 'officialPosition')
+    df = df_presnap.pivot_table(values = 'pressureValue',index=['frameId'], columns = 'displayName')
     
 
-    df.drop(list(df.filter(regex = '1')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '2')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '3')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '4')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '5')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '6')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '7')), axis = 1, inplace = True)
-    df.drop(list(df.filter(regex = '8')), axis = 1, inplace = True)
+    #df.drop(list(df.filter(regex = '1')), axis = 1, inplace = True)
+    #df.drop(list(df.filter(regex = '2')), axis = 1, inplace = True)
+    #df.drop(list(df.filter(regex = '3')), axis = 1, inplace = True)
+    #df.drop(list(df.filter(regex = '4')), axis = 1, inplace = True)
+    #df.drop(list(df.filter(regex = '5')), axis = 1, inplace = True)
+    #df.drop(list(df.filter(regex = '6')), axis = 1, inplace = True)
+    #df.drop(list(df.filter(regex = '7')), axis = 1, inplace = True)
+    #df.drop(list(df.filter(regex = '8')), axis = 1, inplace = True)
     df = df.loc[:, df.columns != 'C']
     df = df.loc[:, df.columns != 'G']
+    df = df.loc[:, df.columns != 'G1']
     df = df.loc[:, df.columns != 'T']
+    df = df.loc[:, df.columns != 'T1']
     df = df.loc[:, df.columns != 'RB']
+    df = df.loc[:, df.columns != 'RB1']
     df = df.loc[:, df.columns != 'WR']
+    df = df.loc[:, df.columns != 'WR1']
     df = df.loc[:, df.columns != 'TE']
+    df = df.loc[:, df.columns != 'TE1']
     df.iloc[:,0:-1] = df.iloc[:,0:-1]
     top_pressure = set()
 
     playDescription = pff_joined_df.playDescription.loc[1]
-
     gameDescription = pff_joined_df.gameId.loc[0]
 
     for index, row in df.iterrows():
