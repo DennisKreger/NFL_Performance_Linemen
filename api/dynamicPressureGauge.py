@@ -101,10 +101,12 @@ def pickingPressurePlay(gameId,playId):
     trd.\"x\",        \
     trd.\"y\"         \
     FROM trackingdata as trd                                            \
-    LEFT JOIN players as pl                                             \
-    ON trd.\"nflId\" = pl.\"nflID\" \
     LEFT JOIN plays as ply \
-    ON trd.\"playId\" = ply.\"playId\"       \
+    ON trd.\"playId\" = ply.\"playId\"      \
+    AND trd.\"gameId\" = ply.\"gameId\" \
+    LEFT JOIN pffscoutingdata as pff \
+    ON trd.\"playId\" = pff.\"playId\"   \
+    AND trd.\"gameId\" = pff.\"gameId\"   \
     WHERE trd.\"gameId\" = {gameId} AND trd.\"playId\" = {playId} "
 
     # Execute the "SELECT" query
