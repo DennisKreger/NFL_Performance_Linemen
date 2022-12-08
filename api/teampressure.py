@@ -28,7 +28,7 @@ def generate_plot_home(team):
     ax1.set_xlabel('Distance from QB (yards)')
     plt.ylabel('Frequency')
     plt.title(f'Max Pressure by Play - {team}')
-    filename = f'images/pressure-home_' + team + '.jpg'
+    filename = f'images/pressure-home_temp.jpg'
     fig.savefig(f'static/{filename}', bbox_inches='tight')
     return filename
 
@@ -41,7 +41,7 @@ def generate_plot_away(team):
     ax1.set_xlabel('Distance from QB (yards)')
     plt.ylabel('Frequency')
     plt.title(f'Max Pressure by Play - {team}')
-    filename = f'images/pressure-away_' + team + '.jpg'
+    filename = f'images/pressure-away_temp.jpg'
     fig.savefig(f'static/{filename}', bbox_inches='tight')
     return filename
 
