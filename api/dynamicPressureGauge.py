@@ -91,7 +91,7 @@ def pickingPressurePlay(gameId,playId):
     "x",
     "y"
     ]
-    query = f"SELECT ALL trd.\"gameId\", \
+   query = f"SELECT ALL trd.\"gameId\", \
     trd.\"playId\", \
     trd.\"nflId\",  \
     pl.\"displayName\", \
@@ -101,6 +101,8 @@ def pickingPressurePlay(gameId,playId):
     trd.\"x\",        \
     trd.\"y\"         \
     FROM trackingdata as trd                                            \
+    LEFT JOIN players as pl                                             \
+    ON trd.\"nflId\" = pl.\"nflID\" \
     LEFT JOIN plays as ply \
     ON trd.\"playId\" = ply.\"playId\"      \
     AND trd.\"gameId\" = ply.\"gameId\" \
