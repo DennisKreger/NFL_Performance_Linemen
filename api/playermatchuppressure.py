@@ -43,9 +43,12 @@ def player_matchup(nflId_defense, nflId_offense):
     pressure_metric_offense = pressure_allowed_probability(nflId_offense)
     matchup_metric = pressure_metric_defense * pressure_metric_offense
     
+    value = 2000*matchup_metric
+    if value > 100:
+        value = 100
     fig = go.Figure(go.Indicator(
         domain = {'x': [0, 1], 'y': [0, 1]},
-        value = 3000*matchup_metric,
+        value = value,
         mode = "gauge+number",
         title = {'text': "Pressure Metric"},
         gauge = {'axis': {'range': [None, 100]},
