@@ -22,4 +22,4 @@ The [Database Integration](./database/README.md) section contains information ab
 
 ## Dashboard
 
-The [Dashboard](./dashboard/README.md) section contains information about the dashboard.
+The [api](./api/README.md) section contains information about the dashboard. Running the Flask app inside the api directory will display/run the app on a local server, showing the working, interactive dashboard. 

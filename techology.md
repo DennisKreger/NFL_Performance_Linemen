@@ -1,12 +1,18 @@
 # Technologies Used
 ## Data Cleaning and Analysis
-Pandas will be used to clean the data and perform an exploratory analysis. We also plan on using both python and R to analyze the data. 
+Pandas was used to clean the data and perform an exploratory analysis. We also used PostgreSQL for joining our data and python for our analyses and statistics. 
 
 ## Database Storage
-Google cloud services is the database we intend to use, and we will integrate Spark and Java to display the data as DataFrames in PostreSQL.
+Google cloud services is the database we are using to load in our data. Flask, CSS, HTML, and JS were used to load and display our data from the cloud database.
 
 ## Machine Learning
-SciKitLearn is the ML library we'll be using to create a classifier. Our training and testing setup is to identify when players are "in trouble" and then analyze some of the reasons why (why did a sack occur, what was the defensive matchup like, etc.) and we are also starting a model that looks into the acceleration of players after they emerge from "clinching" with another player. This should help determine performance metrics and can point out who is most explosive and might need the most time off in between games. Plots from both of these models have been promising so far with high accuracy, we just need to sort through more data and make some of the necessary connections that the data is showing in these models. 
+SciKitLearn is the ML library we used to create a classifier. Our training and testing setup is to identify historical data on teams wins and losses since 2011, specifically comparing offensive and defensive stats. A logistic regression model was used to predict the outcome of games in the 2021 season, and this model has an accuracy of 61.2%. A confidence value was also calculated for each prediction to showcase the strength of the prediction based on the data that we found for each team. 
 
 ## Dashboard
-In addition to using a Spark template, we will also integrate D3.js for a fully functioning and interactive dashboard. It will be hosted on a HTML web page using bootstrap templates. We also plan on performing some visualizations on Tableu, which will be linked within the dashboard.
+We use a Flask application to display our dashboard via an HTML webpage.  Bootstrap/CSS was used for styling the dashboard.  Google App engine was utilized to host the app through a cloud service, and SQL alchemy was also used to help facilitate the dashboard commuication between python files and the database. Both Plotly and Matplotlib were utilized to create the visualizations that are embedded in our dashboard's static HTML files.
+
+
+### Additional technological architecture that we utilized for this project can be seen in this summary image below:
+
+
+![architecture](/api/static/images/architecture.png)
