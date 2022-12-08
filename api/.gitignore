@@ -1,5 +1,6 @@
 pressure-home_*.jpg
-winpred_temp.jpg
+pressure-away_*.jpg
+winpred_*.jpg
 
 .env
 big-data-bowl-key.json

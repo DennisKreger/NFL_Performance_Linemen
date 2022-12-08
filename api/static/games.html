@@ -130,10 +130,21 @@
                 function delay(time) {
                     return new Promise(resolve => setTimeout(resolve, time));
                 }
+
+                $("body").css("cursor", "progress");
+
+                document.getElementById('pressureHomeTeam').innerHTML = '';
+                document.getElementById('pressureAwayTeam').innerHTML = '';
+                document.getElementById('winprediction').innerHTML = '';
+
                 console.log("predicting");
-                $('#pressureHomeTeam').load('/pressurehometeam/' + selectedHomeTeam);     
-                delay(2000).then(() => $('#pressureAwayTeam').load('/pressureawayteam/' + selectedAwayTeam));   
-                delay(4000).then(() => $('#winprediction').load('/winprediction/' + selectedHomeTeam + '/' +  selectedAwayTeam));
+                $('#pressureHomeTeam').load(
+                    '/pressurehometeam/' + selectedHomeTeam, () => $('#pressureAwayTeam').load(
+                        '/pressureawayteam/' + selectedAwayTeam, () => $('#winprediction').load(
+                            '/winprediction/' + selectedHomeTeam + '/' +  selectedAwayTeam, () => $("body").css("cursor", "default")
+                        )
+                    )
+                );
             };
         
         </script>        
@@ -212,7 +223,7 @@
                                   Predict Game Outcome
                                 </button>
                               </p>
-                              <div class="collapse" id="collapseExample">
+                              <div>
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="card mb-4">

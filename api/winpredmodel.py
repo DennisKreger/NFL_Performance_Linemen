@@ -139,7 +139,6 @@ season_stats = season_stats[season_stats['Next Season'] == 2021]
 
 
 def make_plot(home, visitor, home_win, confidence):
-    plt.show()
     plt.clf()
     if home in team_abbr.keys():
         home = team_abbr[home]
@@ -183,10 +182,10 @@ def make_plot(home, visitor, home_win, confidence):
         solid_capstyle='round'
     )
     ax = plt.gca()
-    ax.set_aspect('equal', adjustable='box')
+    ax.set_aspect('equal', adjustable='datalim')
     ax.set_ylim(-0.5,2.5)
     plt.axis('off')
-    filename = f'images/winpred_temp.jpg'
+    filename = f'images/winpred_{home.replace(" ", "-")}-{visitor.replace(" ", "-")}.jpg'
     plt.savefig(f'static/{filename}', bbox_inches ='tight')
     return filename
 
