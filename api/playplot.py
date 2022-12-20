@@ -150,8 +150,10 @@ def playplot(
     # Animate plot
     anim = FuncAnimation(fig, update, frames=tracking_play['frameId'].max(), interval=100, repeat=True)
 
-    writergif = animation.PillowWriter(fps=10) 
-    anim.save('./test.gif', writer=writergif)
+    writergif = animation.PillowWriter(fps=10)
+    filename = f'./static/playplot_{gameId}_{playId}.gif'
+    anim.save(filename, writer=writergif)
+    return filename
 
 
 if __name__ == '__main__':
