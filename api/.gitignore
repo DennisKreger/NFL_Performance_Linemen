@@ -2,6 +2,7 @@ pressure-home_*.jpg
 pressure-away_*.jpg
 winpred_*.jpg
 player-matchup_*.jpg
+playplot_*.gif
 
 .env
 big-data-bowl-key.json
