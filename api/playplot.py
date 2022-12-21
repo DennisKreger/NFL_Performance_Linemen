@@ -36,12 +36,7 @@ tracking = pd.concat([
 
 def playplot(
     gameId,
-    playId,
-    matchups,
-    qb_pressure_frames,
-    qb_proximities,
-    plays,
-    tracking
+    playId
 ):
     
     matchups_filtered = matchups[
