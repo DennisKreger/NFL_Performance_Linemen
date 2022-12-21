@@ -12,6 +12,7 @@ from flask import Flask, render_template
 import dynamicPressureGauge
 import playermatchuppressure
 import UserPickupdated
+from playplot import playplot
 import matplotlib.pyplot as plt
 
 # Init App
@@ -265,6 +266,30 @@ class QBProximities(db.Model):
 
     def __repr__(self):
         return f"<qbproximities {self.nflId}-{self.nflId2} at {self.gameId}-{self.playId}-{self.frameId}>"
+
+# Create A Model For QBPressure Table
+class QBPressure(db.Model):
+    __tablename__ = 'qbpressure'
+    gameId = db.Column(db.Integer, primary_key=True)
+    playId = db.Column(db.Integer, primary_key=True)
+    frameId = db.Column(db.Integer, primary_key=True)
+    distance = db.Column(db.Float)
+    nflId = db.Column(db.Integer, primary_key=True)
+    x = db.Column(db.Float)
+    y = db.Column(db.Float)
+
+    def __init__(self, gameId, playId, frameId, distance, \
+            nflId, x, y):
+        self.gameId = gameId
+        self.playId = playId
+        self.frameId = frameId
+        self.distance = distance
+        self.nflId = nflId
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return f"<qbpressure {self.gameId}-{self.playId}-{self.frameId}>"
 
 @app.route('/')
 def root():
@@ -643,6 +668,25 @@ def htmlplayerpressure(nflIdDefense, nflIdOffense):
 @app.route('/playanimation/<gameId>/<playId>', methods=['GET'])
 def playanimation(gameId, playId):
     html = UserPickupdated.returnHTML(gameId,playId)
+    #return render_template('animation.html', html=html)
+    return html
+
+@app.route('/matchup/<gameId>/<playId>', methods=['GET'])
+def matchup(gameId, playId):
+    matchups = Matchups.query.all()
+    qb_pressure_frames = QBPressure.query.all()
+    qb_prximities = QBProximities.query.all()
+    plays = Plays.query.all()
+    tracking = Trackingdata.query.all()
+    filename = playplot(
+        gameId,
+        playId,
+        matchups,
+        qb_pressure_frames,
+        qb_proximities,
+        plays,
+        tracking
+    )
     #return render_template('animation.html', html=html)
     return html
 
