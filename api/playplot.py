@@ -8,7 +8,31 @@ from matplotlib.patches import Rectangle, Circle
 from matplotlib.animation import FuncAnimation
 from sklearn.preprocessing import LabelEncoder
 
+# Reading data
+matchups = pd.read_csv('https://storage.googleapis.com/big-data-bowl/matchups.csv')
+qb_pressure_frames = pd.read_csv('https://storage.googleapis.com/big-data-bowl/qb-pressure-frames.csv')
+qb_proximities = pd.read_csv('https://storage.googleapis.com/big-data-bowl/QBProximity-all.csv')
 
+plays = pd.read_csv('https://storage.googleapis.com/big-data-bowl/plays.csv')
+week1 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week1.csv')
+week2 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week2.csv')
+week3 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week3.csv')
+week4 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week4.csv')
+week5 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week5.csv')
+week6 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week6.csv')
+week7 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week7.csv')
+week8 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week8.csv')
+
+tracking = pd.concat([
+    week1,
+    week2,
+    week3,
+    week4,
+    week5,
+    week6,
+    week7,
+    week8
+])
 
 def playplot(
     gameId,
@@ -157,32 +181,6 @@ def playplot(
 
 
 if __name__ == '__main__':
-    # Reading data
-    matchups = pd.read_csv('https://storage.googleapis.com/big-data-bowl/matchups.csv')
-    qb_pressure_frames = pd.read_csv('https://storage.googleapis.com/big-data-bowl/qb-pressure-frames.csv')
-    qb_proximities = pd.read_csv('https://storage.googleapis.com/big-data-bowl/QBProximity-all.csv')
-
-    plays = pd.read_csv('https://storage.googleapis.com/big-data-bowl/plays.csv')
-    week1 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week1.csv')
-    week2 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week2.csv')
-    week3 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week3.csv')
-    week4 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week4.csv')
-    week5 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week5.csv')
-    week6 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week6.csv')
-    week7 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week7.csv')
-    week8 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week8.csv')
-
-    tracking = pd.concat([
-        week1,
-        week2,
-        week3,
-        week4,
-        week5,
-        week6,
-        week7,
-        week8
-    ])
-
     gameId = 2021091904
     playId = 2030
 
