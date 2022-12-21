@@ -178,6 +178,94 @@ class Trackingdata(db.Model):
     def __repr__(self):
         return f"<trackingdata {self.jerseyNumber}>"
 
+# Create A Model For Matchups Table
+class Matchups(db.Model):
+    __tablename__ = 'matchups'
+    gameId = db.Column(db.Integer, primary_key=True)
+    playId = db.Column(db.Integer, primary_key=True)
+    nflId_defender = db.Column(db.Integer, primary_key=True)
+    nflId_offender = db.Column(db.Integer, primary_key=True)
+    matchup_duration = db.Column(db.Integer)
+    pressure_gain_pct = db.Column(db.Float)
+    pressure_gain = db.Column(db.Integer)
+    matchup_win = db.Column(db.Integer)
+
+    def __init__(self, gameId, playId, nflId_defender, nflId_offender, \
+            matchup_duration, pressure_gain_pct, pressure_gain, matchup_win):
+        self.gameId = gameId
+        self.playId = playId
+        self.nflId_defender = nflId_defender
+        self.nflId_offender = nflId_offender
+        self.matchup_duration = matchup_duration
+        self.pressure_gain_pct = pressure_gain_pct
+        self.pressure_gain = pressure_gain
+        self.matchup_win = matchup_win
+
+    def __repr__(self):
+        return f"<matchups {self.nflId_defender}-{self.nflId_offender} at {self.gameId}-{self.playId}>"
+
+# Create A Model For PlayerProximities Table
+class PlayerProximities(db.Model):
+    __tablename__ = 'playerproximities'
+    gameId = db.Column(db.Integer, primary_key=True)
+    playId = db.Column(db.Integer, primary_key=True)
+    frameId = db.Column(db.Integer, primary_key=True)
+    nflId = db.Column(db.Integer, primary_key=True)
+    officialPosition = db.Column(db.String(3))
+    nflId2 = db.Column(db.Integer, primary_key=True)
+    officialPosition2 = db.Column(db.String(3))
+    matchupOpposing = db.Column(db.Integer)
+    distance = db.Column(db.Float)
+    angle = db.Column(db.Float)
+
+    def __init__(self, gameId, playId, frameId, nflId, \
+            officialPosition, nflId2, officialPosition2, matchupOpposing, \
+            distance, angle):
+        self.gameId = gameId
+        self.playId = playId
+        self.frameId = frameId
+        self.nflId = nflId
+        self.officialPosition = officialPosition
+        self.nflId2 = nflId2
+        self.officialPosition2 = officialPosition2
+        self.matchupOpposing = matchupOpposing
+        self.distance = distance
+        self.angle = angle
+
+    def __repr__(self):
+        return f"<playerproximities {self.nflId}-{self.nflId2} at {self.gameId}-{self.playId}-{self.frameId}>"
+
+# Create A Model For QBProximities Table
+class QBProximities(db.Model):
+    __tablename__ = 'qbproximities'
+    gameId = db.Column(db.Integer, primary_key=True)
+    playId = db.Column(db.Integer, primary_key=True)
+    frameId = db.Column(db.Integer, primary_key=True)
+    nflId = db.Column(db.Integer, primary_key=True)
+    officialPosition = db.Column(db.String(3))
+    nflId2 = db.Column(db.Integer, primary_key=True)
+    officialPosition2 = db.Column(db.String(3))
+    matchupOpposing = db.Column(db.Integer)
+    distance = db.Column(db.Float)
+    angle = db.Column(db.Float)
+
+    def __init__(self, gameId, playId, frameId, nflId, \
+            officialPosition, nflId2, officialPosition2, matchupOpposing, \
+            distance, angle):
+        self.gameId = gameId
+        self.playId = playId
+        self.frameId = frameId
+        self.nflId = nflId
+        self.officialPosition = officialPosition
+        self.nflId2 = nflId2
+        self.officialPosition2 = officialPosition2
+        self.matchupOpposing = matchupOpposing
+        self.distance = distance
+        self.angle = angle
+
+    def __repr__(self):
+        return f"<qbproximities {self.nflId}-{self.nflId2} at {self.gameId}-{self.playId}-{self.frameId}>"
+
 @app.route('/')
 def root():
     return redirect('/static/index.html')
