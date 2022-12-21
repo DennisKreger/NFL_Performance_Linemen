@@ -161,21 +161,21 @@ class Plays(db.Model):
     def __repr__(self):
         return f"<Plays {self.playDescription}>"
 
-# # Create A Model For Trackingdata Table
-# class Trackingdata(db.Model):
-#     __tablename__ = 'trackingdata'
-#     gameId = db.Column(db.Integer, primary_key=True)
-#     playId = db.Column(db.Integer, primary_key=True)
-#     nflId = db.Column(db.Integer, primary_key=True)
-#     jerseyNumber = db.Column(db.Integer)
-#     team = db.Column(db.String(5))
+# Create A Model For Trackingdata Table
+class Trackingdata(db.Model):
+    __tablename__ = 'trackingdata'
+    gameId = db.Column(db.Integer, primary_key=True)
+    playId = db.Column(db.Integer, primary_key=True)
+    nflId = db.Column(db.Integer, primary_key=True)
+    jerseyNumber = db.Column(db.Integer)
+    team = db.Column(db.String(5))
 
-#     def __init__(self, gameId, playId, nflId, jerseyNumber, team):
-#         self.gameId = gameId
-#         self.playId = playId
-#         self.nflId = nflId
-#         self.jerseyNumber = jerseyNumber
-#         self.team = team
+    def __init__(self, gameId, playId, nflId, jerseyNumber, team):
+        self.gameId = gameId
+        self.playId = playId
+        self.nflId = nflId
+        self.jerseyNumber = jerseyNumber
+        self.team = team
 
 #     def __repr__(self):
 #         return f"<trackingdata {self.jerseyNumber}>"
