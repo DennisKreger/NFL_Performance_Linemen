@@ -170,8 +170,8 @@ def playplot(
     anim = FuncAnimation(fig, update, frames=tracking_play['frameId'].max(), interval=100, repeat=True)
 
     writergif = animation.PillowWriter(fps=10)
-    filename = f'./static/images/playplot_{gameId}_{playId}.gif'
-    anim.save(filename, writer=writergif)
+    filename = f'images/playplot_{gameId}_{playId}.gif'
+    anim.save(f'static/{filename}', writer=writergif)
     return filename
 
 
