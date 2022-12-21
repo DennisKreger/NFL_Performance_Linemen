@@ -675,7 +675,7 @@ def playanimation(gameId, playId):
 def matchup(gameId, playId):
     matchups = Matchups.query.all()
     qb_pressure_frames = QBPressure.query.all()
-    qb_prximities = QBProximities.query.all()
+    qb_proximities = QBProximities.query.all()
     plays = Plays.query.all()
     tracking = Trackingdata.query.all()
     filename = playplot(
@@ -687,8 +687,7 @@ def matchup(gameId, playId):
         plays,
         tracking
     )
-    #return render_template('animation.html', html=html)
-    return html
+    return render_template('matchup.html', filename=filename)
 
    
 
