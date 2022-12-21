@@ -36,6 +36,7 @@
 
         $.holdReady(true);
         $(document).ready(function () {
+            $('#loading').hide();
             var table = $('#plays').DataTable({
                 searchPanes: {
                     layout: "columns-3",
@@ -108,7 +109,9 @@
                 selectedGameId = tableArray[0][1];
                 selectedPlayId = tableArray[0][2];
                 console.log('Selected Game Id: ' + selectedGameId);  
-                console.log('Selected Play Id: ' + selectedPlayId);  
+                console.log('Selected Play Id: ' + selectedPlayId); 
+                $('#loading').show();
+                predict(); 
             } )
             .on( 'deselect', function ( e, dt, type, indexes ) {
                 var rowData = table.rows( indexes ).data().toArray();
@@ -120,14 +123,13 @@
                 selectedGameId = 0;
                 selectedPlayId = 0;
                 $('#simulation').empty();
-                $('#pressure').empty();
             } );
 
         });
 
         function predict() {
             console.log("predicting");
-            $('#simulation').load('/matchup/' + selectedGameId + '/' + selectedPlayId);                   
+            $('#simulation').load('/matchup/' + selectedGameId + '/' + selectedPlayId, () => {$('#loading').hide()});                   
         };
     
     
@@ -212,17 +214,20 @@
                             <br>
                             <p>
                             <a>Select a Play from the table below to watch a simulation of the play.</a><br>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" 
+                            <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" 
                             id="predict" onclick="predict()"
                             data-bs-target="#collapsePrediction" aria-expanded="false" 
                             aria-controls="collapsePrediction">
                                 Simulate Play
-                            </button>
+                            </button> -->
                             </p>
                             <div class="collapse" id="collapsePrediction">
                         </div>
                             <div class="card card-body" id="prediction">
                                 <a>Play Simulation</a>
+                                    <div style="display:flex;align-items:center;justify-content:center;height:100%;width:100%;">
+                                        <img id="loading" style="width:200px;height:auto;margin-right:-20px;" src="images/loading.gif" alt="">
+                                    </div>
                                 <div id="simulation">
 
                                 </div>
