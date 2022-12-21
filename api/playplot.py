@@ -7,52 +7,165 @@ import matplotlib.animation as animation
 from matplotlib.patches import Rectangle, Circle
 from matplotlib.animation import FuncAnimation
 from sklearn.preprocessing import LabelEncoder
+from os import environ, path
+from dotenv import load_dotenv
+import psycopg2, sys
 
-# Reading data
-matchups = pd.read_csv('https://storage.googleapis.com/big-data-bowl/matchups.csv')
-qb_pressure_frames = pd.read_csv('https://storage.googleapis.com/big-data-bowl/qb-pressure-frames.csv')
-qb_proximities = pd.read_csv('https://storage.googleapis.com/big-data-bowl/QBProximity-all.csv')
+basedir = path.abspath(path.dirname(__file__))
+load_dotenv(path.join(basedir, '.env'))
+dbPassword = environ.get('DB_PASSWORD')
 
-plays = pd.read_csv('https://storage.googleapis.com/big-data-bowl/plays.csv')
-week1 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week1.csv')
-week2 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week2.csv')
-week3 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week3.csv')
-week4 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week4.csv')
-week5 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week5.csv')
-week6 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week6.csv')
-week7 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week7.csv')
-week8 = pd.read_csv('https://storage.googleapis.com/big-data-bowl/week8.csv')
+PARAMS = {
+        'database': 'big-data-bowl',
+        'user': 'postgres',
+        'password': dbPassword,
+        'host': '34.72.136.99',
+        'port': 5432,
+}
 
-tracking = pd.concat([
-    week1,
-    week2,
-    week3,
-    week4,
-    week5,
-    week6,
-    week7,
-    week8
-])
+def connect(params_dic):
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # connect to the PostgreSQL server
+        conn = psycopg2.connect(**params_dic)
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+        sys.exit(1)
+    return conn
+
+
+def postgresql_to_dataframe(conn, select_query, column_names):
+    """
+    Tranform a SELECT query into a pandas dataframe
+    """
+    cursor = conn.cursor()
+    try:
+        cursor.execute(select_query)
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("Error: %s" % error)
+        cursor.close()
+        return 1
+    
+    # Naturally we get a list of tupples
+    tupples = cursor.fetchall()
+    cursor.close()
+    
+    # We just need to turn it into a pandas dataframe
+    df = pd.DataFrame(tupples, columns=column_names)
+    return df
 
 def playplot(
     gameId,
     playId
 ):
-    
-    matchups_filtered = matchups[
-        (matchups['gameId'] == gameId) &\
-        (matchups['playId'] == playId)
+    conn = connect(PARAMS)
+
+    print('Fetching plays')
+    column_names = [
+        "gameId",
+        "playId",
+        "playDescription"
     ]
+    query = f'''
+        SELECT ALL
+            p."gameId",
+            p."playId",
+            p."playDescription"
+        FROM plays AS p
+        WHERE p."gameId" = {gameId} AND p."playId" = {playId}
+        '''
+    plays = postgresql_to_dataframe(conn, query, column_names)
 
-    qb_proximities_filtered = qb_proximities[
-        (qb_proximities['gameId'] == gameId) &\
-        (qb_proximities['playId'] == playId) &\
-        (qb_proximities['matchupOpposing'] == 1)
+    print('Fetching matchups')
+    column_names = [
+        "gameId", 
+        "playId",
+        "nflId_defender",
+        "nflId_offender",
+        "matchup_win"
     ]
+    query = f'''
+        SELECT ALL
+            mu."gameId",
+            mu."playId",
+            mu."nflId_defender",
+            mu."nflId_offender",
+            mu."matchup_win"
+        FROM matchups AS mu
+        WHERE mu."gameId" = {gameId} AND mu."playId" = {playId}
+        '''
+    matchups = postgresql_to_dataframe(conn, query, column_names)
 
-    player_max_pressure = qb_proximities_filtered[['nflId2', 'distance']].groupby(['nflId2']).min().reset_index()
+    print('Fetching qbproximity')
+    column_names = [
+        "gameId", 
+        "playId",
+        "nflId2",
+        "matchupOpposing",
+        "distance"
+    ]
+    query = f'''
+        SELECT ALL
+            qbp."gameId",
+            qbp."playId",
+            qbp."nflId2",
+            qbp."matchupOpposing",
+            qbp."distance"
+        FROM qbproximity AS qbp
+        WHERE qbp."gameId" = {gameId} AND qbp."playId" = {playId} AND qbp."matchupOpposing" = 1
+        '''
+    qbproximity = postgresql_to_dataframe(conn, query, column_names)
 
-    matchup = matchups_filtered.merge(
+    print('Fetching qbpressure')
+    column_names = [
+        "gameId",
+        "playId",
+        "frameId",
+        "distance",
+        "x",
+        "y"
+    ]
+    query = f'''
+        SELECT ALL
+            qbp."gameId",
+            qbp."playId",
+            qbp."frameId",
+            qbp."distance",
+            qbp."x",
+            qbp."y"
+        FROM qbpressure AS qbp
+        WHERE qbp."gameId" = {gameId} AND qbp."playId" = {playId}
+        '''
+    qbpressure = postgresql_to_dataframe(conn, query, column_names)
+
+    print('Fetching tracking')
+    column_names = [
+        "gameId",
+        "playId",
+        "frameId",
+        "nflId",
+        "team",
+        "x",
+        "y"
+    ]
+    query = f'''
+        SELECT ALL
+            t."gameId",
+            t."playId",
+            t."frameId",
+            t."nflId",
+            t."team",
+            t."x",
+            t."y"
+        FROM trackingdata AS t
+        WHERE t."gameId" = {gameId} AND t."playId" = {playId}
+        '''
+    tracking = postgresql_to_dataframe(conn, query, column_names)
+
+    player_max_pressure = qbproximity[['nflId2', 'distance']].groupby(['nflId2']).min().reset_index()
+
+    matchup = matchups.merge(
         player_max_pressure,
         left_on=['nflId_defender'],
         right_on=['nflId2']
@@ -67,33 +180,22 @@ def playplot(
     # Get play description
     play_description = plays[(plays['gameId'] == gameId) & (plays['playId'] == playId)]['playDescription'].iloc[0]
 
-    # Get tracking data for matchup play
-    tracking_play = tracking.loc[
-        (tracking['gameId'] == gameId) & \
-        (tracking['playId'] == playId)
-    ].copy()
-
     # Encode plot colors
     LE = LabelEncoder()
-    tracking_play['color_code'] = LE.fit_transform(tracking_play['team'])
-    tracking_play.loc[tracking_play['nflId'] == nflId_defender, 'color_code'] = 3
-    tracking_play.loc[tracking_play['nflId'] == nflId_offender, 'color_code'] = 4
+    tracking['color_code'] = LE.fit_transform(tracking['team'])
+    tracking.loc[tracking['nflId'] == nflId_defender, 'color_code'] = 3
+    tracking.loc[tracking['nflId'] == nflId_offender, 'color_code'] = 4
 
     # Get team matchup
-    teams = tracking_play[tracking_play['team'] != 'football']['team'].unique().tolist()
+    teams = tracking[tracking['team'] != 'football']['team'].unique().tolist()
 
     info = f'{" vs ".join(teams)} | Defender Win: {matchup_win == 1} | gameId: {gameId} | playId: {playId}'
     play_description = plays[(plays['gameId'] == gameId) & (plays['playId'] == playId)]['playDescription'].iloc[0]
 
-    scrim_x = tracking_play[
-        (tracking_play['team'] == 'football') &\
-        (tracking_play['frameId'] == 1)
+    scrim_x = tracking[
+        (tracking['team'] == 'football') &\
+        (tracking['frameId'] == 1)
     ]['x'].iloc[0]
-
-    qb_play_pressure = qb_pressure_frames.loc[
-        (qb_pressure_frames['gameId'] == gameId) & \
-        (qb_pressure_frames['playId'] == playId)
-    ]
 
     # Build base plot
     fig, ax = plt.subplots(2, 1, gridspec_kw={'height_ratios': [19, 1]})
@@ -144,14 +246,14 @@ def playplot(
 
     # Function to update plot animation
     def update(frameId):
-        tracking_frame = tracking_play.loc[
-            (tracking_play['frameId'] == frameId)
+        tracking_frame = tracking.loc[
+            (tracking['frameId'] == frameId)
         ]
         scatter.set_offsets(np.c_[tracking_frame['x'], tracking_frame['y']])
         scatter.set_array(tracking_frame['color_code'])
         
-        qb_slice = qb_play_pressure.loc[
-            (qb_play_pressure['frameId'] == frameId+1)
+        qb_slice = qbpressure.loc[
+            (qbpressure['frameId'] == frameId+1)
         ]
         
         pressure = qb_slice['distance'].iloc[0]
@@ -167,7 +269,7 @@ def playplot(
         return scatter, c, r, g
 
     # Animate plot
-    anim = FuncAnimation(fig, update, frames=tracking_play['frameId'].max(), interval=100, repeat=True)
+    anim = FuncAnimation(fig, update, frames=tracking['frameId'].max(), interval=100, repeat=True)
 
     writergif = animation.PillowWriter(fps=10)
     filename = f'images/playplot_{gameId}_{playId}.gif'
@@ -181,10 +283,5 @@ if __name__ == '__main__':
 
     playplot(
         gameId,
-        playId,
-        matchups,
-        qb_pressure_frames,
-        qb_proximities,
-        plays,
-        tracking
+        playId
     )
