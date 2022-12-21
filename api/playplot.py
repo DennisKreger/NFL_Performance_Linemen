@@ -228,7 +228,7 @@ def playplot(
         
     # Format yardline labels
     ax[0].get_yaxis().set_visible(False)
-    ax[0].set_xticks(range(20, 110, 10), range(10, 100, 10), fontsize=24, color='w')
+    ax[0].set_xticks(range(20, 110, 10), [10, 20, 30, 40, 50, 40, 30, 20, 10], fontsize=24, color='w')
     ax[0].tick_params(
         axis="x",
         direction="in",
