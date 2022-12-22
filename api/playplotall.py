@@ -57,6 +57,7 @@ def postgresql_to_dataframe(conn, select_query, column_names):
 
 
 def playgifs(gameId, playId):
+    # Connect and query from database
     conn = connect(PARAMS)
     print('Fetching plays')
     column_names = [
@@ -168,6 +169,7 @@ def playgifs(gameId, playId):
         '''
     matchups = postgresql_to_dataframe(conn, query, column_names)
 
+    # Find and merge max play pressure of each matched player
     player_max_pressure = qbproximity[['nflId2', 'distance']].groupby(['nflId2']).min().reset_index()
     matchups = matchups.merge(
         player_max_pressure,
@@ -176,6 +178,7 @@ def playgifs(gameId, playId):
     ).sort_values(by='distance', ascending=True)\
     .sort_values(by='matchup_win', ascending=False)
 
+    # Create a GIF for no player matchup selected
     no_matchup = playplot(
                 gameId,
                 playId,
@@ -194,6 +197,7 @@ def playgifs(gameId, playId):
                 }
             )
 
+    # Loop through matchups to generate GIFs
     matchup_data = []
     for i, matchup in matchups.iterrows():
         if matchup['displayName_defender'] == 0:
@@ -224,10 +228,6 @@ def playplot(
     tracking,
     matchup
 ):
-    conn = connect(PARAMS)
-
-    print(matchup)
-
     # Extract matchup features
     nflId_defender = matchup['nflId_defender']
     nflId_offender = matchup['nflId_offender']
@@ -243,12 +243,10 @@ def playplot(
     tracking.loc[tracking['nflId'] == nflId_defender, 'color_code'] = 3
     tracking.loc[tracking['nflId'] == nflId_offender, 'color_code'] = 4
 
-    # Get team matchup
+    # Define play features
     teams = tracking[tracking['team'] != 'football']['team'].unique().tolist()
-
     info = f'{" vs ".join(teams)} | Defender Win: {matchup_win == 1} | gameId: {gameId} | playId: {playId}'
     play_description = plays[(plays['gameId'] == gameId) & (plays['playId'] == playId)]['playDescription'].iloc[0]
-
     scrim_x = tracking[
         (tracking['team'] == 'football') &\
         (tracking['frameId'] == 1)
@@ -259,14 +257,16 @@ def playplot(
     fig.set_figheight(6.5)
     fig.set_figwidth(12)
 
+    # ax[1] is the pressure gauge
     ax[1].get_yaxis().set_visible(False)
     ax[1].get_xaxis().set_visible(False)
+
     r = Rectangle((0, 0), 1, 1, facecolor = 'indianred')
     ax[1].add_patch(r)
     g = Rectangle((0, 0), 1, 1, facecolor = 'green')
     ax[1].add_patch(g)
 
-
+    # ax[0] is the play plot itself
     ax[0].set_xlim(0, 120)
     ax[0].set_ylim(0, 53.3)
     ax[0].set_xlabel(play_description, fontsize=8)
@@ -303,23 +303,26 @@ def playplot(
 
     # Function to update plot animation
     def update(frameId):
+        # Get data for just this play
         tracking_frame = tracking.loc[
             (tracking['frameId'] == frameId)
         ]
+
+        # Update scatter plot
         scatter.set_offsets(np.c_[tracking_frame['x'], tracking_frame['y']])
         scatter.set_array(tracking_frame['color_code'])
         
+        # Animate QB pocket circle
         qb_slice = qbpressure.loc[
             (qbpressure['frameId'] == frameId+1)
         ]
-        
         pressure = qb_slice['distance'].iloc[0]
         x = qb_slice['x'].iloc[0]
         y = qb_slice['y'].iloc[0]
-        
         c.set(radius=pressure)
         c.center=(x, y)
         
+        # Animate pressure gauge
         r.set(width=1 - (pressure/10), alpha = 1 - (pressure/10))
         g.set(width=1 - (pressure/10), alpha = (pressure/10))
         
@@ -328,6 +331,7 @@ def playplot(
     # Animate plot
     anim = FuncAnimation(fig, update, frames=tracking['frameId'].max(), interval=100, repeat=True)
 
+    # Save plot
     writergif = animation.PillowWriter(fps=10)
     filename = f'images/playplot_{gameId}_{playId}_{int(nflId_defender)}_{int(nflId_offender)}.gif'
     anim.save(f'static/{filename}', writer=writergif)
