@@ -96,7 +96,7 @@ def playplot(
         WHERE mu."gameId" = {gameId} AND mu."playId" = {playId}
         '''
     matchups = postgresql_to_dataframe(conn, query, column_names)
-    print(matchups)
+
     print('Fetching qbproximity')
     column_names = [
         "gameId", 
@@ -138,7 +138,7 @@ def playplot(
         WHERE qbp."gameid" = {gameId} AND qbp."playid" = {playId}
         '''
     qbpressure = postgresql_to_dataframe(conn, query, column_names)
-    print(qbpressure)
+
     print('Fetching tracking')
     column_names = [
         "gameId",
