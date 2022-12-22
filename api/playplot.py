@@ -89,14 +89,14 @@ def playplot(
         SELECT ALL
             mu."gameId",
             mu."playId",
-            mu."nflId_defender",
+            mu."nflId_deffender",
             mu."nflId_offender",
             mu."matchup_win"
-        FROM matchups AS mu
+        FROM matchups2 AS mu
         WHERE mu."gameId" = {gameId} AND mu."playId" = {playId}
         '''
     matchups = postgresql_to_dataframe(conn, query, column_names)
-
+    print(matchups)
     print('Fetching qbproximity')
     column_names = [
         "gameId", 
@@ -128,17 +128,17 @@ def playplot(
     ]
     query = f'''
         SELECT ALL
-            qbp."gameId",
-            qbp."playId",
-            qbp."frameId",
+            qbp."gameid",
+            qbp."playid",
+            qbp."frameid",
             qbp."distance",
             qbp."x",
             qbp."y"
-        FROM qbpressure AS qbp
-        WHERE qbp."gameId" = {gameId} AND qbp."playId" = {playId}
+        FROM qbpressure2 AS qbp
+        WHERE qbp."gameid" = {gameId} AND qbp."playid" = {playId}
         '''
     qbpressure = postgresql_to_dataframe(conn, query, column_names)
-
+    print(qbpressure)
     print('Fetching tracking')
     column_names = [
         "gameId",
@@ -165,17 +165,27 @@ def playplot(
 
     player_max_pressure = qbproximity[['nflId2', 'distance']].groupby(['nflId2']).min().reset_index()
 
-    matchup = matchups.merge(
+    matchups = matchups.merge(
         player_max_pressure,
         left_on=['nflId_defender'],
         right_on=['nflId2']
     ).sort_values(by='distance', ascending=True)\
-    .sort_values(by='matchup_win', ascending=False).iloc[0]
+    .sort_values(by='matchup_win', ascending=False)
 
-    # Extract matchup features
-    nflId_defender = matchup['nflId_defender']
-    nflId_offender = matchup['nflId_offender']
-    matchup_win = matchup['matchup_win']
+    # Get first matchup if there are any
+    try:
+        # Select first matchup
+        matchup = matchups.iloc[0]
+
+        # Extract matchup features
+        nflId_defender = matchup['nflId_defender']
+        nflId_offender = matchup['nflId_offender']
+        matchup_win = matchup['matchup_win']
+    except:
+        print("No matchups found")
+        nflId_defender = 0
+        nflId_offender = 0
+        matchup_win = 0
 
     # Get play description
     play_description = plays[(plays['gameId'] == gameId) & (plays['playId'] == playId)]['playDescription'].iloc[0]
