@@ -168,16 +168,6 @@ def playgifs(gameId, playId):
         '''
     matchups = postgresql_to_dataframe(conn, query, column_names)
 
-    matchups = pd.concat([matchups,pd.DataFrame({
-        'gameId': gameId,
-        'playId': playId,
-        'nflId_defender': 0,
-        'nflId_offender': 0,
-        'matchup_win': 0,
-        'displayName_defender': 'N/A',
-        'displayName_offender': 'N/A'
-    }, index=[0])])
-
     player_max_pressure = qbproximity[['nflId2', 'distance']].groupby(['nflId2']).min().reset_index()
     matchups = matchups.merge(
         player_max_pressure,
@@ -186,14 +176,34 @@ def playgifs(gameId, playId):
     ).sort_values(by='distance', ascending=True)\
     .sort_values(by='matchup_win', ascending=False)
 
-    matchup_data = {}
+    no_matchup = playplot(
+                gameId,
+                playId,
+                plays,
+                qbpressure,
+                tracking,
+                {
+                    'gameId': gameId,
+                    'playId': playId,
+                    'nflId_defender': 0,
+                    'nflId_offender': 0,
+                    'matchup_win': 0,
+                    'displayName_defender': 'N/A',
+                    'displayName_offender': 'N/A',
+                    'distance': 0
+                }
+            )
+
+    matchup_data = []
     for i, matchup in matchups.iterrows():
-        matchup_data[i] = {
-            'Defensive Lineman': matchup['displayName_defender'],
-            'Offensive Lineman': matchup['displayName_offender'],
-            'Max Proximity': matchup['distance'],
-            'Matchup Winner': 'Defense' if matchup['matchup_win'] == 1 else 'Offense',
-            'GIF': playplot(
+        if matchup['displayName_defender'] == 0:
+            next
+        matchup_data.append([
+            matchup['displayName_defender'],
+            matchup['displayName_offender'],
+            f'{matchup["distance"]:.2f}',
+            'Defense' if matchup['matchup_win'] == 1 else 'Offense',
+            playplot(
                 gameId,
                 playId,
                 plays,
@@ -201,9 +211,9 @@ def playgifs(gameId, playId):
                 tracking,
                 matchup
             )
-        }
+        ])
 
-    return matchup_data
+    return matchup_data, no_matchup
 
 
 def playplot(
@@ -216,7 +226,7 @@ def playplot(
 ):
     conn = connect(PARAMS)
 
-    
+    print(matchup)
 
     # Extract matchup features
     nflId_defender = matchup['nflId_defender']

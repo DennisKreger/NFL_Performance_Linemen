@@ -12,7 +12,7 @@ from flask import Flask, render_template
 import dynamicPressureGauge
 import playermatchuppressure
 import UserPickupdated
-from playplot import playplot
+from playplotall import playgifs
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -645,11 +645,11 @@ def playanimation(gameId, playId):
 def matchup(gameId, playId):
     gameId = int(gameId)
     playId = int(playId)
-    filename = playplot(
+    data, no_matchup = playgifs(
         gameId,
         playId
     )
-    return render_template('matchup.html', filename=filename)
+    return render_template('matchup.html', data=data, base=no_matchup)
 
    
 
