@@ -120,6 +120,26 @@ def playgifs(gameId, playId):
         '''
     tracking = postgresql_to_dataframe(conn, query, column_names)
 
+    print('Fetching qbproximity')
+    column_names = [
+        "gameId", 
+        "playId",
+        "nflId2",
+        "matchupOpposing",
+        "distance"
+    ]
+    query = f'''
+        SELECT ALL
+            qbp."gameId",
+            qbp."playId",
+            qbp."nflId2",
+            qbp."matchupOpposing",
+            qbp."distance"
+        FROM qbproximity AS qbp
+        WHERE qbp."gameId" = {gameId} AND qbp."playId" = {playId} AND qbp."matchupOpposing" = 1
+        '''
+    qbproximity = postgresql_to_dataframe(conn, query, column_names)
+
     print('Fetching matchups')
     column_names = [
         "gameId", 
@@ -147,24 +167,43 @@ def playgifs(gameId, playId):
         WHERE mu."gameId" = {gameId} AND mu."playId" = {playId};
         '''
     matchups = postgresql_to_dataframe(conn, query, column_names)
-    print(matchups)
-    exit()
+
     matchups = pd.concat([matchups,pd.DataFrame({
         'gameId': gameId,
         'playId': playId,
         'nflId_defender': 0,
         'nflId_offender': 0,
-        'matchup_win': 0
+        'matchup_win': 0,
+        'displayName_defender': 'N/A',
+        'displayName_offender': 'N/A'
     }, index=[0])])
 
-    return [playplot(
-        gameId,
-        playId,
-        plays,
-        qbpressure,
-        tracking,
-        matchup
-    ) for i, matchup in matchups.iterrows()]
+    player_max_pressure = qbproximity[['nflId2', 'distance']].groupby(['nflId2']).min().reset_index()
+    matchups = matchups.merge(
+        player_max_pressure,
+        left_on=['nflId_defender'],
+        right_on=['nflId2']
+    ).sort_values(by='distance', ascending=True)\
+    .sort_values(by='matchup_win', ascending=False)
+
+    matchup_data = {}
+    for i, matchup in matchups.iterrows():
+        matchup_data[i] = {
+            'Defensive Lineman': matchup['displayName_defender'],
+            'Offensive Lineman': matchup['displayName_offender'],
+            'Max Proximity': matchup['distance'],
+            'Matchup Winner': 'Defense' if matchup['matchup_win'] == 1 else 'Offense',
+            'GIF': playplot(
+                gameId,
+                playId,
+                plays,
+                qbpressure,
+                tracking,
+                matchup
+            )
+        }
+
+    return matchup_data
 
 
 def playplot(
