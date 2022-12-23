@@ -111,7 +111,6 @@
                 console.log('Selected Game Id: ' + selectedGameId);  
                 console.log('Selected Play Id: ' + selectedPlayId); 
                 $('#loading').show();
-                $('#preview').show();
                 predict(); 
             } )
             .on( 'deselect', function ( e, dt, type, indexes ) {
@@ -129,15 +128,25 @@
             
         });
 
+        var timers = [];
         function predict() {
             console.log("predicting");
+            $('#simulation').empty();
+            $('#preview').attr('src', '');
+            $('#preview').show();
             imageName = 'images/playplot_' + selectedGameId + '_' + selectedPlayId + '_0_0.gif'
+            var counter = 0;
+            if (typeof inverval_timer != 'undefined') {
+                clearInterval(inverval_timer);
+            }
+            
             inverval_timer = setInterval(function() {
                 fetch(imageName, { method: 'HEAD' })
                     .then(res => {
                         console.log(res)
                         if (res.ok) {
-                            $('#preview').attr('src', imageName);
+                            console.log('Found base plot')
+                            setTimeout(() =>{$('#preview').attr('src', imageName);},500);
                             clearInterval(inverval_timer);
                         }
                     })
@@ -147,7 +156,6 @@
             $('#simulation').load('/matchup/' + selectedGameId + '/' + selectedPlayId, () => {
                 $('#loading').hide();
                 $('#preview').hide();
-                $('#preview').attr('src', '');
             });             
         };
     
