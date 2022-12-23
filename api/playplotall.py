@@ -86,14 +86,14 @@ def playgifs(gameId, playId):
     ]
     query = f'''
         SELECT ALL
-            qbp."gameid",
-            qbp."playid",
-            qbp."frameid",
+            qbp."gameId",
+            qbp."playId",
+            qbp."frameId",
             qbp."distance",
             qbp."x",
             qbp."y"
-        FROM qbpressure2 AS qbp
-        WHERE qbp."gameid" = {gameId} AND qbp."playid" = {playId}
+        FROM qbpressure AS qbp
+        WHERE qbp."gameId" = {gameId} AND qbp."playId" = {playId}
         '''
     qbpressure = postgresql_to_dataframe(conn, query, column_names)
 
@@ -155,14 +155,14 @@ def playgifs(gameId, playId):
         SELECT ALL
             mu."gameId",
             mu."playId",
-            mu."nflId_deffender",
+            mu."nflId_defender",
             mu."nflId_offender",
             mu."matchup_win",
             p."displayName",
             p2."displayName"
-        FROM matchups2 AS mu
+        FROM matchups AS mu
         LEFT JOIN players AS p
-        ON p."nflID" = mu."nflId_deffender"
+        ON p."nflID" = mu."nflId_defender"
         LEFT JOIN players AS p2
         ON p2."nflID" = mu."nflId_offender"
         WHERE mu."gameId" = {gameId} AND mu."playId" = {playId};
@@ -242,10 +242,11 @@ def playplot(
     tracking['color_code'] = LE.fit_transform(tracking['team'])
     tracking.loc[tracking['nflId'] == nflId_defender, 'color_code'] = 3
     tracking.loc[tracking['nflId'] == nflId_offender, 'color_code'] = 4
+    
 
     # Define play features
     teams = tracking[tracking['team'] != 'football']['team'].unique().tolist()
-    info = f'{" vs ".join(teams)} | Defender Win: {matchup_win == 1} | gameId: {gameId} | playId: {playId}'
+    info = f'{" vs ".join(teams)} | gameId: {gameId} | playId: {playId}'
     play_description = plays[(plays['gameId'] == gameId) & (plays['playId'] == playId)]['playDescription'].iloc[0]
     scrim_x = tracking[
         (tracking['team'] == 'football') &\
@@ -307,6 +308,19 @@ def playplot(
         tracking_frame = tracking.loc[
             (tracking['frameId'] == frameId)
         ]
+
+        # Add dummy players to force color scheme
+        if len(tracking_frame) > 0:
+            tracking_frame = pd.concat([tracking_frame, pd.DataFrame({
+                'gameId': [gameId, gameId, gameId, gameId, gameId],
+                'playId': [playId, playId, playId, playId, playId],
+                'frameId': [frameId, frameId, frameId, frameId, frameId],
+                'nflId': [0, 0, 0, 0, 0],
+                'team': ['NA', 'NA', 'NA', 'NA', 'NA'],
+                'x': [-10, -10, -10, -10, -10],
+                'y': [-10, -10, -10, -10, -10],
+                'color_code': [0, 1, 2, 3, 4]
+            })])
 
         # Update scatter plot
         scatter.set_offsets(np.c_[tracking_frame['x'], tracking_frame['y']])
