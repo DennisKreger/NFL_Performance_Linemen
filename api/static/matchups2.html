@@ -111,6 +111,7 @@
                 console.log('Selected Game Id: ' + selectedGameId);  
                 console.log('Selected Play Id: ' + selectedPlayId); 
                 $('#loading').show();
+                $('#preview').show();
                 predict(); 
             } )
             .on( 'deselect', function ( e, dt, type, indexes ) {
@@ -125,11 +126,29 @@
                 $('#simulation').empty();
             } );
 
+            
         });
 
         function predict() {
             console.log("predicting");
-            $('#simulation').load('/matchup/' + selectedGameId + '/' + selectedPlayId, () => {$('#loading').hide()});                   
+            imageName = 'images/playplot_' + selectedGameId + '_' + selectedPlayId + '_0_0.gif'
+            inverval_timer = setInterval(function() {
+                fetch(imageName, { method: 'HEAD' })
+                    .then(res => {
+                        console.log(res)
+                        if (res.ok) {
+                            $('#preview').attr('src', imageName);
+                            clearInterval(inverval_timer);
+                        }
+                    })
+                    .catch(err => console.log('Error:', err))
+            }, 1000);
+
+            $('#simulation').load('/matchup/' + selectedGameId + '/' + selectedPlayId, () => {
+                $('#loading').hide();
+                $('#preview').hide();
+                $('#preview').attr('src', '');
+            });             
         };
     
     
@@ -225,8 +244,9 @@
                         </div>
                             <div class="card card-body" id="prediction">
                                 <a>Play Simulation</a>
-                                    <div style="display:flex;align-items:center;justify-content:center;height:100%;width:100%;">
-                                        <img id="loading" style="width:200px;height:auto;margin-right:-20px;" src="images/loading.gif" alt="">
+                                    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%;">
+                                        <img id="preview" src="" alt="" style="max-width: 100%">
+                                        <img id="loading" src="images/loading.gif" alt="" style="width:200px">
                                     </div>
                                 <div id="simulation">
 
