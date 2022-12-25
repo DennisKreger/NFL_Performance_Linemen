@@ -1,11 +1,22 @@
-<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-  <img src="{{ filename }}" style="max-width:100%;max-height:100%;">
-</div>
-<div>
+<link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/searchpanes/2.1.0/css/searchPanes.bootstrap5.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/select/1.5.0/css/select.bootstrap5.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/searchpanes/2.1.0/js/dataTables.searchPanes.min.js"></script>
+<script src="https://cdn.datatables.net/searchpanes/2.1.0/js/searchPanes.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
+<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center">
   <img class="playPlot" id="{{ base }}" src="{{ base }}" alt="" style="max-width: 100%">
   <table class="table table-hover table-bordered matchups" id="matchups" style="cursor:pointer;">
     <thead>
       <tr>
+        <th scope="col">Select</th>
         <th scope="col">Defensive Lineman</th>
         <th scope="col">Offensive Lineman</th>
         <th scope="col">Minimum QB Proximity</th>
@@ -14,6 +25,7 @@
     </thead>
     {% for row in data %}
       <tr scope="row" id="{{ row[4] }}">
+        <td></td>
         <td>{{ row[0] }}</td>
         <td>{{ row[1] }}</td>
         <td>{{ row[2] }}</td>
@@ -23,22 +35,30 @@
   </table>
 </div>
 <script>
-  $(document).ready(function() {
-    $('.matchups > tbody > tr').click(function() {
-      if($(this).hasClass("matchup-selected")){
-        $("tr").removeClass("matchup-selected");
-        $('.playPlot').attr("src", $('.playPlot').attr("id"));
-      } else {
-        var gif = $(this).attr('id');
-        $("tr").removeClass("matchup-selected");
-        $(this).attr('class', 'matchup-selected');
-        $('.playPlot').attr("src", gif);
+  $.holdReady(true);
+  $(document).ready(function () {
+    var table = $('#matchups').DataTable({
+      paging: false,
+      searching: false,
+      ordering:  false,
+      columnDefs: [ {
+        orderable: false,
+        className: 'select-checkbox',
+        targets:   0
+      } ],
+      select: {
+        style:    'os',
+        selector: 'td:first-child'
       }
     });
+    table
+      .on( 'select', function ( e, dt, type, indexes ) {
+        var rowData = table.rows( indexes ).ids();
+        var gif = rowData[0];
+        $('.playPlot').attr("src", gif);
+      } )
+      .on( 'deselect', function ( e, dt, type, indexes ) {
+        $('.playPlot').attr("src", $('.playPlot').attr("id"));
+      });
   });
 </script>
-<style>
-.matchup-selected {
-    background-color:rgb(13 110 253 / 50%);
-  }
-</style>
