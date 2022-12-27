@@ -38,6 +38,7 @@
         $(document).ready(function () {
             $('#loading').hide();
             var table = $('#plays').DataTable({
+                scrollX: true,
                 searchPanes: {
                     layout: "columns-3",
                     viewTotal: true
@@ -263,7 +264,7 @@
                   
                     </div>
                     <div class="container-fluid px-4">
-                        <table id="plays" class="display" style="width:100%">
+                        <table id="plays" class="display">
                             <thead>
                                 <tr>
                                     <th>Select</th>
@@ -323,7 +324,7 @@
                                 </script>
 
                             </tbody>
-                            <tfoot>
+                            <!-- <tfoot>
                                 <tr>
                                     <th>Select</th>
                                     <th>Game Id</th>
@@ -346,7 +347,7 @@
                                     <th>Pass Coverage</th>
                                     <th>Pass Coverage Type</th>
                                 </tr>
-                            </tfoot>
+                            </tfoot> -->
                         </table>
                     </div>
             </main>
