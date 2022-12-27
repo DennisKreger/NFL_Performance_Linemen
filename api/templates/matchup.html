@@ -12,7 +12,7 @@
 <script src="https://cdn.datatables.net/searchpanes/2.1.0/js/searchPanes.bootstrap5.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
 <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center">
-  <img class="playPlot" id="{{ base }}" src="{{ base }}" alt="" style="max-width: 100%">
+  <img class="playPlot" id="{{ base }}" src="{{ base }}" alt="" style="max-width:100%;max-height:75vh">
   <table class="table table-hover table-bordered matchups" id="matchups" style="cursor:pointer;">
     <thead>
       <tr>
@@ -37,7 +37,7 @@
 <script>
   $.holdReady(true);
   $(document).ready(function () {
-    var table = $('#matchups').DataTable({
+    var matchupTable = $('#matchups').DataTable({
       paging: false,
       searching: false,
       ordering:  false,
@@ -51,7 +51,7 @@
         selector: 'td:first-child'
       }
     });
-    table
+    matchupTable
       .on( 'select', function ( e, dt, type, indexes ) {
         var rowData = table.rows( indexes ).ids();
         var gif = rowData[0];
