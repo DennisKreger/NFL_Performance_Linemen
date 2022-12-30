@@ -110,9 +110,8 @@
                 selectedGameId = tableArray[0][1];
                 selectedPlayId = tableArray[0][2];
                 console.log('Selected Game Id: ' + selectedGameId);  
-                console.log('Selected Play Id: ' + selectedPlayId); 
-                $('#loading').show();
-                predict(); 
+                console.log('Selected Play Id: ' + selectedPlayId);
+                getMatchups();
             } )
             .on( 'deselect', function ( e, dt, type, indexes ) {
                 var rowData = table.rows( indexes ).data().toArray();
@@ -123,41 +122,21 @@
                 console.log('Deselected Play Id: ' + selectedPlayId);    
                 selectedGameId = 0;
                 selectedPlayId = 0;
+                $('#matchups').empty();
                 $('#simulation').empty();
             } );
-
-            
         });
 
         var timers = [];
-        function predict() {
-            console.log("predicting");
-            $('#simulation').empty();
-            $('#preview').attr('src', '');
-            $('#preview').show();
-            imageName = 'images/playplot_' + selectedGameId + '_' + selectedPlayId + '_0_0.gif'
-            var counter = 0;
-            if (typeof inverval_timer != 'undefined') {
-                clearInterval(inverval_timer);
-            }
-            
-            inverval_timer = setInterval(function() {
-                fetch(imageName, { method: 'HEAD' })
-                    .then(res => {
-                        console.log(res)
-                        if (res.ok) {
-                            console.log('Found base plot')
-                            setTimeout(() =>{$('#preview').attr('src', imageName);},500);
-                            clearInterval(inverval_timer);
-                        }
-                    })
-                    .catch(err => console.log('Error:', err))
-            }, 1000);
-
-            $('#simulation').load('/matchup/' + selectedGameId + '/' + selectedPlayId, () => {
-                $('#loading').hide();
-                $('#preview').hide();
-            });             
+        function getMatchups() {
+            $('#simulation').hide();
+            $('#loading').show();
+            $('#matchups').load('/get-matchups/' + selectedGameId + '/' + selectedPlayId, () => {
+                $('#simulation').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/0/0', () => {
+                    $('#loading').hide();
+                    $('#simulation').show();
+                });
+            });
         };
     
     
@@ -253,13 +232,11 @@
                         </div>
                             <div class="card card-body" id="prediction">
                                 <a>Play Simulation</a>
-                                    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%;">
-                                        <img id="preview" src="" alt="" style="max-width:100%;max-height:75vh">
-                                        <img id="loading" src="images/loading.gif" alt="" style="width:200px">
-                                    </div>
-                                <div id="simulation">
-
+                                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;">
+                                    <div id="simulation"></div>
+                                    <img id="loading" src="images/loading.gif" alt="" style="width:200px">
                                 </div>
+                                <div id="matchups"></div>
                             </div>
                   
                     </div>

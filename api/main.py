@@ -13,9 +13,11 @@ import dynamicPressureGauge
 import playermatchuppressure
 import UserPickupdated
 from playplotall import playgifs
+from playplot import playplot
 from matchups import get_matchups
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
 # Init App
 app = Flask(__name__)
@@ -653,15 +655,25 @@ def matchup(gameId, playId):
     return render_template('matchup.html', data=data, base=no_matchup)
 
 @app.route('/get-matchups/<gameId>/<playId>', methods=['GET'])
-def matchup(gameId, playId):
+def matchup_table(gameId, playId):
     gameId = int(gameId)
     playId = int(playId)
     data = get_matchups(
         gameId,
         playId
     )
-    return render_template('matchup.html', data=data)
+    return render_template('matchups-table.html', data=data)
 
+@app.route('/get-playplot/<gameId>/<playId>/<nflId_defender>/<nflId_offender>', methods=['GET'])
+def matchup_plot(gameId, playId, nflId_defender, nflId_offender):
+    gameId = int(gameId)
+    playId = int(playId)
+    nflId_defender = int(nflId_defender)
+    nflId_offender = int(nflId_offender)
+    filename = f'images/playplot_{gameId}_{playId}_{nflId_defender}_{nflId_offender}.gif'
+    if not os.path.isfile(f'static/{filename}'):
+        playplot(gameId, playId, nflId_defender, nflId_offender)
+    return render_template('matchups-plot.html', filename=filename)
    
 
 if __name__ == '__main__':

@@ -125,11 +125,13 @@ def get_matchups(gameId, playId):
             matchup['displayName_defender'],
             matchup['displayName_offender'],
             f'{matchup["distance"]:.2f}',
-            f'{matchup["matchup_duration"]/10:.2f}sec',
+            f'{matchup["matchup_duration"]/10:.1f}s',
             f'{matchup["matchup_broken"]==1}',
             f'{matchup["trouble_generated"]==1}',
             f'{matchup["pressure_gain"]==1}',
             f'{matchup["pressure_gain_pct"]:.2%}',
+            matchup['nflId_defender'],
+            matchup['nflId_offender']
         ])
 
     return matchup_data
