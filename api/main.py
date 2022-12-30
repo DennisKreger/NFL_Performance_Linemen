@@ -13,6 +13,7 @@ import dynamicPressureGauge
 import playermatchuppressure
 import UserPickupdated
 from playplotall import playgifs
+from matchups import get_matchups
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -650,6 +651,16 @@ def matchup(gameId, playId):
         playId
     )
     return render_template('matchup.html', data=data, base=no_matchup)
+
+@app.route('/get-matchups/<gameId>/<playId>', methods=['GET'])
+def matchup(gameId, playId):
+    gameId = int(gameId)
+    playId = int(playId)
+    data = get_matchups(
+        gameId,
+        playId
+    )
+    return render_template('matchup.html', data=data)
 
    
 
