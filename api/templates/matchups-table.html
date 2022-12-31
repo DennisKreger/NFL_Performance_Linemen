@@ -62,7 +62,6 @@
         selector: 'td:first-child'
       }
     });
-    matchupTable.columns.adjust()
     matchupTable.columns.adjust();
     matchupTable
       .on( 'select', function ( e, dt, type, indexes ) {
@@ -76,12 +75,15 @@
         });
       } )
       .on( 'deselect', function ( e, dt, type, indexes ) {
-        $('#simulation').hide();
-        $('#loading').show();
-        $('#simulation').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/0/0', () => {
-            $('#loading').hide();
-            $('#simulation').show();
-        });
+        console.log('deselect')
+        if (selectedGameId == 0) {
+            $('#simulation').hide();
+            $('#loading').show();
+            $('#simulation').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/0/0', () => {
+                $('#loading').hide();
+                $('#simulation').show();
+            });
+        }
       });
   });
 </script>

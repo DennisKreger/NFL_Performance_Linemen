@@ -105,6 +105,8 @@
 
             table
             .on( 'select', function ( e, dt, type, indexes ) {
+                $('#matchups').empty();
+                $('#simulation').empty();
                 var rowData = table.rows( indexes ).data().toArray();
                 var tableArray = table.rows( indexes ).data();
                 selectedGameId = tableArray[0][1];
@@ -119,7 +121,7 @@
                 selectedGameId = tableArray[0][1];
                 selectedPlayId = tableArray[0][1];
                 console.log('Deselected Game Id: ' + selectedGameId);  
-                console.log('Deselected Play Id: ' + selectedPlayId);    
+                console.log('Deselected Play Id: ' + selectedPlayId); 
                 selectedGameId = 0;
                 selectedPlayId = 0;
                 $('#matchups').empty();
