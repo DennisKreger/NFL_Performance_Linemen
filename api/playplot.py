@@ -57,7 +57,9 @@ def postgresql_to_dataframe(conn, select_query, column_names):
 
 def playplot(
     gameId,
-    playId
+    playId,
+    nflId_defender,
+    nflId_offender
 ):
     conn = connect(PARAMS)
 
@@ -77,46 +79,6 @@ def playplot(
         '''
     plays = postgresql_to_dataframe(conn, query, column_names)
 
-    print('Fetching matchups')
-    column_names = [
-        "gameId", 
-        "playId",
-        "nflId_defender",
-        "nflId_offender",
-        "matchup_win"
-    ]
-    query = f'''
-        SELECT ALL
-            mu."gameId",
-            mu."playId",
-            mu."nflId_deffender",
-            mu."nflId_offender",
-            mu."matchup_win"
-        FROM matchups2 AS mu
-        WHERE mu."gameId" = {gameId} AND mu."playId" = {playId}
-        '''
-    matchups = postgresql_to_dataframe(conn, query, column_names)
-
-    print('Fetching qbproximity')
-    column_names = [
-        "gameId", 
-        "playId",
-        "nflId2",
-        "matchupOpposing",
-        "distance"
-    ]
-    query = f'''
-        SELECT ALL
-            qbp."gameId",
-            qbp."playId",
-            qbp."nflId2",
-            qbp."matchupOpposing",
-            qbp."distance"
-        FROM qbproximity AS qbp
-        WHERE qbp."gameId" = {gameId} AND qbp."playId" = {playId} AND qbp."matchupOpposing" = 1
-        '''
-    qbproximity = postgresql_to_dataframe(conn, query, column_names)
-
     print('Fetching qbpressure')
     column_names = [
         "gameId",
@@ -128,14 +90,14 @@ def playplot(
     ]
     query = f'''
         SELECT ALL
-            qbp."gameid",
-            qbp."playid",
-            qbp."frameid",
+            qbp."gameId",
+            qbp."playId",
+            qbp."frameId",
             qbp."distance",
             qbp."x",
             qbp."y"
-        FROM qbpressure2 AS qbp
-        WHERE qbp."gameid" = {gameId} AND qbp."playid" = {playId}
+        FROM qbpressure AS qbp
+        WHERE qbp."gameId" = {gameId} AND qbp."playId" = {playId}
         '''
     qbpressure = postgresql_to_dataframe(conn, query, column_names)
 
@@ -163,30 +125,6 @@ def playplot(
         '''
     tracking = postgresql_to_dataframe(conn, query, column_names)
 
-    player_max_pressure = qbproximity[['nflId2', 'distance']].groupby(['nflId2']).min().reset_index()
-
-    matchups = matchups.merge(
-        player_max_pressure,
-        left_on=['nflId_defender'],
-        right_on=['nflId2']
-    ).sort_values(by='distance', ascending=True)\
-    .sort_values(by='matchup_win', ascending=False)
-
-    # Get first matchup if there are any
-    try:
-        # Select first matchup
-        matchup = matchups.iloc[0]
-
-        # Extract matchup features
-        nflId_defender = matchup['nflId_defender']
-        nflId_offender = matchup['nflId_offender']
-        matchup_win = matchup['matchup_win']
-    except:
-        print("No matchups found")
-        nflId_defender = 0
-        nflId_offender = 0
-        matchup_win = 0
-
     # Get play description
     play_description = plays[(plays['gameId'] == gameId) & (plays['playId'] == playId)]['playDescription'].iloc[0]
 
@@ -199,7 +137,7 @@ def playplot(
     # Get team matchup
     teams = tracking[tracking['team'] != 'football']['team'].unique().tolist()
 
-    info = f'{" vs ".join(teams)} | Defender Win: {matchup_win == 1} | gameId: {gameId} | playId: {playId}'
+    info = f'{" vs ".join(teams)} | gameId: {gameId} | playId: {playId}'
     play_description = plays[(plays['gameId'] == gameId) & (plays['playId'] == playId)]['playDescription'].iloc[0]
 
     scrim_x = tracking[
@@ -259,6 +197,20 @@ def playplot(
         tracking_frame = tracking.loc[
             (tracking['frameId'] == frameId)
         ]
+
+        # Add dummy players to force color scheme
+        if len(tracking_frame) > 0:
+            tracking_frame = pd.concat([tracking_frame, pd.DataFrame({
+                'gameId': [gameId, gameId, gameId, gameId, gameId],
+                'playId': [playId, playId, playId, playId, playId],
+                'frameId': [frameId, frameId, frameId, frameId, frameId],
+                'nflId': [0, 0, 0, 0, 0],
+                'team': ['NA', 'NA', 'NA', 'NA', 'NA'],
+                'x': [-10, -10, -10, -10, -10],
+                'y': [-10, -10, -10, -10, -10],
+                'color_code': [0, 1, 2, 3, 4]
+            })])
+        
         scatter.set_offsets(np.c_[tracking_frame['x'], tracking_frame['y']])
         scatter.set_array(tracking_frame['color_code'])
         
@@ -282,7 +234,7 @@ def playplot(
     anim = FuncAnimation(fig, update, frames=tracking['frameId'].max(), interval=100, repeat=True)
 
     writergif = animation.PillowWriter(fps=10)
-    filename = f'images/playplot_{gameId}_{playId}.gif'
+    filename = f'images/playplot_{gameId}_{playId}_{nflId_defender}_{nflId_offender}.gif'
     anim.save(f'static/{filename}', writer=writergif)
     return filename
 

@@ -1,0 +1,87 @@
+<link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/searchpanes/2.1.0/css/searchPanes.bootstrap5.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/select/1.5.0/css/select.bootstrap5.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/searchpanes/2.1.0/js/dataTables.searchPanes.min.js"></script>
+<script src="https://cdn.datatables.net/searchpanes/2.1.0/js/searchPanes.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
+
+<div class="container-fluid px-4" style="width:100%;height:100%;margin-left:auto;margin-right:auto">
+  <table class="display" id="matchups-table" style="width:100%">
+    <thead>
+      <tr>
+        <th scope="col">Select</th>
+        <th scope="col">Defensive Lineman</th>
+        <th scope="col">Offensive Lineman</th>
+        <th scope="col">Minimum QB Proximity</th>
+        <th scope="col">Matchup Duration</th>
+        <th scope="col">Matchup Broken</th>
+        <th scope="col">Trouble Generated</th>
+        <th scope="col">Pressure Gain</th>
+        <th scope="col">Pressure Gain Pct</th>
+      </tr>
+    </thead>
+    {% for row in data %}
+    <tr scope="row" id="{{ row[8] }}/{{ row[9] }}" class="matchup-row">
+      <td style="cursor:pointer;"></td>
+      <td>{{ row[0] }}</td>
+      <td>{{ row[1] }}</td>
+      <td>{{ row[2] }}</td>
+      <td>{{ row[3] }}</td>
+      <td>{{ row[4] }}</td>
+      <td>{{ row[5] }}</td>
+      <td>{{ row[6] }}</td>
+      <td>{{ row[7] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+<script>
+  $.holdReady(true);
+  $(document).ready(function () {
+    var matchupTable = $('#matchups-table').DataTable({
+      paging: false,
+      "bInfo": false,
+      scrollX: true,
+      'sScrollX': '100%',
+      searching: false,
+      ordering:  true,
+      columnDefs: [ {
+        orderable: false,
+        className: 'select-checkbox',
+        targets:   0
+      } ],
+      select: {
+        style:    'os',
+        selector: 'td:first-child'
+      }
+    });
+    matchupTable.columns.adjust();
+
+    matchupTable
+    .on( 'select', function ( e, dt, type, indexes ) {
+      $('#simulation').hide();
+      $('#loading').show();
+      var rowData = matchupTable.rows( indexes ).ids();
+      var matchupIds = rowData[0];
+      $('#simulation').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/' + matchupIds, () => {
+        $('#loading').hide();
+        $('#simulation').show();
+      });
+    } )
+    .on( 'deselect', function ( e, dt, type, indexes ) {
+      $('#simulation').hide();
+      $('#loading').show();
+      $('#simulation').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/0/0', () => {
+        $('#loading').hide();
+        $('#simulation').show();
+      });
+    });
+  });
+</script>
