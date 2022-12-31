@@ -28,17 +28,17 @@
       </tr>
     </thead>
     {% for row in data %}
-      <tr scope="row" id="{{ row[8] }}/{{ row[9] }}">
-        <td style="cursor:pointer"></td>
-        <td>{{ row[0] }}</td>
-        <td>{{ row[1] }}</td>
-        <td>{{ row[2] }}</td>
-        <td>{{ row[3] }}</td>
-        <td>{{ row[4] }}</td>
-        <td>{{ row[5] }}</td>
-        <td>{{ row[6] }}</td>
-        <td>{{ row[7] }}</td>
-      </tr>
+    <tr scope="row" id="{{ row[8] }}/{{ row[9] }}" class="matchup-row">
+      <td style="cursor:pointer;"></td>
+      <td>{{ row[0] }}</td>
+      <td>{{ row[1] }}</td>
+      <td>{{ row[2] }}</td>
+      <td>{{ row[3] }}</td>
+      <td>{{ row[4] }}</td>
+      <td>{{ row[5] }}</td>
+      <td>{{ row[6] }}</td>
+      <td>{{ row[7] }}</td>
+    </tr>
     {% endfor %}
   </table>
 </div>
@@ -63,27 +63,25 @@
       }
     });
     matchupTable.columns.adjust();
+
     matchupTable
-      .on( 'select', function ( e, dt, type, indexes ) {
-        $('#simulation').hide();
-        $('#loading').show();
-        var rowData = matchupTable.rows( indexes ).ids();
-        var matchupIds = rowData[0];
-        $('#simulation').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/' + matchupIds, () => {
-            $('#loading').hide();
-            $('#simulation').show();
-        });
-      } )
-      .on( 'deselect', function ( e, dt, type, indexes ) {
-        console.log('deselect')
-        if (selectedGameId == 0) {
-            $('#simulation').hide();
-            $('#loading').show();
-            $('#simulation').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/0/0', () => {
-                $('#loading').hide();
-                $('#simulation').show();
-            });
-        }
+    .on( 'select', function ( e, dt, type, indexes ) {
+      $('#simulation').hide();
+      $('#loading').show();
+      var rowData = matchupTable.rows( indexes ).ids();
+      var matchupIds = rowData[0];
+      $('#simulation').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/' + matchupIds, () => {
+        $('#loading').hide();
+        $('#simulation').show();
       });
+    } )
+    .on( 'deselect', function ( e, dt, type, indexes ) {
+      $('#simulation').hide();
+      $('#loading').show();
+      $('#simulation').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/0/0', () => {
+        $('#loading').hide();
+        $('#simulation').show();
+      });
+    });
   });
 </script>

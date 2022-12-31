@@ -137,6 +137,12 @@
                 $('#simulation').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/0/0', () => {
                     $('#loading').hide();
                     $('#simulation').show();
+                    var data = $('.matchup-row');
+                    console.log(data);
+                    Array.from(data).forEach((item) => {
+                        console.log('preloading ' + item.id)
+                        $('#simulation-staging').load('/get-playplot/' + selectedGameId + '/' + selectedPlayId + '/' + item.id);
+                    });
                 });
             });
         };
@@ -236,6 +242,7 @@
                                 <a>Play Simulation</a>
                                 <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;">
                                     <div id="simulation"></div>
+                                    <div id="simulation-staging" style="display:none;"></div>
                                     <img id="loading" src="images/loading.gif" alt="" style="width:200px">
                                 </div>
                                 <div id="matchups"></div>
