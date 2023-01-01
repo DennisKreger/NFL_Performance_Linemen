@@ -644,16 +644,6 @@ def playanimation(gameId, playId):
     #return render_template('animation.html', html=html)
     return html
 
-@app.route('/matchup/<gameId>/<playId>', methods=['GET'])
-def matchup(gameId, playId):
-    gameId = int(gameId)
-    playId = int(playId)
-    data, no_matchup = playgifs(
-        gameId,
-        playId
-    )
-    return render_template('matchup.html', data=data, base=no_matchup)
-
 @app.route('/get-matchups/<gameId>/<playId>', methods=['GET'])
 def matchup_table(gameId, playId):
     gameId = int(gameId)
