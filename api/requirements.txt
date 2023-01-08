@@ -22,5 +22,8 @@ kaleido
 ConfigParser
 gunicorn
 psycopg2-binary
+kaleido
+bar-chart-race
+
 
 
